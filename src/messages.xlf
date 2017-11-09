@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="ng2.template">
+        <body>
+            <trans-unit id="logInHeader" datatype="html">
+                <source>Log In</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/login/login.component.ts</context>
+                    <context context-type="linenumber">2</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="usernameLabel" datatype="html">
+                <source>Username</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/login/login.component.ts</context>
+                    <context context-type="linenumber">6</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="passwordLabel" datatype="html">
+                <source>Password</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/login/login.component.ts</context>
+                    <context context-type="linenumber">10</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="forgotPasswordLabel" datatype="html">
+                <source>Forgot Password?</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/login/login.component.ts</context>
+                    <context context-type="linenumber">14</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="logInLabel" datatype="html">
+                <source>Log In</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/login/login.component.ts</context>
+                    <context context-type="linenumber">16</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="siteStatusLabel" datatype="html">
+                <source>Site Status</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/login/login.component.ts</context>
+                    <context context-type="linenumber">19</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="needHelpLabel" datatype="html">
+                <source>Need Help?</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/contact-details/contact-details.component.ts</context>
+                    <context context-type="linenumber">1</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="resetPasswordHeader" datatype="html">
+                <source>Reset Password</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/forgot-password/forgot-password.component.ts</context>
+                    <context context-type="linenumber">2</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/reset-password/reset-password.component.ts</context>
+                    <context context-type="linenumber">2</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="forgotPasswordHeader" datatype="html">
+                <source>
+                    Please enter your email address. We will send you an email with instructions on how to reset your password.
+                </source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/forgot-password/forgot-password.component.ts</context>
+                    <context context-type="linenumber">7</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="emailLabel" datatype="html">
+                <source>Email: </source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/forgot-password/forgot-password.component.ts</context>
+                    <context context-type="linenumber">12</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="cancelLabel" datatype="html">
+                <source>Cancel</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/forgot-password/forgot-password.component.ts</context>
+                    <context context-type="linenumber">16</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/reset-password/reset-password.component.ts</context>
+                    <context context-type="linenumber">21</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="submitLabel" datatype="html">
+                <source>Submit</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/forgot-password/forgot-password.component.ts</context>
+                    <context context-type="linenumber">17</context>
+                </context-group>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/reset-password/reset-password.component.ts</context>
+                    <context context-type="linenumber">22</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="passwordRulesHeader" datatype="html">
+                <source>
+                    Your new password must:
+                </source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/reset-password/reset-password.component.ts</context>
+                    <context context-type="linenumber">7</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="newPasswordLabel" datatype="html">
+                <source>New password</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/reset-password/reset-password.component.ts</context>
+                    <context context-type="linenumber">13</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="confirmPasswordLabel" datatype="html">
+                <source>Confirm password</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/reset-password/reset-password.component.ts</context>
+                    <context context-type="linenumber">17</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="passwordInformationLabel" datatype="html">
+                <source>
+                    Using a passphrase or longer password makes your password more secure.
+                </source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/reset-password/reset-password.component.ts</context>
+                    <context context-type="linenumber">25</context>
+                </context-group>
+            </trans-unit>
+            <trans-unit id="logOutLabel" datatype="html">
+                <source>Log out</source>
+                <context-group purpose="location">
+                    <context context-type="sourcefile">app/app.component.ts</context>
+                    <context context-type="linenumber">6</context>
+                </context-group>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

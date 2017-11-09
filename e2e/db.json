@@ -1,0 +1,20 @@
+{
+    "confidentiality-notice": {
+        "message":"",
+        "verbiage":"*CONFIDENTIALITY NOTICE: By clicking the &#39Log In&#39 button, the user accessing this PrimeRevenue Application (&#34You&#34) hereby agrees as follows:<ol><li>The user name or user ID & password You are using for access to this PrimeRevenue Application is to be used solely by You.</li><li>You represent and warrant to PrimeRevenue that You are the person to whom this user name or user ID and password were issued by PrimeRevenue. Furthermore you acknowledge that PrimeRevenue actively monitors access to this PrimeRevenue Application and that the network domain names of all persons accessing this application are recorded, thus identifying the corporate networks (not individual users) accessing this application. In the event PrimeRevenue determines that the user name or user name and password assigned to You are being used by others (or that You are not the person to whom the user name or user ID and password were assigned), access to the PrimeRevenue Application and/or additional PrimeRevenue services by You may be prevented, suspended or terminated.</li><li>The information contained in this PrimeRevenue Application is confidential and You agree not to disclose, orally or in writing, to any third party such confidential information without the prior written consent of PrimeRevenue.</li></ol>",
+        "statusCode":200
+    },
+    "site-status": {
+        "show": true
+    },
+    "copyright": {
+        "message":"",
+        "verbiage":"Copyright",
+        "statusCode":200
+    },
+    "env": {
+        "message":"",
+        "verbiage":"",
+        "statusCode":200
+    }
+}

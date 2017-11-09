@@ -1,0 +1,72 @@
+
+<div class="container container-big">
+    <h1>Account Settings {{currentUser.username}}</h1>
+    <div *ngIf="errors.length > 0" class="errors">
+        <div *ngFor="let error of errors">{{error}}</div>
+    </div>
+    <form [formGroup]="userprofileForm" (ngSubmit)="updateUser()">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="firstName" class="control-label">First Name: </label>
+                    <input type="text" formControlName="firstName" class="form-control" />
+                    <span class="help-block default-hidden"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="lastName" class="control-label">Last Name: </label>
+                    <input type="text" formControlName="lastName" class="form-control"/>
+                    <span class="help-block default-hidden"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">Organization: </label>
+                    <input type="text" formControlName="organization" class="form-control"/>
+                    <span class="help-block default-hidden"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">Title: </label>
+                    <input type="text" formControlName="title" class="form-control"/>
+                    <span class="help-block default-hidden"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                <label class="control-label">Department: </label>
+                <input type="text" formControlName="department" class="form-control"/>
+                    <span class="help-block default-hidden"></span>
+                </div>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                <label class="control-label">Email Address: </label>
+                <input type="text" formControlName="email" class="form-control"/>
+                    <span class="help-block default-hidden"></span>
+                </div>
+            </div>
+        </div>          
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary text-center" [disabled]="!userprofileForm.valid || submitted" >Save Changes</button>
+                    <button routerLink="/" class="btn btn-primary text-center">Cancel</button>
+                    <button type="button" class="btn btn-primary text-center" (click)="savePassword()">Change Password</button>
+                </div>
+            </div>
+        </div> 
+    </form>
+</div>
