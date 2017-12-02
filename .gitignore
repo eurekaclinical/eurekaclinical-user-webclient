@@ -51,7 +51,7 @@ Thumbs.db
 /src/**/*.map
 
 # css files
-/src/**/*.css
+#/src/**/*.css
 
 # fonts
 src/fonts/
