@@ -1,6 +1,6 @@
 
 <div class="container container-big">
-    <h1>Account Settings {{currentUser.username}}</h1>
+    <h1>Account Settings <p *ngIf="currentUser">{{currentUser.username}}</p></h1>
     <div *ngIf="errors.length > 0" class="errors">
         <div *ngFor="let error of errors">{{error}}</div>
     </div>
@@ -64,9 +64,11 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary text-center" [disabled]="!userprofileForm.valid || submitted" >Save Changes</button>
                     <button routerLink="/" class="btn btn-primary text-center">Cancel</button>
-                    <button type="button" class="btn btn-primary text-center" (click)="savePassword()">Change Password</button>
+                    <button *ngIf="currentUser?.type=='LOCAL'" type="button" class="btn btn-primary text-center" (click)="openModal()">Change Password</button>
                 </div>
             </div>
         </div> 
     </form>
+    <modal>
+    </modal>
 </div>

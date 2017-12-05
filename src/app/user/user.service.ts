@@ -25,7 +25,6 @@ export class UserService {
     }
 
     getCurrentUser() : Promise<User> {
-        console.log("I am called 2");
         return this.http
             .get(this.configService.getCurrentUserAPI)
             .toPromise()

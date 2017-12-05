@@ -1,0 +1,41 @@
+<div class="modal">
+    <div class="modal-body">
+        <div class="modal-body">
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <label for="oldPassword" class="control-label">Old Password</label>
+                    <input id="oldPassword" name="oldPassword" type="password" class="form-control" 
+                           />
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <label for="newPassword" class="control-label" >New Password</label>
+                    <input id="newPassword" name="newPassword" type="password" class="form-control"
+                           />
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-9">
+                <div class="form-group">
+                    <label for="verifyPassword" class="control-label">Re-enter New Password</label>
+                    <input id="verifyPassword" name="verifyPassword" type="password" class="form-control" 
+                           />
+                    <span class="help-inline"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="passwordChangeNotificationMsg" class="col-sm-10 default-hidden">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary text-center" (click)="updatePassword()">Save Password</button>
+            <button type="button" class="btn btn-primary text-center" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>

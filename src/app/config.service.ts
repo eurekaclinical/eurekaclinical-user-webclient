@@ -41,7 +41,6 @@ export class ConfigurationService {
     }
 
     get getCurrentUserAPI(): string {
-        console.log("I am called 3");
         console.log("url: ", this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT);
         return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;
         

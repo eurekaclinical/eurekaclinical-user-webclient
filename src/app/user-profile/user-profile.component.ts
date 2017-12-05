@@ -6,6 +6,8 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { UserResponse } from '../user/user-response.model';
 
+import { ModalService } from '../modal/modal.service';
+
 @Component( {
     selector: 'user-profile',
     templateUrl: './user-profile.component.html'
@@ -27,7 +29,7 @@ export class UserProfileComponent implements OnInit {
     };
 
     constructor(
-        private userService: UserService) {
+        private userService: UserService, private modalService: ModalService) {
     }
 
     ngOnInit() {
@@ -47,7 +49,6 @@ export class UserProfileComponent implements OnInit {
     }
     
     getCurrentUser() : void {
-        console.log("I am called 1");
         this.userService.getCurrentUser()
             .then(currentUser => {
                 this.currentUser = currentUser;
@@ -93,10 +94,14 @@ export class UserProfileComponent implements OnInit {
         updatedUser.email = this.userprofileForm.get( 'email' ).value;                
         return updatedUser;
 
-    }
+    }  
     
-    savePassword() : void{
-        console.log("I am called too!");
-    }    
-
+    openModal(){
+        console.log("I am called openModal!");
+        this.modalService.open();
+    }
+ 
+    /*closeModal(){
+        this.modalService.close('custom-modal-1');
+    }*/
 }
