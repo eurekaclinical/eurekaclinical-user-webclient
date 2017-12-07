@@ -3,13 +3,13 @@
   "version": "0.14.1",
   "license": "MIT",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build --aot --prod",
-    "test": "ng test",
-    "lint": "ng lint",
-    "pree2e": "json-server --watch e2e/db.json &",
-    "e2e": "ng e2e --aot --env=test"
+    "ng": "node_modules/.bin/ng",
+    "start": "node_modules/.bin/ng serve --proxy-config proxy.conf.json --ssl 1 --ssl-key 'pki/key.pem' --ssl-cert 'pki/cert.pem'",
+    "build": "node_modules/.bin/ng build --prod",
+    "test": "node_modules/.bin/ng test",
+    "lint": "node_modules/.bin/ng lint",
+    "pree2e": "node_modules/.bin/json-server --watch e2e/db.json &",
+    "e2e": "node_modules/.bin/ng e2e --aot --env=test"
   },
   "private": true,
   "dependencies": {
@@ -37,7 +37,7 @@
     "@angular/language-service": "^4.4.6",
     "@angular/platform-server": "^4.4.6",
     "@types/jasmine": "2.5.45",
-    "@types/jquery": "^3.2.11",
+    "@types/jquery": "^3.2.16",
     "@types/node": "~6.0.60",
     "@types/underscore": "^1.8.1",
     "codelyzer": "~3.0.1",

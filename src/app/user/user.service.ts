@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise';
 import { User } from './user.model';
 import { ConfigurationService } from '../config.service';
 import { UserResponse } from './user-response.model';
+import { PasswordChange} from './passwordchange.model';
 
 @Injectable()
 export class UserService {
@@ -18,10 +19,19 @@ export class UserService {
 
     updateUser( user: User ): Promise<UserResponse> {
         return this.http
-            .post( this.configService.updateUserAPI, JSON.stringify( user ), { headers: this.headers })
+            .put(this.configService.getUpdateUserAPI(String(user.id)), user.toJSON(), { headers: this.headers })
             .toPromise()
             .then( response => response.json() as UserResponse )
             .catch( this.handleError );
+    }
+    
+    changePassword(request: PasswordChange, userid:number){
+        return this.http
+            .post(this.configService.getChangePasswordAPI(String(userid)), request.toJSON(), { headers: this.headers })
+            .toPromise()
+            .then( response => response.json() as UserResponse )
+            .catch( this.handleError );
+        
     }
 
     getCurrentUser() : Promise<User> {

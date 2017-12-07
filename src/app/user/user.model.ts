@@ -35,7 +35,9 @@ export class User {
     
     private _verificationCode:string; 
     
-    private _password:string;    
+    private _password:string;
+    
+    private _passwordExpiration: Date;    
             
     constructor() {}
     
@@ -181,13 +183,43 @@ export class User {
     
     set password( value:string ) {
         this._password = value;
+    }
+ 
+    get passwordExpiration(): Date {
+        return this._passwordExpiration;
     }          
+    
+    set passwordExpiration(value: Date){
+        this._passwordExpiration = value;
+    }
+    
     toJSON() {
         
+        let keys: string[] = ['type',
+                    'id',
+                    'username',
+                    'roles',
+                    'created',
+                    'active',
+                    'firstName',
+                    'lastName',
+                    'fullName',
+                    'email',
+                    'organization',
+                    'lastLogin',
+                    'title',
+                    'department',
+                    'loginType',
+                    'verified',
+                    'verificationCode',
+                    'password',
+                    'passwordExpiration'];
+
         let json = {};
-        
-        json["email"] = this._email;
-        
+        for (let k of keys)
+        {
+            json[k] = this[k];
+        }
         return json;
         
     }
