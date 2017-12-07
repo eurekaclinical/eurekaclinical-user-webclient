@@ -4,8 +4,10 @@ import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { User } from './user.model';
+import { RegisterUser } from '../user/register-user.model';
+import { AppProperties } from './app-properties.model';
 import { ConfigurationService } from '../config.service';
-import { UserResponse } from './user-response.model';
+import { ServiceResponse } from './service-response.model';
 
 @Injectable()
 export class UserService {
@@ -16,14 +18,22 @@ export class UserService {
     
     constructor( private http: Http, private configService: ConfigurationService ) { }
 
-    updateUser( user: User ): Promise<UserResponse> {
+    updateUser( user: User ): Promise<ServiceResponse> {
         return this.http
             .post( this.configService.updateUserAPI, JSON.stringify( user ), { headers: this.headers })
             .toPromise()
-            .then( response => response.json() as UserResponse )
+            .then( response => response.json() as ServiceResponse )
             .catch( this.handleError );
     }
 
+    saveUser( registerUser: RegisterUser ): Promise<ServiceResponse> {
+        return this.http
+            .post( this.configService.saveUserAPI, JSON.stringify( registerUser ), { headers: this.headers })
+            .toPromise()
+            .then( response => response.json() as ServiceResponse )
+            .catch( this.handleError );
+    }
+    
     getCurrentUser() : Promise<User> {
         return this.http
             .get(this.configService.getCurrentUserAPI)
@@ -32,6 +42,27 @@ export class UserService {
             .catch(this.handleError);
     }
         
+    getUserWebappProperties() : Promise<AppProperties> {
+        return this.http
+            .get(this.configService.getUserWebappPropertiesAPI)
+            .toPromise()
+            .then(response => this.extractAppPropertiesData(response))
+            .catch(this.handleError);
+    }
+        
+    private extractAppPropertiesData(response: Response){
+        let data = response.json();
+        let appProperties = new AppProperties();
+        
+        appProperties.userWebappUrl = data.url;
+        appProperties.ephiProhibited =  data.ephiProhibited;
+        appProperties.demoMode = data.demoMode;
+        appProperties.registryServiceUrl = data.registryServiceUrl;
+        appProperties.localAccountRegistrationEnabled = data.localAccountRegistrationEnabled;
+        
+        return appProperties;
+    }
+    
     private handleError( error: Response | any ) {
         return Promise.reject( error.message || error );
     }

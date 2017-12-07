@@ -1,19 +1,9 @@
-import { User } from './user.model';
-export class UserResponse {
+export class ServiceResponse {
    
     private _statusCode: number;
 
     private _message: string;
-    
-    private _user:User;
 
-    get user(): User {
-        return this._user;
-    }
-    
-    set user( value:User ) {
-        this._user = value;
-    } 
 
     get statusCode(): number {
         return this._statusCode;

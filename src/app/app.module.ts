@@ -4,12 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { UserProfileModule } from './user-profile/user-profile.module';
-
+import { RegisterModule } from './register/register.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfigurationService } from './config.service';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { FooterComponent } from './footer/footer.component';
         ReactiveFormsModule,
         HttpModule,
         UserProfileModule,
+        RegisterModule,
         AppRoutingModule,
     ],
     declarations: [

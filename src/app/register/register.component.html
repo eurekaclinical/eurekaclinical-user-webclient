@@ -1,0 +1,105 @@
+<h1>Register</h1>    
+<div *ngIf="appProperties?.demoMode || appProperties?.ephiProhibited">
+    <div class="alert alert-warning">
+        <strong>Disclaimer: Loading real patient data into the system is strictly prohibited!</strong>
+    </div>    
+</div>    
+<form [formGroup]="registerForm" (ngSubmit)="saveUser()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="firstName" class="control-label">First Name: </label>
+                <input type="text" formControlName="firstName" class="form-control" />
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="lastName" class="control-label">Last Name: </label>
+                <input type="text" formControlName="lastName" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Organization: </label>
+                <input type="text" formControlName="organization" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label">Title: </label>
+                <input type="text" formControlName="title" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+            <label class="control-label">Department: </label>
+            <input type="text" formControlName="department" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+            <label class="control-label">Email Address: </label>
+            <input type="text" formControlName="email" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+            <label class="control-label">Verify Email Address: </label>
+            <input type="text" formControlName="verifyEmail" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+            <label class="control-label">Password: </label>
+            <input type="password" formControlName="password" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+            <label class="control-label">Confirm Password: </label>
+            <input type="password" formControlName="verifyPassword" class="form-control"/>
+                <span class="help-block default-hidden"></span>
+            </div>
+        </div>
+    </div>        
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                *Passwords must be at least 8 characters and contain at least
+                one letter & digit
+            </div>
+        </div>
+    </div>        
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary text-center" [disabled]="!registerForm.valid || submitted" >Submit</button>
+            </div>
+        </div>
+    </div> 
+</form>    
+

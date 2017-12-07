@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
-import { UserResponse } from '../user/user-response.model';
+import { ServiceResponse } from '../user/service-response.model';
 
 import { ModalService } from '../modal/modal.service';
 
@@ -60,7 +60,7 @@ export class UserProfileComponent implements OnInit {
         
         this.errors = [];
         this.userService.updateUser( this.populateUser() ).then(
-            ( response: UserResponse ) => {
+            ( response: ServiceResponse ) => {
                 this.submitted = false;
             },
             ( error ) => {
