@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eurekaclinical</groupId>
+	<artifactId>eurekaclinical-analytics-webclient</artifactId>
+	<version>1.0-Alpha-1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Eureka! Clinical User Web Client</name>
+	
+
+	<!-- define the package versions for various project we will use -->
+	<properties>
+    <nodejs-version>v8.9.1</nodejs-version>
+    <npm-version>3.9.5</npm-version>
+    <frontend-maven-plugin-version>1.6</frontend-maven-plugin-version>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<distribution>manual</distribution>
+		</license>
+		<license>
+			<name>GNU General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${frontend-maven-plugin-version}</version>
+				<configuration>
+					<workingDirectory />
+					<installDirectory>${user.home}/.eurekaclinical/dev</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install-node-and-npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>${nodejs-version}</nodeVersion>
+							<npmVersion>${npm-version}</npmVersion>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm-install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+					</execution>
+          <execution>
+            <id>npm-build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run-script build</arguments>
+            </configuration>
+            <phase>generate-resources</phase> 
+          </execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+  
+  <profiles>
+    <profile>
+      <id>startserver</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>${frontend-maven-plugin-version}</version>
+            <configuration>
+              <workingDirectory />
+              <installDirectory>${user.home}/.eurekaclinical/dev</installDirectory>
+              <arguments>run-script start</arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
+

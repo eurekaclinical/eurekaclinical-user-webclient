@@ -8,6 +8,8 @@ import { RegisterUser } from '../user/register-user.model';
 import { AppProperties } from './app-properties.model';
 import { ConfigurationService } from '../config.service';
 import { ServiceResponse } from './service-response.model';
+import { PasswordChange} from './passwordchange.model';
+
 
 @Injectable()
 export class UserService {
@@ -20,10 +22,19 @@ export class UserService {
 
     updateUser( user: User ): Promise<ServiceResponse> {
         return this.http
-            .post( this.configService.updateUserAPI, JSON.stringify( user ), { headers: this.headers })
+            .put(this.configService.getUpdateUserAPI(String(user.id)), user.toJSON(), { headers: this.headers })
             .toPromise()
             .then( response => response.json() as ServiceResponse )
             .catch( this.handleError );
+    }
+    
+    changePassword(request: PasswordChange, userid:number){
+        return this.http
+            .post(this.configService.getChangePasswordAPI(String(userid)), request.toJSON(), { headers: this.headers })
+            .toPromise()
+            .then( response => response.json() as ServiceResponse )
+            .catch( this.handleError );
+        
     }
 
     saveUser( registerUser: RegisterUser ): Promise<ServiceResponse> {

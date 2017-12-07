@@ -1,15 +1,16 @@
-
 <div class="container container-big">
     <h1>Account Settings <p *ngIf="currentUser">{{currentUser.username}}</p></h1>
     <div *ngIf="errors.length > 0" class="errors">
         <div *ngFor="let error of errors">{{error}}</div>
     </div>
+    
     <form [formGroup]="userprofileForm" (ngSubmit)="updateUser()">
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="firstName" class="control-label">First Name: </label>
                     <input type="text" formControlName="firstName" class="form-control" />
+                    <div *ngIf="userprofileForm.controls['firstName'].hasError('required') && userprofileForm.controls['firstName'].touched" class="alert alert-danger">You must include a first name.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -17,8 +18,9 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="lastName" class="control-label">Last Name: </label>
+                    <label for="lastName"  class="control-label">Last Name: </label>
                     <input type="text" formControlName="lastName" class="form-control"/>
+                    <div *ngIf="userprofileForm.controls['lastName'].hasError('required') && userprofileForm.controls['lastName'].touched" class="alert alert-danger">You must include a last name.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -28,6 +30,7 @@
                 <div class="form-group">
                     <label class="control-label">Organization: </label>
                     <input type="text" formControlName="organization" class="form-control"/>
+                    <div *ngIf="userprofileForm.controls['organization'].hasError('required') && userprofileForm.controls['organization'].touched" class="alert alert-danger">You must provide an organization.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -37,6 +40,7 @@
                 <div class="form-group">
                     <label class="control-label">Title: </label>
                     <input type="text" formControlName="title" class="form-control"/>
+                    <div *ngIf="userprofileForm.controls['title'].hasError('required') && userprofileForm.controls['title'].touched" class="alert alert-danger">You must provide a title.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -46,6 +50,7 @@
                 <div class="form-group">
                 <label class="control-label">Department: </label>
                 <input type="text" formControlName="department" class="form-control"/>
+                <div *ngIf="userprofileForm.controls['department'].hasError('required') && userprofileForm.controls['department'].touched" class="alert alert-danger">You must provide a department name.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -55,20 +60,85 @@
                 <div class="form-group">
                 <label class="control-label">Email Address: </label>
                 <input type="text" formControlName="email" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                <div *ngIf="userprofileForm.controls['email'].hasError('required') && userprofileForm.controls['email'].touched" class="alert alert-danger">Email is required.</div>
+                <div *ngIf="userprofileForm.controls['email'].errors && userprofileForm.controls['email'].touched" class="alert-email alert-danger-email">Please provide a valid email</div>
+                <span class="help-block default-hidden"></span>
                 </div>
             </div>
-        </div>          
+        </div>
+         <div class="row">
+                <div id="infoNotificationFailure" class="default-hidden help-block has-error">
+                    <div id="infoNotificationFailureMsg"></div>                                    
+                </div>
+            </div>
         <div class="row">
             <div class="col-sm-10">
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary text-center" [disabled]="!userprofileForm.valid || submitted" >Save Changes</button>
                     <button routerLink="/" class="btn btn-primary text-center">Cancel</button>
-                    <button *ngIf="currentUser?.type=='LOCAL'" type="button" class="btn btn-primary text-center" (click)="openModal()">Change Password</button>
+                    <button *ngIf="currentUser?.type=='LOCAL'" type="button" class="btn btn-primary text-center" (click)="openPasswordDialog()">Change Password</button>
                 </div>
             </div>
         </div> 
     </form>
-    <modal>
-    </modal>
+    
+    <div *ngIf="showSuccessMessage==true" class="alert alert-success">
+            <p><strong>Your changes has been saved successfully.</strong></p>
+    </div>
+    
+    <div id="newPasswordModal" class="modal"   [style.display] = "showPasswordDialog? 'block' : 'none'"  role="dialog" aria-labelledby="newPasswordModalLabel"
+                 aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="newPasswordModalLabel" class="modal-title">
+                        Change Password
+                    </h4>
+                </div>
+                <form [formGroup]="userCredentialForm" (ngSubmit)="updatePassword()">
+                    <div class="modal-body">
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <label for="oldPassword" class="control-label">Old Password</label>
+                                <input id="oldPassword" formControlName="oldPassword" type="password" class="form-control" 
+                                       />
+                                 <div *ngIf="userCredentialForm.controls['oldPassword'].hasError('required') && userCredentialForm.controls['oldPassword'].touched" class="alert alert-danger">Please input old password</div>
+
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <label for="newPassword" class="control-label" >New Password</label>
+                                <input id="newPassword" formControlName="newPassword" type="password" class="form-control"
+                                       />
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <label for="verifyPassword" class="control-label">Re-enter New Password</label>
+                                <input id="verifyPassword" formControlName="verifyPassword" type="password" class="form-control" 
+                                       />
+                                <span class="help-inline"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div id="passwordChangeNotificationMsg" [style.display]="showPasswordMessage?'block':'none'" class="col-sm-10 default-hidden">
+                            {{passwordMessage}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="action" value="savepassword"/>
+                        <input type="submit" value="Save Password" id="savePasswordBtn" class="btn btn-primary"/>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "closePasswordDialog()">Close</button>
+                    </div>  
+                </form>
+            </div>
+        </div>
+    </div>          
 </div>
