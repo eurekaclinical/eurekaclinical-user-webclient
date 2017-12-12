@@ -10,7 +10,6 @@ import { ConfigurationService } from './config.service';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
-import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({

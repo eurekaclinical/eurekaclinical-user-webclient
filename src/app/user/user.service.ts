@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import { Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
 
 import { User } from './user.model';
 import { RegisterUser } from '../user/register-user.model';
@@ -13,7 +15,7 @@ import { PasswordChange} from './passwordchange.model';
 
 @Injectable()
 export class UserService {
-
+data: any;
     private headers = new Headers( {
         'Content-Type': 'application/json'
     });
@@ -53,26 +55,12 @@ export class UserService {
             .catch(this.handleError);
     }
         
-    getUserWebappProperties() : Promise<AppProperties> {
-        return this.http
-            .get(this.configService.getUserWebappPropertiesAPI)
-            .toPromise()
-            .then(response => this.extractAppPropertiesData(response))
-            .catch(this.handleError);
+    getUserWebappProperties():Observable<any> {
+        return this.http.get(this.configService.getUserWebappPropertiesAPI)
+            .map(response => response.json())
+            .catch( this.handleError );
     }
-        
-    private extractAppPropertiesData(response: Response){
-        let data = response.json();
-        let appProperties = new AppProperties();
-        
-        appProperties.userWebappUrl = data.url;
-        appProperties.ephiProhibited =  data.ephiProhibited;
-        appProperties.demoMode = data.demoMode;
-        appProperties.registryServiceUrl = data.registryServiceUrl;
-        appProperties.localAccountRegistrationEnabled = data.localAccountRegistrationEnabled;
-        
-        return appProperties;
-    }
+       
     
     private handleError( error: Response | any ) {
         return Promise.reject( error.message || error );

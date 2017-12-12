@@ -8,6 +8,10 @@ import { AppProperties } from '../user/app-properties.model';
 import { RegisterUser } from '../user/register-user.model';
 import { ServiceResponse } from '../user/service-response.model';
 
+import { Subscription } from 'rxjs/Subscription';
+
+import 'rxjs/add/operator/map'
+
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
@@ -22,12 +26,11 @@ export class RegisterComponent implements OnInit {
 
     submitted: boolean;
     
-    constructor(
-        private userService: UserService) {
+    constructor(private userService: UserService) {
     }
 
     ngOnInit() {
-        //this.getUserWebappProperties();
+        this.getUserWebappProperties();
         this.registerForm = new FormGroup({
             firstName: new FormControl(),
             lastName: new FormControl(),
@@ -40,13 +43,14 @@ export class RegisterComponent implements OnInit {
             verifyPassword: new FormControl()                                    
         });
     }
-    
-    getUserWebappProperties() : void {
-        this.userService.getUserWebappProperties()
-            .then(appProperties => {
-                this.appProperties = appProperties;
+            
+    getUserWebappProperties() {   
+        this.userService.getUserWebappProperties().subscribe((data) => {
+              console.log("appProperties: ", data);
+              this.appProperties = data;
             });
-    }    
+
+     }  
     
     saveUser() {        
         this.submitted = true;

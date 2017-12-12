@@ -42,7 +42,6 @@ export class ConfigurationService {
     }
 
     get saveUserAPI(): string {
-        console.log("I am called saveUserAPI"); 
         return this.serviceUrl;
     }
     
@@ -59,13 +58,11 @@ export class ConfigurationService {
     }
     
     get getCurrentUserAPI(): string {
-        console.log("url: ", this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT);
         return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;
         
     }
     
     get getUserWebappPropertiesAPI(): string {
-        console.log("I am called getUserWebappPropertiesAPI"); 
-        return this.serviceUrl;      
+        return 'assets/config.json';     
     }    
 }

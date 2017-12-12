@@ -9,6 +9,10 @@ export class AppProperties {
     private _registryServiceUrl:string;  
     
     private _localAccountRegistrationEnabled:boolean;  
+    
+    private _authenticationMethod:string;
+    
+    private _accountTypeDisplayName:string;
             
     constructor() {}
     
@@ -51,7 +55,23 @@ export class AppProperties {
     set localAccountRegistrationEnabled( value:boolean ) {
         this._localAccountRegistrationEnabled = value;
     }
+    
+    get authenticationMethod():string {
+        return this._authenticationMethod;
+    }
+    
+    set authenticationMethod( value:string ) {
+        this._authenticationMethod = value;
+    }    
      
+    get accountTypeDisplayName():string {
+        return this._accountTypeDisplayName;
+    }
+    
+    set accountTypeDisplayName( value:string ) {
+        this._accountTypeDisplayName = value;
+    } 
+        
     toJSON() {
         
         let json = {};
