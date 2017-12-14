@@ -20,6 +20,9 @@
                 <div class="form-group">
                     <label for="firstName" class="control-label">First Name: </label>
                     <input type="text" formControlName="firstName" class="form-control" />
+                    <div *ngIf="registerForm.controls['firstName'].hasError('required') && (registerForm.controls['firstName'].touched || registerForm.controls['firstName'].dirty)" class="alert alert-danger">
+                        You must include a first name.
+                    </div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>

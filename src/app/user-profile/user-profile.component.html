@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label for="firstName" class="control-label">First Name: </label>
                     <input type="text" formControlName="firstName" class="form-control" />
-                    <div *ngIf="userprofileForm.controls['firstName'].hasError('required') && userprofileForm.controls['firstName'].touched" class="alert alert-danger">You must include a first name.</div>
+                    <div *ngIf="userprofileForm.controls['firstName'].hasError('required') && (userprofileForm.controls['firstName'].touched || userprofileForm.controls['firstName'].dirty)" class="alert alert-danger">You must include a first name.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label for="lastName"  class="control-label">Last Name: </label>
                     <input type="text" formControlName="lastName" class="form-control"/>
-                    <div *ngIf="userprofileForm.controls['lastName'].hasError('required') && userprofileForm.controls['lastName'].touched" class="alert alert-danger">You must include a last name.</div>
+                    <div *ngIf="userprofileForm.controls['lastName'].hasError('required') && (userprofileForm.controls['lastName'].touched||userprofileForm.controls['lastName'].dirty)" class="alert alert-danger">You must include a last name.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <label class="control-label">Organization: </label>
                     <input type="text" formControlName="organization" class="form-control"/>
-                    <div *ngIf="userprofileForm.controls['organization'].hasError('required') && userprofileForm.controls['organization'].touched" class="alert alert-danger">You must provide an organization.</div>
+                    <div *ngIf="userprofileForm.controls['organization'].hasError('required') && (userprofileForm.controls['organization'].touched || userprofileForm.controls['organization'].dirty)" class="alert alert-danger">You must provide an organization.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label class="control-label">Title: </label>
                     <input type="text" formControlName="title" class="form-control"/>
-                    <div *ngIf="userprofileForm.controls['title'].hasError('required') && userprofileForm.controls['title'].touched" class="alert alert-danger">You must provide a title.</div>
+                    <div *ngIf="userprofileForm.controls['title'].hasError('required') && (userprofileForm.controls['title'].touched || userprofileForm.controls['title'].dirty)" class="alert alert-danger">You must provide a title.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                 <div class="form-group">
                 <label class="control-label">Department: </label>
                 <input type="text" formControlName="department" class="form-control"/>
-                <div *ngIf="userprofileForm.controls['department'].hasError('required') && userprofileForm.controls['department'].touched" class="alert alert-danger">You must provide a department name.</div>
+                <div *ngIf="userprofileForm.controls['department'].hasError('required') && (userprofileForm.controls['department'].touched || userprofileForm.controls['department'].dirty)" class="alert alert-danger">You must provide a department name.</div>
                     <span class="help-block default-hidden"></span>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                 <div class="form-group">
                 <label class="control-label">Email Address: </label>
                 <input type="text" formControlName="email" class="form-control"/>
-                <div *ngIf="userprofileForm.controls['email'].hasError('required') && userprofileForm.controls['email'].touched" class="alert alert-danger">Email is required.</div>
+                <div *ngIf="userprofileForm.controls['email'].hasError('required') && (userprofileForm.controls['email'].touched || userprofileForm.controls['email'].dirty)" class="alert alert-danger">Email is required.</div>
                 <div *ngIf="userprofileForm.controls['email'].errors && userprofileForm.controls['email'].touched" class="alert-email alert-danger-email">Please provide a valid email</div>
                 <span class="help-block default-hidden"></span>
                 </div>
