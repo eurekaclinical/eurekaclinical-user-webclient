@@ -3,7 +3,9 @@
     <div *ngIf="errors.length > 0" class="errors">
         <div *ngFor="let error of errors">{{error}}</div>
     </div>
-    
+    <div *ngIf="messageBoard.showMessage==true" [ngClass] = "messageBoard.styleClass">
+            <p><strong>{{messageBoard.message}}</strong></p>
+    </div>
     <form [formGroup]="userprofileForm" (ngSubmit)="updateUser()">
         <div class="row">
             <div class="col-sm-6">
@@ -82,9 +84,7 @@
         </div> 
     </form>
     
-    <div *ngIf="showSuccessMessage==true" class="alert alert-success">
-            <p><strong>Your changes has been saved successfully.</strong></p>
-    </div>
+    
     
     <div id="newPasswordModal" class="modal"   [style.display] = "showPasswordDialog? 'block' : 'none'"  role="dialog" aria-labelledby="newPasswordModalLabel"
                  aria-hidden="true">
@@ -102,7 +102,7 @@
                                 <label for="oldPassword" class="control-label">Old Password</label>
                                 <input id="oldPassword" formControlName="oldPassword" type="password" class="form-control" 
                                        />
-                                 <div *ngIf="userCredentialForm.controls['oldPassword'].hasError('required') && userCredentialForm.controls['oldPassword'].touched" class="alert alert-danger">Please input old password</div>
+                                 <div *ngIf="userCredentialForm.controls['oldPassword'].hasError('required') && (userCredentialForm.controls['oldPassword'].touched || userCredentialForm.controls['oldPassword'].dirty)" class="alert alert-danger">Please input old password</div>
 
                                 <span class="help-inline"></span>
                             </div>
@@ -113,6 +113,9 @@
                                 <label for="newPassword" class="control-label" >New Password</label>
                                 <input id="newPassword" formControlName="newPassword" type="password" class="form-control"
                                        />
+                                <div *ngIf="userCredentialForm.controls['newPassword'].errors && (userCredentialForm.controls['newPassword'].touched||userCredentialForm.controls['newPassword'].dirty)" class="alert alert-danger">
+                                    Please input new password with at least 8 characters.
+                                </div>
                                 <span class="help-inline"></span>
                             </div>
                         </div>
@@ -122,19 +125,20 @@
                                 <label for="verifyPassword" class="control-label">Re-enter New Password</label>
                                 <input id="verifyPassword" formControlName="verifyPassword" type="password" class="form-control" 
                                        />
+                                <div *ngIf="userCredentialForm.hasError('mismatch')" class="alert alert-danger">
+                                    Passwords do not match.
+                                </div>
                                 <span class="help-inline"></span>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div id="passwordChangeNotificationMsg" [style.display]="showPasswordMessage?'block':'none'" class="col-sm-10 default-hidden">
-                            {{passwordMessage}}
-                            </div>
+                        <div *ngIf="passwordMessageBoard.showMessage==true" [ngClass] = "passwordMessageBoard.styleClass">
+                              <p><strong>{{passwordMessageBoard.message}}</strong></p>
+    </div>
                         </div>
-                    </div>
                     <div class="modal-footer">
                         <input type="hidden" name="action" value="savepassword"/>
-                        <input type="submit" value="Save Password" id="savePasswordBtn" class="btn btn-primary"/>
+                        <button type="submit" class="btn btn-primary text-center" [disabled]="!userCredentialForm.valid" >Save Password</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "closePasswordDialog()">Close</button>
                     </div>  
                 </form>

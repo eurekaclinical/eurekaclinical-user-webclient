@@ -40,8 +40,9 @@ data: any;
     }
 
     saveUser( registerUser: RegisterUser ): Promise<ServiceResponse> {
+        console.log(registerUser.toJSON());
         return this.http
-            .post( this.configService.saveUserAPI, JSON.stringify( registerUser ), { headers: this.headers })
+            .post(this.configService.saveUserAPI, registerUser.toJSON(), { headers: this.headers })
             .toPromise()
             .then( response => response.json() as ServiceResponse )
             .catch( this.handleError );

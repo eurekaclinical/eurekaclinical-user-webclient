@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user/user.service';
@@ -26,21 +26,21 @@ export class RegisterComponent implements OnInit {
 
     submitted: boolean;
     
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService, private fb: FormBuilder) {
     }
 
     ngOnInit() {
         this.getUserWebappProperties();
-        this.registerForm = new FormGroup({
-            firstName: new FormControl(),
-            lastName: new FormControl(),
-            organization: new FormControl(),
-            title: new FormControl(),
-            department: new FormControl(),
-            email: new FormControl(),
-            verifyEmail: new FormControl(),
-            password: new FormControl(),
-            verifyPassword: new FormControl()                                    
+        this.registerForm = this.fb.group({
+            firstName: [null, Validators.required],
+            lastName: [null, Validators.required],
+            organization: [null, Validators.required],
+            title: [null, Validators.required],
+            department: [null, Validators.required],
+            email: [null, Validators.compose([Validators.required, Validators.email])],
+            verifyEmail: [null, Validators.compose([Validators.required, Validators.email])],
+            password: [null, Validators.required],
+            verifyPassword: [null, Validators.required]                                    
         });
     }
             
@@ -70,16 +70,24 @@ export class RegisterComponent implements OnInit {
         
         let registerUser = new RegisterUser();
         
-        registerUser.firstName = this.registerForm.get( 'firstName' ).value;      
-        registerUser.lastName = this.registerForm.get( 'lastName' ).value;
-        registerUser.organization = this.registerForm.get( 'organization' ).value;      
-        registerUser.title = this.registerForm.get( 'title' ).value;
-        registerUser.department = this.registerForm.get( 'department' ).value;      
-        registerUser.email = this.registerForm.get( 'email' ).value;      
-        registerUser.verifyEmail = this.registerForm.get( 'verifyEmail' ).value;
-        registerUser.password = this.registerForm.get( 'password' ).value;      
-        registerUser.verifyPassword = this.registerForm.get( 'verifyPassword' ).value;  
-                          
+        let keys: string[] = [
+                    'firstName',
+                    'lastName',
+                    'email',
+                    'verifyEmail',
+                    'organization',
+                    'title',
+                    'department',
+                    'password',
+                    'verifyPassword'
+                    ];
+        
+        for (let k of keys)
+        {
+            registerUser[k] = this.registerForm.get(k).value;
+        }
+        registerUser['username'] = registerUser['firstName'] + registerUser['lastName'];
+                   
         return registerUser;
 
     }       
