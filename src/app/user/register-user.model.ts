@@ -1,5 +1,8 @@
 export class RegisterUser {
-
+    private _id:number;
+    
+    private _userName:string;
+    
     private _firstName:string;
     
     private _lastName:string;  
@@ -16,9 +19,31 @@ export class RegisterUser {
 
     private _password:string;   
     
-    private _verifyPassword:string;      
+    private _verifyPassword:string;  
+    
+    private _authenticationMethod:string;    
             
-    constructor() {}
+    constructor() {
+        this._authenticationMethod = 'LOCAL';
+        this._id = -1;
+        this._userName = "";
+    }
+    
+    get id():number {
+        return this._id;
+    }
+    
+    set id(value:number) {
+        this._id = value;
+    }
+    
+    get username():string {
+        return this._userName;
+    }
+    
+    set username(value:string) {
+        this._userName = value;
+    }
 
     get firstName():string {
         return this._firstName;
@@ -90,14 +115,36 @@ export class RegisterUser {
     
     set verifyPassword( value:string ) {
         this._verifyPassword = value;
+    }
+    
+    get authenticationMethod():string {
+        return this._authenticationMethod;
     } 
               
     toJSON() {
         
+        let keys: string[] = [
+                    'id',
+                    'username',
+                    'firstName',
+                    'lastName',
+                    'email',
+                    'verifyEmail',
+                    'organization',
+                    'title',
+                    'department',
+                    'password',
+                    'verifyPassword'
+                    
+                    ];
+
         let json = {};
+        for (let k of keys)
+        {
+            json[k] = this[k];
+        }
         
-        json["email"] = this._email;
-        
+        json['type'] = 'LOCAL';
         return json;
         
     }
