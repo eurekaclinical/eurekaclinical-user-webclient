@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { UserService } from '../user/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService: UserService,private router: Router) { }
 
-  ngOnInit() {
-  }
-
+    ngOnInit(): void {
+        if ( this.router.url.endsWith( 'logout' ) ) {
+            this.doLogout();
+        }
+    }
+    
+    doLogout() {
+        this.userService.doLogout();
+        this.router.navigate( ['/welcome', 'loggedOut'] );
+    }  
 }

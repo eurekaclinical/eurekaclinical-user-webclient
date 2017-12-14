@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { RegisterModule } from './register/register.module';
+import { HomeModule } from './home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfigurationService } from './config.service';
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { FooterComponent } from './footer/footer.component';
         BrowserModule,
         ReactiveFormsModule,
         HttpModule,
+        HomeModule,
         UserProfileModule,
         RegisterModule,
         AppRoutingModule,
