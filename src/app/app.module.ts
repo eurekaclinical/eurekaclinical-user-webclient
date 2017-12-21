@@ -11,6 +11,7 @@ import { ConfigurationService } from './config.service';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
+import {ChooseAccountModule} from './choose-account/choose-account.module';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import { FooterComponent } from './footer/footer.component';
         HomeModule,
         UserProfileModule,
         RegisterModule,
+        ChooseAccountModule,
         AppRoutingModule,
+        
     ],
     declarations: [
         AppComponent,

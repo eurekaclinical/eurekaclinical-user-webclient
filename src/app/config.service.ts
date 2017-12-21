@@ -7,6 +7,7 @@ export class ConfigurationService {
     readonly UPDATE_USER_ENDPOINT = 'users/{id}';
     readonly GET_CURRENT_USER_ENDPOINT = 'users/me';
     readonly CHANGE_PASSWORD_ENDPOINT = 'users/passwordchange';
+
     readonly CAS_LOGOUT_ENDPOINT = 'https://localhost:8443/cas-mock/logout';
     readonly REGISTRATION_ENDPOINT = 'userrequests';
     
@@ -48,8 +49,8 @@ export class ConfigurationService {
     }
 
     get saveUserAPI(): string {
-        return "https://localhost:4200/eurekaclinical-user-service/api/userrequests"
-        //return this.serviceUrl + this.REGISTRATION_ENDPOINT;
+        //return "https://localhost:4200/eurekaclinical-user-service/api/userrequests"
+        return this.serviceUrl + this.REGISTRATION_ENDPOINT;
     }
     
     get changePasswordAPITemplate(): string {

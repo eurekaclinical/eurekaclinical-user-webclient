@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
     errors: string[] = [];
     showPasswordDialog: boolean;
     submitted: boolean;
+    submittedPassword: boolean;
     
     
     messageBoard = {
@@ -35,8 +36,8 @@ export class UserProfileComponent implements OnInit {
                     showMessage: false,
                     'message': '',
                     styleClass:{'alert':true,
-                                 'alert-success':true,
-                                 'alert-danger':false
+                                 'alert-success':false,
+                                 'alert-danger':true
                                 }
     };
     
@@ -65,20 +66,30 @@ export class UserProfileComponent implements OnInit {
         
         this.userCredentialForm = fb.group({
             oldPassword: [null, Validators.required],
-            newPassword: [null, Validators.compose([Validators.required, Validators.minLength(8)])],
+            newPassword: [null, this.passwordValidator],
             verifyPassword: [null, Validators.required]
         }, {validator: this.passwordMatchValidator});
+        
+        this.userprofileForm.valueChanges.subscribe((data) => {this.showMessage("","")});
+        this.submitted = false;
+        this.submittedPassword = false;
     }
     
    
     
     ngOnInit() {
         this.getCurrentUser();
-        console.log(this.userCredentialForm);
+    
     }
 
     ngAfterViewInit() {
 
+    }
+    
+    passwordValidator(g: FormControl){
+        let value:string = g.value;
+        
+        return value && value.length >= 8 && /[0-9]+/.test(value) && /[a-zA-Z]+/.test(value) ? null : {'passwordPattern': true};
     }
     
     passwordMatchValidator(g: FormGroup){
@@ -94,27 +105,32 @@ export class UserProfileComponent implements OnInit {
             });
     }
     
-    updateUser() {
-        console.log("Update user being run");        
+    updateUser() {    
         this.submitted = true;
         this.showMessage("","")
         this.errors = [];
+        if (!this.userprofileForm.valid)
+            return;
+            
         this.userService.updateUser( this.populateUser() ).then(
             ( response: ServiceResponse ) => {
-                this.submitted = false;
                 this.showMessage("Your changes has been saved successfully.", "success");
             },
             ( error ) => {
-                this.submitted = false;
+                this.showMessage(error._body,"fail");
             }
         );
     }
     
-    updatePassword(): void{
-        console.log("changing password");        
+    updatePassword(): void{      
         this.showMessage("","");
         this.showPasswordMessage("","");
         this.errors = [];
+        this.submittedPassword = true;
+        
+        if (this.userCredentialForm.invalid)
+            return;
+        
         let req = new PasswordChange();
         req.oldPassword = this.userCredentialForm.get('oldPassword').value;
         req.newPassword = this.userCredentialForm.get('newPassword').value;
@@ -124,7 +140,6 @@ export class UserProfileComponent implements OnInit {
                 this.closePasswordDialog();
             },
             ( error ) => {
-                console.log(error._body);
                 this.showPasswordMessage(error._body,"fail");
            
             }
@@ -144,6 +159,8 @@ export class UserProfileComponent implements OnInit {
                 }
             }
         }
+        
+       
 
     }
     
@@ -170,18 +187,17 @@ export class UserProfileComponent implements OnInit {
         return updatedUser;
 
     }  
-    
-    openPasswordDialog() : void{
-        console.log("I am called too!");
+     
+    openPasswordDialog() : void{      
         this.showPasswordDialog = true;
-    //    (<JQuery>(<any>$('#newPasswordModal'))).modal('show');
-      //  console.log($('#newPasswordModal'));
     }
     
     closePasswordDialog():void{
         this.userCredentialForm.setValue({'oldPassword':'', 'newPassword':'','verifyPassword':''});
         this.showPasswordDialog = false;
         this.showPasswordMessage("","");
+        this.userCredentialForm.reset();
+        this.submittedPassword = false;
     }
     
     showMessage(msg:string, status: string): void{
@@ -222,7 +238,23 @@ export class UserProfileComponent implements OnInit {
                 this.passwordMessageBoard.showMessage = true;
                 this.passwordMessageBoard.styleClass['alert-success'] = false;
                 this.passwordMessageBoard.styleClass['alert-danger'] = true;
+                this.passwordMessageBoard.styleClass['errors'] = true;
+                
             }
         }
+    }
+    
+    formgroupClass(formName:string, controlName: string)
+    {
+        return {"form-group":true,
+                "has-error": this[formName].controls[controlName].errors&&this.submitted?true:false
+               };
+    }
+    
+    formgroupPasswordClass(formName:string, controlName: string)
+    {
+        return {"form-group":true,
+            "has-error": this[formName].controls[controlName].errors && this.submittedPassword?true:false
+               };
     }
 }
