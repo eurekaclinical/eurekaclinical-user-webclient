@@ -6,6 +6,7 @@ import { UserService } from '../user/user.service';
 import { AppProperties } from '../user/app-properties.model';
 
 import { RegisterUser } from '../user/register-user.model';
+import { RegisterUserService } from "../user/register-user.service"
 import { ServiceResponse } from '../user/service-response.model';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -26,7 +27,18 @@ export class RegisterComponent implements OnInit {
 
     submitted: boolean;
     
-    constructor(private userService: UserService, private fb: FormBuilder) {
+    hideForm: boolean;
+    
+    messageBoard = {
+                    showMessage: false,
+                    'message': '',
+                    styleClass:{'alert':true,
+                                 'alert-success':true,
+                                 'alert-danger':false
+                                }
+                    };
+    
+    constructor(private userService: UserService, private fb: FormBuilder, private registerUserService: RegisterUserService ) {
     }
 
     ngOnInit() {
@@ -39,9 +51,18 @@ export class RegisterComponent implements OnInit {
             department: [null, Validators.required],
             email: [null, Validators.compose([Validators.required, Validators.email])],
             verifyEmail: [null, Validators.compose([Validators.required, Validators.email])],
-            password: [null, Validators.required],
+            password: [null, this.passwordValidator],
             verifyPassword: [null, Validators.required]                                    
-        });
+        }, {validator: this.passwordMatchValidator});
+        
+        this.registerForm.valueChanges.subscribe((data) => {this.showMessage("","")});
+        this.hideForm = false;
+    }
+    
+    passwordValidator(g: FormControl){
+        let value:string = g.value;
+        
+        return value && value.length >= 8 && /[0-9]+/.test(value) && /[a-zA-Z]+/.test(value) ? null : {'passwordPattern': true};
     }
             
     getUserWebappProperties() {   
@@ -53,15 +74,22 @@ export class RegisterComponent implements OnInit {
      }  
     
     saveUser() {        
-        this.submitted = true;
-        
+        this.submitted = true;     
         this.errors = [];
+        this.showMessage("","");
+        
+        if (this.registerForm.invalid)
+            return;
+            
         this.userService.saveUser( this.populateRegisterUser() ).then(
-            ( response: ServiceResponse ) => {
-                this.submitted = false;
+            ( response ) => {
+
+                this.showMessage("User registration request submitted successfully, you will receive an email after the request is approved.", "success");
+                this.hideForm = true;
             },
             ( error ) => {
-                this.submitted = false;
+
+                this.showMessage("Registration request failed.\n" +error._body,"fail");
             }
         );
     }   
@@ -69,6 +97,7 @@ export class RegisterComponent implements OnInit {
     private populateRegisterUser(): RegisterUser {
         
         let registerUser = new RegisterUser();
+        registerUser.authenticationMethod = this.registerUserService.registerUser.authenticationMethod;
         
         let keys: string[] = [
                     'firstName',
@@ -86,10 +115,58 @@ export class RegisterComponent implements OnInit {
         {
             registerUser[k] = this.registerForm.get(k).value;
         }
-        registerUser['username'] = registerUser['firstName'] + registerUser['lastName'];
+        registerUser['username'] = registerUser['email'];
+        
                    
         return registerUser;
 
-    }       
+    } 
+    
+     passwordMatchValidator(g: FormGroup){
+        let result = {};
+        if(g.get('password').value != g.get('verifyPassword').value)
+        {
+            result = {'passwordMismatch': true};
+        }
+        
+        if(g.get('email').value != g.get('verifyEmail').value)
+        {
+            result['emailMismatch'] = true;
+        }
+        
+        return result; 
+    }
+    
+    showMessage(msg:string, status: string): void{
+        this.messageBoard.message = msg;
+        
+        if(msg ===""){
+            this.messageBoard.showMessage = false;
+        }
+        else{
+            if(status=="success"){
+                this.messageBoard.showMessage = true;
+                this.messageBoard.styleClass['alert-success'] = true;
+                this.messageBoard.styleClass['alert-danger'] = false;
+            }
+            else if(status=="fail")
+            {
+                this.messageBoard.showMessage = true;
+                this.messageBoard.styleClass['alert-success'] = false;
+                this.messageBoard.styleClass['alert-danger'] = true;
+            }
+            else
+            {
+                console.log("Unknow message type, please report this to website admin");
+            }
+        }
+    }
+    
+    formgroupClass(formName:string, controlName: string)
+    {
+        return {"form-group":true,
+                "has-error": this[formName].controls[controlName].errors&&this.submitted?true:false
+               };
+    }     
 
 }

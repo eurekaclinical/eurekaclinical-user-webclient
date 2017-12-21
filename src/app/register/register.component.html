@@ -14,88 +14,110 @@
             </div>    
         </div>    
     </div>
-    <form [formGroup]="registerForm" (ngSubmit)="saveUser()">
+    <div *ngIf="messageBoard.showMessage==true" [ngClass] = "messageBoard.styleClass">
+            <p><strong>{{messageBoard.message}}</strong></p>
+    </div>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="saveUser()" [hidden] = "hideForm" >
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "formgroupClass('registerForm','firstName')">
                     <label for="firstName" class="control-label">First Name: </label>
                     <input type="text" formControlName="firstName" class="form-control" />
-                    <div *ngIf="registerForm.controls['firstName'].hasError('required') && (registerForm.controls['firstName'].touched || registerForm.controls['firstName'].dirty)" class="alert alert-danger">
+                    <div *ngIf="registerForm.controls['firstName'].hasError('required') && submitted" class="help-block">
                         You must include a first name.
                     </div>
-                    <span class="help-block default-hidden"></span>
+                    
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "formgroupClass('registerForm','lastName')">
                     <label for="lastName" class="control-label">Last Name: </label>
                     <input type="text" formControlName="lastName" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                    <div *ngIf="registerForm.controls['lastName'].hasError('required') && submitted" class="help-block">
+                        You must include a last name.
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "formgroupClass('registerForm','organization')">
                     <label class="control-label">Organization: </label>
                     <input type="text" formControlName="organization" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                    <div *ngIf="registerForm.controls['organization'].hasError('required') && submitted" class="help-block">
+                        You must include a organization.
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "formgroupClass('registerForm','title')">
                     <label class="control-label">Title: </label>
                     <input type="text" formControlName="title" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                    <div *ngIf="registerForm.controls['title'].hasError('required') && submitted" class="help-block">
+                        You must include a title.
+                </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "formgroupClass('registerForm','department')">
                 <label class="control-label">Department: </label>
                 <input type="text" formControlName="department" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                <div *ngIf="registerForm.controls['department'].hasError('required') && submitted" class="help-block">
+                        You must include a Department.
+                </div>    
                 </div>
             </div>
         </div>    
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "formgroupClass('registerForm','email')">
                 <label class="control-label">Email Address: </label>
                 <input type="text" formControlName="email" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                <div *ngIf="registerForm.controls['email'].errors && submitted" class="help-block">
+                        You must include a valid email.
+                </div>
                 </div>
             </div>
         </div>   
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "{'has-error': registerForm.hasError('emailMismatch') && submitted?true:false, 'form-group':true}">
                 <label class="control-label">Verify Email Address: </label>
                 <input type="text" formControlName="verifyEmail" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                <div *ngIf="registerForm.hasError('emailMismatch') && submitted " class="help-block">
+                        Emails do not match.
+                </div>    
                 </div>
+                
             </div>
         </div> 
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "formgroupClass('registerForm','password')">
                 <label class="control-label">Password: </label>
                 <input type="password" formControlName="password" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                <div *ngIf="registerForm.controls['password'].errors && submitted" class="help-block">
+                        Passwords must be at least 8 characters and contain at least
+                    one letter & digit
+                </div>    
                 </div>
             </div>
         </div>  
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
+                <div [ngClass] = "{'has-error': registerForm.hasError('passwordMismatch')&&submitted?true:false, 'form-group':true}">
                 <label class="control-label">Confirm Password: </label>
                 <input type="password" formControlName="verifyPassword" class="form-control"/>
-                    <span class="help-block default-hidden"></span>
+                <div *ngIf="registerForm.hasError('passwordMismatch') &&submitted " class="help-block">
+                        Passwords do not match.
+                </div>    
                 </div>
             </div>
         </div>       
@@ -110,7 +132,7 @@
         <div class="row">
             <div class="col-sm-10">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary text-center" [disabled]="!registerForm.valid || submitted" >Submit</button>
+                    <button type="submit" class="btn btn-primary text-center" >Submit</button>
                 </div>
             </div>
         </div> 

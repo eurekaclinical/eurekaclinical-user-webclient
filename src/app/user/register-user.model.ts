@@ -119,6 +119,10 @@ export class RegisterUser {
     
     get authenticationMethod():string {
         return this._authenticationMethod;
+    }
+    
+    set authenticationMethod(value: string) {
+        this._authenticationMethod = value;
     } 
               
     toJSON() {
@@ -144,7 +148,10 @@ export class RegisterUser {
             json[k] = this[k];
         }
         
-        json['type'] = 'LOCAL';
+        if (this.authenticationMethod === 'LOCAL')
+        {
+            json['type'] = 'LOCAL';
+        }
         return json;
         
     }
