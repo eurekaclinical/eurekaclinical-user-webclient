@@ -7,7 +7,7 @@ export class ConfigurationService {
     readonly UPDATE_USER_ENDPOINT = 'users/{id}';
     readonly GET_CURRENT_USER_ENDPOINT = 'users/me';
     readonly CHANGE_PASSWORD_ENDPOINT = 'users/passwordchange';
-    readonly REGISTRATION_ENDPOINT = 'unprotected/userrequests';
+    readonly REGISTRATION_ENDPOINT = 'userrequests';
     
     private _serviceScheme: string = 'https';
     private _serviceHost: string = 'localhost';

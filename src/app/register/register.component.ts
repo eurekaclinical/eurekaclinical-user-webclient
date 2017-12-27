@@ -57,6 +57,7 @@ export class RegisterComponent implements OnInit {
         
         this.registerForm.valueChanges.subscribe((data) => {this.showMessage("","")});
         this.hideForm = false;
+        this.registerForm.get('password').disable();
     }
     
     passwordValidator(g: FormControl){
@@ -73,7 +74,7 @@ export class RegisterComponent implements OnInit {
 
      }  
     
-    saveUser() {        
+    registerUser() {        
         this.submitted = true;     
         this.errors = [];
         this.showMessage("","");

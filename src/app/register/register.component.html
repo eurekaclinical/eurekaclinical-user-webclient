@@ -1,6 +1,6 @@
 <div class="container container-big">
     <div id="registerHeading">
-        <div *ngIf="appProperties?.authenticationMethod == 'LOCAL'; else elseBlock ">
+        <div *ngIf="authenticationMethod == 'LOCAL'; else elseBlock ">
             <h1>Register</h1> 
         </div>
         <ng-template #elseBlock>
@@ -18,7 +18,7 @@
             <p><strong>{{messageBoard.message}}</strong></p>
     </div>
     
-    <form [formGroup]="registerForm" (ngSubmit)="saveUser()" [hidden] = "hideForm" >
+    <form [formGroup]="registerForm" (ngSubmit)="registerUser()" [hidden] = "hideForm" >
         <div class="row">
             <div class="col-sm-6">
                 <div [ngClass] = "formgroupClass('registerForm','firstName')">
