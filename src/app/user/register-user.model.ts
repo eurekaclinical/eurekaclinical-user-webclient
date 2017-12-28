@@ -1,3 +1,5 @@
+import {OAuthUser} from '../oauth-service/oauth-user';
+
 export class RegisterUser {
     private _id:number;
     
@@ -22,11 +24,14 @@ export class RegisterUser {
     private _verifyPassword:string;  
     
     private _authenticationMethod:string;    
-            
+    
+    private _oauthUser:OAuthUser;
+       
     constructor() {
         this._authenticationMethod = 'LOCAL';
         this._id = -1;
         this._userName = "";
+        this._oauthUser = null;
     }
     
     get id():number {
@@ -123,7 +128,21 @@ export class RegisterUser {
     
     set authenticationMethod(value: string) {
         this._authenticationMethod = value;
-    } 
+    }
+    
+    
+    get oauthUser():OAuthUser {
+        return this._oauthUser;
+    }
+    
+    set oauthUser(value: OAuthUser) {
+        this._oauthUser = value;
+        this.firstName = this._oauthUser.firstName;
+        this.lastName = this._oauthUser.lastName;
+        this.email = this._oauthUser.email;
+        this.username = this._oauthUser.providerUserName;
+    }
+     
               
     toJSON() {
         
@@ -152,6 +171,7 @@ export class RegisterUser {
         {
             json['type'] = 'LOCAL';
         }
+        console.log(json);
         return json;
         
     }

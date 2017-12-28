@@ -12,6 +12,43 @@ export class RegisterUserService {
     set registerUser(value:RegisterUser){
         this._registerUser = value;
     }
+    
+    convertToJsonRequest(user:RegisterUser):any {
+        let keys: string[] = [
+                    'username',
+                    'firstName',
+                    'lastName',
+                    'email',
+                    'verifyEmail',
+                    'organization',
+                    'title',
+                    'department',
+                    ];
+        if (user.authenticationMethod == 'LOCAL'){
+            keys.concat(['password',
+                    'verifyPassword']);
+        }
+       
+        let json = {};
+        for (let k of keys){
+            json[k] = user[k];
+        }
+        
+        if (user.authenticationMethod === 'LOCAL'){
+            json['type'] = 'LOCAL';
+            json['username']
+        }else 
+            if (user.authenticationMethod=='OAUTH'){
+                json['type'] = 'OAUTH';
+                json['oauthProvider'] = user.oauthUser.provider;
+                json['providerUsername'] = user.oauthUser.providerUserName;
+                json['username'] = user.oauthUser.userName;
+            }
+        
+        console.log(json);
+        return json;
+        
+    }
 }
 
 

@@ -14,6 +14,7 @@ export class ConfigurationService {
     private _servicePort: number = 4200;
     private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';
 
+    
     get serviceUrl(): string {
 
         let serviceUrl: string = '';

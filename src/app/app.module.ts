@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import {ChooseAccountModule} from './choose-account/choose-account.module';
-
+import {OAuthCallbackModule} from './oauthcallback/oauthcallback.module';
 
 @NgModule({
     imports: [
@@ -21,6 +21,7 @@ import {ChooseAccountModule} from './choose-account/choose-account.module';
         UserProfileModule,
         RegisterModule,
         ChooseAccountModule,
+        OAuthCallbackModule,
         AppRoutingModule,
         
     ],

@@ -50,14 +50,22 @@ export class RegisterComponent implements OnInit {
             title: [null, Validators.required],
             department: [null, Validators.required],
             email: [null, Validators.compose([Validators.required, Validators.email])],
-            verifyEmail: [null, Validators.compose([Validators.required, Validators.email])],
-            password: [null, this.passwordValidator],
-            verifyPassword: [null, Validators.required]                                    
-        }, {validator: this.passwordMatchValidator});
+            verifyEmail: [null, Validators.compose([Validators.required, Validators.email])],                                   
+        });
+        
+        if (this.authenticationMethod=='LOCAL')
+        {
+            this.registerForm.addControl('password', new FormControl(null, this.passwordValidator));
+            this.registerForm.addControl('verifyPassword', new FormControl(null, Validators.required));
+            this.registerForm.validator = this.passwordMatchValidator;
+        }
+        
+        
+        this.initializeFormValues();
         
         this.registerForm.valueChanges.subscribe((data) => {this.showMessage("","")});
         this.hideForm = false;
-        this.registerForm.get('password').disable();
+        
     }
     
     passwordValidator(g: FormControl){
@@ -80,9 +88,11 @@ export class RegisterComponent implements OnInit {
         this.showMessage("","");
         
         if (this.registerForm.invalid)
+        {
+            //this.showMessage("Please correct erros below","fail");
             return;
-            
-        this.userService.saveUser( this.populateRegisterUser() ).then(
+        }   
+        this.userService.registerUser(this.registerUserService.convertToJsonRequest(this.populateRegisterUser()) ).then(
             ( response ) => {
 
                 this.showMessage("User registration request submitted successfully, you will receive an email after the request is approved.", "success");
@@ -93,6 +103,28 @@ export class RegisterComponent implements OnInit {
                 this.showMessage("Registration request failed.\n" +error._body,"fail");
             }
         );
+    }
+    
+    private initializeFormValues(){
+        
+        let keys: string[] = [
+                    'firstName',
+                    'lastName',
+                    'email',
+                    'verifyEmail',
+                    'organization',
+                    'title',
+                    'department'
+                    ];
+        
+        for (let k of keys){
+            this.registerForm.get(k).setValue(this.registerUserService.registerUser[k]);  
+        }
+        
+        this.registerForm.get('verifyEmail').setValue(this.registerUserService.registerUser['email']);
+            
+        
+        
     }   
     
     private populateRegisterUser(): RegisterUser {
@@ -108,17 +140,21 @@ export class RegisterComponent implements OnInit {
                     'organization',
                     'title',
                     'department',
-                    'password',
-                    'verifyPassword'
                     ];
+        if (this.authenticationMethod=='LOCAL'){
+            keys.concat(['password','verifyPassword']);
+        }
         
-        for (let k of keys)
-        {
+        for (let k of keys){
             registerUser[k] = this.registerForm.get(k).value;
         }
-        registerUser['username'] = registerUser['email'];
         
-                   
+        
+                
+       if(this.authenticationMethod=='OAUTH'){
+            registerUser['oauthUser'] = this.registerUserService.registerUser.oauthUser;
+        }
+                     
         return registerUser;
 
     } 
@@ -168,6 +204,10 @@ export class RegisterComponent implements OnInit {
         return {"form-group":true,
                 "has-error": this[formName].controls[controlName].errors&&this.submitted?true:false
                };
-    }     
+    }    
+    
+    get authenticationMethod():string{
+        return this.registerUserService.registerUser.authenticationMethod;
+    } 
 
 }

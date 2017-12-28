@@ -5,48 +5,27 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { ServiceResponse } from '../user/service-response.model';
-import {Router, RouterModule  } from "@angular/router" 
+import {Router, RouterModule, ParamMap  } from "@angular/router" 
 import {RegisterUserService} from '../user/register-user.service'
 import {RegisterUser} from "../user/register-user.model"
 import {Location} from '@angular/common'
-
-import { OAuthServiceModule} from '../oauth-service/oauth-service.module';
-import {OAuthManagerService} from '../oauth-service/oauth-manager.service';
-
+import {OAuthManagerService} from '../oauth-service/oauth-manager.service'
+import {OAuthUser} from '../oauth-service/oauth-user'
 @Component( {
-    selector: 'choose-account',
-    templateUrl: './choose-account.component.html',
+    selector: 'oauthcallback',
+    templateUrl: './oauth-callback.component.html',
 })
-export class ChooseAccountComponent implements OnInit {
+export class OAuthCallbackComponent implements OnInit {
 
+    queryParameters:any = {};
+    
     userprofileForm: FormGroup;
     userCredentialForm: FormGroup;
-    currentUser: User
+    currentUser: User;
     errors: string[] = [];
     showPasswordDialog: boolean;
     submitted: boolean;
     submittedPassword: boolean;
-    
-    googleAuth = {
-                  enabled:true,
-                  url:"https://test"
-    };
-    
-    gitHubAuth = {
-                  enabled:true,
-                  url:"https://test"
-    };
-    
-    globusAuth = {
-                  enabled:true,
-                  url:"https://test"
-    };
-    
-    localAccount = {
-                    enabled:true,
-    };
-    
-    
     
     messageBoard = {
                     showMessage: false,
@@ -75,7 +54,7 @@ export class ChooseAccountComponent implements OnInit {
         }
     };
 
-    constructor(private registerUserService: RegisterUserService, private router: Router, private oauthService:OAuthManagerService, private location: Location){
+    constructor(private registerUserService: RegisterUserService, private router: Router, private route: ActivatedRoute, private location: Location, private oauthService: OAuthManagerService){
 
         
     }
@@ -83,24 +62,34 @@ export class ChooseAccountComponent implements OnInit {
    
     
     ngOnInit() {
-        console.log(this.location.prepareExternalUrl("https://localhost:4200/googlecallback"));
+        
+        let provider = this.route.snapshot.paramMap.get('provider');
+        let queryString:string = this.location.path(true).substring(this.location.path(false).length+1);
+        this.oauthService.getOAuthUser(provider, queryString)
+        .subscribe(
+            (user:OAuthUser)=>{
+                console.log('get user successfully');
+                console.log(user);
+                this.registerUserService.registerUser.oauthUser = user;
+                this.registerUserService.registerUser.authenticationMethod = "OAUTH";
+                this.router.navigate(['register']);
+            },
+            error=>{
+                console.log('error occured');
+                console.log(error);
+            }
+        );
     
+        
+        
+        
+        
     }
+    
+    
 
     ngAfterViewInit() {
 
     }
     
-    chooseOAuthAccount(provider:string)
-    {
-       window.location.href = 
-           this.oauthService.authenticationServerUrl(provider);
-    }
-    
-    registerLocal()
-    {
-        this.registerUserService.registerUser.authenticationMethod = "LOCAL";
-        this.router.navigate(['register']);
-        
-    }
 }
