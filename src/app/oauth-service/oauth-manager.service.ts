@@ -6,14 +6,18 @@ import {OAuthUser} from './oauth-user'
 import {OAuthInterface} from './oauth.interface'
 import {ConfigurationService} from '../config.service'
 import {GoogleOAuthService} from './google-oauth.service'
+import {GithubOAuthService} from './github-oauth.service'
+import {GlobusOAuthService} from './globus-oauth.service'
 
 @Injectable()
 export class OAuthManagerService{
     private _providers: Map<string, OAuthInterface> = new Map<string,OAuthInterface>();
     
     
-    constructor(private httpClient: Http, private oauthProvider: OAuthProvider, private configService:ConfigurationService, private google2Provider: GoogleOAuthService){
+    constructor(private httpClient: Http, private oauthProvider: OAuthProvider, private configService: ConfigurationService, private google2Provider: GoogleOAuthService, private github2Provider: GithubOAuthService, private globusProvider: GlobusOAuthService){
         this.registerOAuthService('google',google2Provider);
+        this.registerOAuthService('github',github2Provider);
+        this.registerOAuthService('globus',globusProvider);
     }
     
     registerOAuthService(provider:string, oauth: OAuthInterface){
@@ -49,11 +53,14 @@ export class OAuthManagerService{
         return supportedProviders;
     }
     
-    getOAuthUser(providerName:string,callbackHash:string ):Observable<OAuthUser> {
+    getOAuthUser(providerName:string,params:any ):Observable<OAuthUser> {
         console.log('OAuthProvider: ' + providerName );
-        let params = this.parseQueryString(callbackHash);
+        //let params = this.parseQueryString(callbackHash);
         console.log(params);
         
+        return this.httpClient.get(this.configService.getOAuthUserAPI(providerName), {params: params})
+            .map(response => response.json() as OAuthUser);
+        /*
         let provider  = this._providers.get(providerName);
         
         if (provider && provider.enabled()){
@@ -63,6 +70,7 @@ export class OAuthManagerService{
             return new Observable<OAuthUser>((observer)=> {
                                         observer.error("Provider not available")});
         }
+        */
     }
         
    

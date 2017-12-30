@@ -38,11 +38,11 @@ export class OAuthUser{
         this._provider = value;
     }
     
-   get providerUserName():string{
+   get providerUsername():string{
         return this._providerUserName;
     }
   
-    set providerUserName(value:string){
+    set providerUsername(value:string){
         this._providerUserName = value;
     }
     

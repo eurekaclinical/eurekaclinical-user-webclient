@@ -140,7 +140,7 @@ export class RegisterUser {
         this.firstName = this._oauthUser.firstName;
         this.lastName = this._oauthUser.lastName;
         this.email = this._oauthUser.email;
-        this.username = this._oauthUser.providerUserName;
+        this.username = this._oauthUser.providerUsername;
     }
      
               

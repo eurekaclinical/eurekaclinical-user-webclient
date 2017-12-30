@@ -65,21 +65,25 @@ export class OAuthCallbackComponent implements OnInit {
         
         let provider = this.route.snapshot.paramMap.get('provider');
         let queryString:string = this.location.path(true).substring(this.location.path(false).length+1);
-        this.oauthService.getOAuthUser(provider, queryString)
+              
+
+        this.oauthService.getOAuthUser(provider, this.route.snapshot.queryParams)
         .subscribe(
             (user:OAuthUser)=>{
                 console.log('get user successfully');
                 console.log(user);
                 this.registerUserService.registerUser.oauthUser = user;
                 this.registerUserService.registerUser.authenticationMethod = "OAUTH";
-                this.router.navigate(['register']);
+         //       this.router.navigate(['register']);
+                
+                
             },
             error=>{
                 console.log('error occured');
                 console.log(error);
             }
         );
-    
+        
         
         
         

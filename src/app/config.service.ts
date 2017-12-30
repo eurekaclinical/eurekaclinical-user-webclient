@@ -8,6 +8,8 @@ export class ConfigurationService {
     readonly GET_CURRENT_USER_ENDPOINT = 'users/me';
     readonly CHANGE_PASSWORD_ENDPOINT = 'users/passwordchange';
     readonly REGISTRATION_ENDPOINT = 'userrequests';
+    readonly OAUTH_ENDPOINT = 'oauthuser/';
+    
     
     private _serviceScheme: string = 'https';
     private _serviceHost: string = 'localhost';
@@ -62,6 +64,11 @@ export class ConfigurationService {
     
     get getCurrentUserAPI(): string {
         return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;
+        
+    }
+    
+    getOAuthUserAPI(provider:string): string{
+            return this.serviceUrl + this.OAUTH_ENDPOINT + provider;
         
     }
     

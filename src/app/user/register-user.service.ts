@@ -41,7 +41,7 @@ export class RegisterUserService {
             if (user.authenticationMethod=='OAUTH'){
                 json['type'] = 'OAUTH';
                 json['oauthProvider'] = user.oauthUser.provider;
-                json['providerUsername'] = user.oauthUser.providerUserName;
+                json['providerUsername'] = user.oauthUser.providerUsername;
                 json['username'] = user.oauthUser.userName;
             }
         

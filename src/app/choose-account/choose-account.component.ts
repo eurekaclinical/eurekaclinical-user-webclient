@@ -75,7 +75,7 @@ export class ChooseAccountComponent implements OnInit {
         }
     };
 
-    constructor(private registerUserService: RegisterUserService, private router: Router, private oauthService:OAuthManagerService, private location: Location){
+    constructor(private registerUserService: RegisterUserService, private router: Router, private oauthManagerService:OAuthManagerService, private location: Location){
 
         
     }
@@ -94,7 +94,7 @@ export class ChooseAccountComponent implements OnInit {
     chooseOAuthAccount(provider:string)
     {
        window.location.href = 
-           this.oauthService.authenticationServerUrl(provider);
+           this.oauthManagerService.authenticationServerUrl(provider);
     }
     
     registerLocal()

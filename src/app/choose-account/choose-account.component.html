@@ -10,11 +10,11 @@
                     <i class="fa fa-google-plus"></i>
                     Use an existing Google account
                 </a>
-                <a *ngIf = "gitHubAuth.enabled" [attr.href] = "gitHubAuth.url" class="btn btn-block btn-social btn-lg btn-github" title="Register using your existing GitHub account">
+                <a *ngIf = "gitHubAuth.enabled" (click) = "chooseOAuthAccount('github')" class="btn btn-block btn-social btn-lg btn-github" title="Register using your existing GitHub account">
                     <i class="fa fa-github"></i>
                     Use an existing GitHub account
                 </a>
-                <a *ngIf = "globusAuth.enabled" [attr.href]="globusAuth.url" 
+                <a *ngIf = "globusAuth.enabled" (click) = "chooseOAuthAccount('globus')" 
                    class="btn btn-block btn-primary btn-lg"
                    title="Register using your existing Globus account">Use an existing Globus account</a>
                 <a *ngIf = "localAccount.enabled" class="btn btn-block btn-primary btn-lg" (click) ="registerLocal()" >Create a traditional user account</a>

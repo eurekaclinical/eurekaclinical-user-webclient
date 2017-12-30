@@ -6,7 +6,7 @@ import {OAuthUser} from './oauth-user'
 import {OAuthInterface} from './oauth.interface'
 import 'rxjs/add/operator/mergeMap';
 
-class GoogleValidationResponse{
+class GlobusValidationResponse{
     public aud:string;
     public user_id:string;
     public scope: string;
@@ -14,13 +14,13 @@ class GoogleValidationResponse{
     public accessToken;
 }
 
-class GoogleToken{
+class GlobusToken{
     public access_token:string;
     public token_type:string;
     public expires_in:string;
 }
 @Injectable()
-export class GoogleOAuthService implements OAuthInterface{
+export class GlobusOAuthService implements OAuthInterface{
     providerInfo: OAuthProvider = new OAuthProvider();
     
     constructor(private httpClient: Http){
@@ -32,12 +32,12 @@ export class GoogleOAuthService implements OAuthInterface{
     }
     
     initializeProviderInfo(){
-        this.providerInfo.name = "Google2Provider";
-        this.providerInfo.url =  "https://accounts.google.com/o/oauth2/auth";
-        this.providerInfo.clientId = "304932551373-i5p4j7j41vghhi8f9d7o99fnj8lfnn48.apps.googleusercontent.com"
-        this.providerInfo.redirectUri = "https://localhost:4200/oauthcallback/google";
+        this.providerInfo.name = "GlobusProvider";
+        this.providerInfo.url =  "https://auth.globus.org/v2/oauth2/authorize";
+        this.providerInfo.clientId = "776c6076-4099-45e6-b2d8-d596c460878e"
+        this.providerInfo.redirectUri = "https://localhost:4200/oauthcallback/globus";
         this.providerInfo.responseType= "code";
-        this.providerInfo.scope = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me"
+        this.providerInfo.scope = "openid profile email urn:globus:auth:scope:auth.globus.org:view_identities "
         this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
         this.providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me'
     }
@@ -76,7 +76,7 @@ export class GoogleOAuthService implements OAuthInterface{
         return urlString;
     }
     
-    validateToken(params:GoogleToken): Observable<GoogleToken> {
+    validateToken(params:GlobusToken): Observable<GlobusToken> {
         let queryString: string = this.providerInfo.tokenValidationUrl + "?access_token="+params['access_token'];
         console.log(this);
         
@@ -93,7 +93,7 @@ export class GoogleOAuthService implements OAuthInterface{
         
     }
     
-    getUserAfterToken(params:GoogleToken):Observable<OAuthUser>{
+    getUserAfterToken(params:GlobusToken):Observable<OAuthUser>{
         let header = new Headers();
         header.append("Authorization", params.token_type + " " + params.access_token);
         console.log("working on getting user");
@@ -116,7 +116,7 @@ export class GoogleOAuthService implements OAuthInterface{
     }
     
     getOAuthUser(callbackParams:any ):Observable<OAuthUser> {
-        callbackParams = <GoogleToken>callbackParams;
+        callbackParams = <GlobusToken>callbackParams;
         if(!callbackParams['access_token']){
             return new Observable<OAuthUser>((observer)=> {
                                         observer.error("No access token found")});

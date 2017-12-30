@@ -8,6 +8,9 @@ import {OAuthManagerService} from './oauth-manager.service'
 import {OAuthProvider} from './oauth-provider.model'
 import {OAuthUser} from './oauth-user'
 import {GoogleOAuthService} from './google-oauth.service'
+import {GithubOAuthService} from './github-oauth.service'
+import {GlobusOAuthService} from "app/oauth-service/globus-oauth.service";
+
 @NgModule( {
     imports: [
         CommonModule,
@@ -21,7 +24,9 @@ import {GoogleOAuthService} from './google-oauth.service'
         RegisterUserService,
         OAuthManagerService,
         OAuthProvider,
-        GoogleOAuthService
+        GoogleOAuthService,
+        GithubOAuthService,
+        GlobusOAuthService
         
     ],
     exports: [
