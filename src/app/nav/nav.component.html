@@ -1,10 +1,38 @@
-<div class="navbar navbar-inverse navbar-static-top">
+<div class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand">
                 <span class="brand-text">User Portal</span>
             </a>            
         </div>
+        
+        <!--<div class="col text-right">
+                <button *ngIf="isLoggedOut; else elseBlock"
+                        class="btn btn-link btn-md" (click)="doLogin()">
+                        <i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login
+                </button>
+                <ng-template #elseBlock>
+                <div ngbDropdown class="d-inline-block">
+                        <button class="btn navbar-btn" id="userLinks" ngbDropdownToggle>
+                                <i class="fa fa-user"></i>&nbsp;&nbsp; {{ currentUser.username }}&nbsp;&nbsp;
+         
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="userLinks">
+                                <button class="dropdown-item btn-link btn-md">
+                                        <a routerLink="/user-profile"> <i class="fa fa-wrench"></i>
+                                                &nbsp;&nbsp;Edit
+                                        </a>
+                                </button>
+                                <button class="dropdown-item btn-link btn-md">
+                                        <a routerLink="/logout"> <i class="fa fa-sign-out"></i>
+                                                &nbsp;&nbsp;Logout
+                                        </a>
+                                </button>
+                        </div>
+                </div>
+                </ng-template>
+        </div>   -->     
+        
     </div>
 </div>
 

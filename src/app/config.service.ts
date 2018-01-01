@@ -7,6 +7,7 @@ export class ConfigurationService {
     readonly UPDATE_USER_ENDPOINT = 'users/{id}';
     readonly GET_CURRENT_USER_ENDPOINT = 'users/me';
     readonly CHANGE_PASSWORD_ENDPOINT = 'users/passwordchange';
+    readonly CAS_LOGOUT_ENDPOINT = 'https://localhost:8443/cas-mock/logout';
     readonly REGISTRATION_ENDPOINT = 'userrequests';
     readonly OAUTH_ENDPOINT = 'oauthuser/';
     
@@ -40,6 +41,10 @@ export class ConfigurationService {
         return serviceUrl;
 
     }
+    
+    get casLogoutUrl(): string {
+        return this.CAS_LOGOUT_ENDPOINT;
+    }    
 
     get updateUserAPITemplate(): string {
         return this.serviceUrl + this.UPDATE_USER_ENDPOINT;

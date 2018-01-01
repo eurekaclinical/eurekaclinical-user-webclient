@@ -22,6 +22,11 @@ data: any;
     
     constructor( private http: Http, private configService: ConfigurationService ) { }
 
+    public doLogout() {
+        return this.http
+            .get( this.configService.casLogoutUrl );
+    }
+    
     updateUser( user: User ): Promise<ServiceResponse> {
         return this.http
             .put(this.configService.getUpdateUserAPI(String(user.id)), user.toJSON(), { headers: this.headers })
