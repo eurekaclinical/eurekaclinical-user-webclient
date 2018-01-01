@@ -7,7 +7,6 @@ export class ConfigurationService {
     readonly UPDATE_USER_ENDPOINT = 'users/{id}';
     readonly GET_CURRENT_USER_ENDPOINT = 'users/me';
     readonly CHANGE_PASSWORD_ENDPOINT = 'users/passwordchange';
-
     readonly CAS_LOGOUT_ENDPOINT = 'https://localhost:8443/cas-mock/logout';
     readonly REGISTRATION_ENDPOINT = 'userrequests';
     
@@ -16,6 +15,7 @@ export class ConfigurationService {
     private _servicePort: number = 4200;
     private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';
 
+    
     get serviceUrl(): string {
 
         let serviceUrl: string = '';

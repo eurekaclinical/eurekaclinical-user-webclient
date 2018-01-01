@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
-                <a *ngIf = "googleAuth.enabled" [attr.href] = "googleAuth.url" class="btn btn-block btn-social btn-lg btn-google-plus" title="Register using your existing Google account">
+                <a *ngIf = "googleAuth.enabled" (click) = "chooseOAuthAccount('google')" class="btn btn-block btn-social btn-lg btn-google-plus" title="Register using your existing Google account">
                     <i class="fa fa-google-plus"></i>
                     Use an existing Google account
                 </a>

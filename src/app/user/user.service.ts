@@ -44,9 +44,9 @@ data: any;
         
     }
 
-    saveUser( registerUser: RegisterUser ): Promise<any> {
+    registerUser( registerUser: any ): Promise<any> {
         return this.http
-            .post(this.configService.saveUserAPI, registerUser.toJSON(), { headers: this.headers })
+            .post(this.configService.saveUserAPI, registerUser, { headers: this.headers })
             .toPromise()
             .then( response => response )
             .catch( this.handleError );
