@@ -6,32 +6,36 @@
             </a>            
         </div>
         
-        <!--<div class="col text-right">
+ 
+  
+        <div class="col text-right">
                 <button *ngIf="isLoggedOut; else elseBlock"
                         class="btn btn-link btn-md" (click)="doLogin()">
-                        <i class="fa fa-sign-in"></i>&nbsp;&nbsp;Login
+                        <i class="fa fa-sign-in"></i>Login
                 </button>
                 <ng-template #elseBlock>
-                <div ngbDropdown class="d-inline-block">
+                <div ngbDropdown placement="bottom-left" class="d-inline-block">
                         <button class="btn navbar-btn" id="userLinks" ngbDropdownToggle>
-                                <i class="fa fa-user"></i>&nbsp;&nbsp; {{ currentUser.username }}&nbsp;&nbsp;
+                                <i class="fa fa-user"></i> {{ currentUser.username }}
          
                         </button>
-                        <div ngbDropdownMenu aria-labelledby="userLinks">
+                
+                    
+                        <div ngbDropdownMenu  aria-labelledby="userLinks">
                                 <button class="dropdown-item btn-link btn-md">
                                         <a routerLink="/user-profile"> <i class="fa fa-wrench"></i>
-                                                &nbsp;&nbsp;Edit
+                                                Edit
                                         </a>
                                 </button>
                                 <button class="dropdown-item btn-link btn-md">
                                         <a routerLink="/logout"> <i class="fa fa-sign-out"></i>
-                                                &nbsp;&nbsp;Logout
+                                                Logout
                                         </a>
                                 </button>
                         </div>
                 </div>
                 </ng-template>
-        </div>   -->     
+        </div>       
         
     </div>
 </div>

@@ -34,7 +34,7 @@ export class GoogleOAuthService implements OAuthInterface{
     initializeProviderInfo(){
         this.providerInfo.name = "Google2Provider";
         this.providerInfo.url =  "https://accounts.google.com/o/oauth2/auth";
-        this.providerInfo.clientId = "304932551373-i5p4j7j41vghhi8f9d7o99fnj8lfnn48.apps.googleusercontent.com"
+        this.providerInfo.clientId = "32862166882-uo3mehuo8klmd9n16vfujuk1cs7ciagu.apps.googleusercontent.com"
         this.providerInfo.redirectUri = "https://localhost:4200/oauthcallback/google";
         this.providerInfo.responseType= "token";
         this.providerInfo.scope = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me"

@@ -25,7 +25,7 @@ export class RegisterUserService {
                     'department',
                     ];
         if (user.authenticationMethod == 'LOCAL'){
-            keys.concat(['password',
+            keys = keys.concat(['password',
                     'verifyPassword']);
         }
        
@@ -49,6 +49,7 @@ export class RegisterUserService {
         return json;
         
     }
+    
 }
 
 

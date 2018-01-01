@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^4.4.6",
     "@angular/platform-browser-dynamic": "^4.4.6",
     "@angular/router": "^4.4.6",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.8",
     "core-js": "^2.4.1",
     "enhanced-resolve": "^3.3.0",
     "googleapis": "^23.0.0",

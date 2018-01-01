@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../user/user.model';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
-
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
