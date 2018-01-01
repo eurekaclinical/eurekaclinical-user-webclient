@@ -4,7 +4,7 @@
             <h1>Register</h1> 
         </div>
         <ng-template #elseBlock>
-                <h1>Register using your {{registerUserService.registerUser.oauthUser.provider}}:{{registerUserService.registerUser.authenticationMethod}} account</h1>
+                <h1>Register using your {{displayedOAuthProviderName}} account</h1>
                 <p>Please review and complete your profile.</p>            
         </ng-template>
            
@@ -15,7 +15,7 @@
         </div>    
     </div>
     <div *ngIf="messageBoard.showMessage==true" [ngClass] = "messageBoard.styleClass">
-            <p><strong>{{messageBoard.message}}</strong></p>
+        <p><span [innerHTML] = "messageBoard.message"></span></p>
     </div>
     
     <form [formGroup]="registerForm" (ngSubmit)="registerUser()" [hidden] = "hideForm" >
@@ -98,8 +98,8 @@
                 
             </div>
         </div> 
-        <div *ngIf="authenticationMethod == 'LOCAL'" class="row">
-            <div class="row">
+      
+            <div *ngIf="authenticationMethod == 'LOCAL'" class="row">
                 <div class="col-sm-6">
                     <div [ngClass] = "formgroupClass('registerForm','password')">
                     <label class="control-label">Password: </label>
@@ -111,7 +111,7 @@
                     </div>
                 </div>
             </div>  
-            <div class="row">
+            <div *ngIf="authenticationMethod == 'LOCAL'" class="row">
                 <div class="col-sm-6">
                     <div [ngClass] = "{'has-error': registerForm.hasError('passwordMismatch')&&submitted?true:false, 'form-group':true}">
                     <label class="control-label">Confirm Password: </label>
@@ -123,13 +123,13 @@
                 </div>
             </div>       
 
-            <div class="col-sm-12">
+            <div *ngIf="authenticationMethod == 'LOCAL'" class="col-sm-12">
                 <div class="form-group">
                     *Passwords must be at least 8 characters and contain at least
                     one letter & digit
                 </div>
             </div>
-        </div>        
+                
         <div class="row">
             <div class="col-sm-10">
                 <div class="form-group">

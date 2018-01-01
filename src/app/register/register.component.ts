@@ -52,7 +52,9 @@ export class RegisterComponent implements OnInit {
             email: [null, Validators.compose([Validators.required, Validators.email])],
             verifyEmail: [null, Validators.compose([Validators.required, Validators.email])],                                   
         });
-        
+        if(!this.authenticationMethod){
+            this.registerUserService.registerUser.authenticationMethod = 'LOCAL';
+        }
         if (this.authenticationMethod=='LOCAL')
         {
             this.registerForm.addControl('password', new FormControl(null, this.passwordValidator));
@@ -95,12 +97,12 @@ export class RegisterComponent implements OnInit {
         this.userService.registerUser(this.registerUserService.convertToJsonRequest(this.populateRegisterUser()) ).then(
             ( response ) => {
 
-                this.showMessage("User registration request submitted successfully, you will receive an email after the request is approved.", "success");
+                this.showMessage("<b>Your request has been submitted.</b> You will be notified once your account is activated.", "success");
                 this.hideForm = true;
             },
             ( error ) => {
-
-                this.showMessage("Registration request failed.\n" +error._body,"fail");
+                console.log(error);
+                this.showMessage("<b>Registration request failed.\n</b>" +error._body,"fail");
             }
         );
     }
@@ -141,25 +143,23 @@ export class RegisterComponent implements OnInit {
                     'title',
                     'department',
                     ];
+       
         if (this.authenticationMethod=='LOCAL'){
-            keys.concat(['password','verifyPassword']);
+            keys = keys.concat(['password','verifyPassword']);
         }
         
         for (let k of keys){
             registerUser[k] = this.registerForm.get(k).value;
         }
         
-        
-                
        if(this.authenticationMethod=='OAUTH'){
             registerUser['oauthUser'] = this.registerUserService.registerUser.oauthUser;
         }
-                     
+        
         return registerUser;
-
     } 
     
-     passwordMatchValidator(g: FormGroup){
+    passwordMatchValidator(g: FormGroup){
         let result = {};
         if(g.get('password').value != g.get('verifyPassword').value)
         {
@@ -208,6 +208,22 @@ export class RegisterComponent implements OnInit {
     
     get authenticationMethod():string{
         return this.registerUserService.registerUser.authenticationMethod;
-    } 
+    }
+    
+    get displayedOAuthProviderName():string{
+        
+            switch(this.registerUserService.registerUser.oauthUser.provider){
+                case 'Google2Provider':
+                    return 'Google';
+                case 'GitHubProvider':
+                    return "GitHub";
+                case 'GlobusProvider':
+                    return 'Globus';
+                default:
+                    return this.registerUserService.registerUser.oauthUser.provider;
+                
+            } 
+
+    }
 
 }

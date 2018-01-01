@@ -74,7 +74,7 @@ export class OAuthCallbackComponent implements OnInit {
                 console.log(user);
                 this.registerUserService.registerUser.oauthUser = user;
                 this.registerUserService.registerUser.authenticationMethod = "OAUTH";
-         //       this.router.navigate(['register']);
+                this.router.navigate(['register']);
                 
                 
             },
