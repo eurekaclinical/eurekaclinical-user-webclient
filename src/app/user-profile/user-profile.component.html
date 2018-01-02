@@ -4,8 +4,7 @@
         <div *ngFor="let error of errors">{{error}}</div>
     </div>
     <div *ngIf="messageBoard.showMessage==true" [ngClass] = "messageBoard.styleClass">
-        <div><p><strong>{{messageBoard.message}}</strong></p>
-        </div>
+            <p [innerHTML] = "messageBoard.message"></p>
     </div>
     <form [formGroup]="userprofileForm" (ngSubmit)="updateUser()">
         <div class="row">

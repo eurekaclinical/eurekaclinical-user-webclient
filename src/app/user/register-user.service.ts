@@ -36,7 +36,7 @@ export class RegisterUserService {
         
         if (user.authenticationMethod === 'LOCAL'){
             json['type'] = 'LOCAL';
-            json['username']
+            json['username'] = user['email'];
         }else 
             if (user.authenticationMethod=='OAUTH'){
                 json['type'] = 'OAUTH';
