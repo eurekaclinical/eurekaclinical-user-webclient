@@ -14,6 +14,7 @@ export class NavComponent implements OnInit {
     currentUser: User
     isLoggedOut: boolean = false;
     
+    menuOpen:boolean = false;
     constructor(private userService: UserService, private router:Router) { 
         this.currentUser = new User();
     }
@@ -41,4 +42,14 @@ export class NavComponent implements OnInit {
     doLogin(){
         this.router.navigate(['/welcome']);
     }    
+    
+    onEditUser(){
+        this.menuOpen = false;
+        this.router.navigate(["/user-profile"]);
+    }
+    
+    onLogOut(){
+        this.menuOpen = false;
+        this.router.navigate(["/logout"]);
+    }
 }
