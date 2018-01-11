@@ -47,12 +47,6 @@ export class GoogleOAuthService implements OAuthInterface{
         
     }
     
-    /*
-    authenticate:Observable<any> (oauthProvider: OAuthProvider)
-    {
-        
-    }
-    */
     authenticationServerUrl():string{
         return this.composeAuthenticationUrl(this.providerInfo);
     }

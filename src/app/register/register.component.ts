@@ -97,13 +97,13 @@ export class RegisterComponent implements OnInit {
         this.userService.registerUser(this.registerUserService.convertToJsonRequest(this.populateRegisterUser()) ).then(
             ( response ) => {
 
-                this.showMessage("<b>User registration request submitted successfully. </b>You will receive an email after the request is approved.", "success");
+                this.showMessage("<b>User registration request submitted successfully. </b>You will receive an email to verify your request.", "success");
                 this.hideForm = true;
             },
             ( error ) => {
                 console.log(error);
                 if(error.status==409){
-                    this.showMessage("<b>Registration request failed.\n</b>That username is already taken.","fail");
+                    this.showMessage("<b>Registration request failed.\n</b>You already have an account.","fail");
 
                 }else {
                     this.showMessage("<b>Registration request failed.\n</b>" +error._body,"fail");

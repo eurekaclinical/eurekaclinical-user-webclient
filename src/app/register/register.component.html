@@ -25,7 +25,7 @@
                     <label for="firstName" class="control-label">First Name: </label>
                     <input type="text" formControlName="firstName" class="form-control" />
                     <div *ngIf="registerForm.controls['firstName'].hasError('required') && submitted" class="help-block">
-                        You must include a first name.
+                        <b>You must include a first name.</b>
                     </div>
                     
                 </div>
@@ -37,7 +37,7 @@
                     <label for="lastName" class="control-label">Last Name: </label>
                     <input type="text" formControlName="lastName" class="form-control"/>
                     <div *ngIf="registerForm.controls['lastName'].hasError('required') && submitted" class="help-block">
-                        You must include a last name.
+                        <b>You must include a last name.</b>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <label class="control-label">Organization: </label>
                     <input type="text" formControlName="organization" class="form-control"/>
                     <div *ngIf="registerForm.controls['organization'].hasError('required') && submitted" class="help-block">
-                        You must include a organization.
+                        <b>You must include a organization.</b>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                     <label class="control-label">Title: </label>
                     <input type="text" formControlName="title" class="form-control"/>
                     <div *ngIf="registerForm.controls['title'].hasError('required') && submitted" class="help-block">
-                        You must include a title.
+                        <b>You must include a title.</b>
                 </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                 <label class="control-label">Department: </label>
                 <input type="text" formControlName="department" class="form-control"/>
                 <div *ngIf="registerForm.controls['department'].hasError('required') && submitted" class="help-block">
-                        You must include a Department.
+                        <b>You must include a Department.</b>
                 </div>    
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <label class="control-label">Email Address: </label>
                 <input type="text" formControlName="email" class="form-control"/>
                 <div *ngIf="registerForm.controls['email'].errors && submitted" class="help-block">
-                        You must include a valid email.
+                        <b>You must include a valid email.</b>
                 </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 <label class="control-label">Verify Email Address: </label>
                 <input type="text" formControlName="verifyEmail" class="form-control"/>
                 <div *ngIf="registerForm.hasError('emailMismatch') && submitted " class="help-block">
-                        Emails do not match.
+                        <b>Emails do not match.</b>
                 </div>    
                 </div>
                 
@@ -104,8 +104,8 @@
                 <label class="control-label">Password: </label>
                 <input type="password" formControlName="password" class="form-control"/>
                 <div *ngIf="registerForm.controls['password'].errors && submitted" class="help-block">
-                        Passwords must be at least 8 characters and contain at least
-                    one letter & digit
+                        <b>Passwords must be at least 8 characters and contain at least
+                    one letter & digit</b>
                 </div>    
                 </div>
             </div>
@@ -116,7 +116,7 @@
                 <label class="control-label">Confirm Password: </label>
                 <input type="password" formControlName="verifyPassword" class="form-control"/>
                 <div *ngIf="registerForm.hasError('passwordMismatch') &&submitted " class="help-block">
-                        Passwords do not match.
+                        <b>Passwords do not match.</b>
                 </div>    
                 </div>
             </div>
