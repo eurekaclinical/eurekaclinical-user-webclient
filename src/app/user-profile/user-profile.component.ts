@@ -114,7 +114,7 @@ export class UserProfileComponent implements OnInit {
             
         this.userService.updateUser( this.populateUser() ).then(
             ( response: ServiceResponse ) => {
-                this.showMessage("Your changes has been saved successfully.", "success");
+                this.showMessage("<b>Your changes has been saved successfully.</b>", "success");
             },
             ( error ) => {
                 this.showMessage(error._body,"fail");
@@ -136,7 +136,7 @@ export class UserProfileComponent implements OnInit {
         req.newPassword = this.userCredentialForm.get('newPassword').value;
         this.userService.changePassword( req, this.currentUser.id ).then(
             ( response: ServiceResponse ) => {   
-                this.showMessage("Your password has been saved successfully.", "success");
+                this.showMessage("<b>Your password has been saved successfully.</b>", "success");
                 this.closePasswordDialog();
             },
             ( error ) => {

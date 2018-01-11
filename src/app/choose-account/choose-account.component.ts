@@ -28,24 +28,20 @@ export class ChooseAccountComponent implements OnInit {
     submittedPassword: boolean;
     
     googleAuth = {
-                  enabled:true,
-                  url:"https://test"
+                  enabled:true
     };
     
     gitHubAuth = {
-                  enabled:true,
-                  url:"https://test"
+                  enabled:true
     };
     
     globusAuth = {
-                  enabled:true,
-                  url:"https://test"
+                  enabled:true
     };
     
     localAccount = {
-                    enabled:true,
+                    enabled:true
     };
-    
     
     
     messageBoard = {

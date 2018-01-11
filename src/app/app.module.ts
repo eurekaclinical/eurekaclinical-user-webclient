@@ -13,6 +13,7 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import {ChooseAccountModule} from './choose-account/choose-account.module';
 import {OAuthCallbackModule} from './oauthcallback/oauthcallback.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {OAuthCallbackModule} from './oauthcallback/oauthcallback.module';
         ChooseAccountModule,
         OAuthCallbackModule,
         AppRoutingModule,
+        NgbModule.forRoot()
         
     ],
     declarations: [

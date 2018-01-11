@@ -24,7 +24,7 @@ export class RegisterUserService {
                     'title',
                     'department',
                     ];
-        if (user.authenticationMethod === 'LOCAL'){
+        if (user.authenticationMethod == 'LOCAL'){
             keys = keys.concat(['password',
                     'verifyPassword']);
         }
@@ -36,7 +36,7 @@ export class RegisterUserService {
         
         if (user.authenticationMethod === 'LOCAL'){
             json['type'] = 'LOCAL';
-            json['username']
+            json['username'] = user['email'];
         }else 
             if (user.authenticationMethod ==='OAUTH'){
                 json['type'] = 'OAUTH';
@@ -49,6 +49,7 @@ export class RegisterUserService {
         return json;
         
     }
+    
 }
 
 
