@@ -89,12 +89,14 @@ export class ChooseAccountComponent implements OnInit {
     
     chooseOAuthAccount(provider:string)
     {
+        this.registerUserService.resetUser();
        window.location.href = 
            this.oauthManagerService.authenticationServerUrl(provider);
     }
     
     registerLocal()
     {
+        this.registerUserService.resetUser();
         this.registerUserService.registerUser.authenticationMethod = "LOCAL";
         this.router.navigate(['register']);
         

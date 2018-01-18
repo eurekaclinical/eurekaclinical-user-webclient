@@ -6,12 +6,10 @@ import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 
 import { User } from './user.model';
-import { RegisterUser } from '../user/register-user.model';
-import { AppProperties } from './app-properties.model';
 import { ConfigurationService } from '../config.service';
 import { ServiceResponse } from './service-response.model';
 import { PasswordChange} from './passwordchange.model';
-
+import { App } from './app.model';
 
 @Injectable()
 export class UserService {
@@ -52,11 +50,19 @@ data: any;
             .catch( this.handleError );
     }
     
-    getCurrentUser() : Promise<User> {
+    getCurrentUser(): Promise<User> {
         return this.http
             .get(this.configService.getCurrentUserAPI)
             .toPromise()
             .then(response => response.json() as User)
+            .catch(this.handleError);
+    }
+        
+    getApps(): Promise<App[]> {
+        return this.http
+            .get(this.configService.appRegisterUrl)
+            .toPromise()
+            .then(response => response.json() as App[])
             .catch(this.handleError);
     }
         

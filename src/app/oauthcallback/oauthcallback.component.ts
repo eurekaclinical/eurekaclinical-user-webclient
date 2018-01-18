@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
-import { ServiceResponse } from '../user/service-response.model';
-import {Router, RouterModule, ParamMap  } from "@angular/router" 
-import {RegisterUserService} from '../user/register-user.service'
-import {RegisterUser} from "../user/register-user.model"
-import {Location} from '@angular/common'
-import {OAuthManagerService} from '../oauth-service/oauth-manager.service'
-import {OAuthUser} from '../oauth-service/oauth-user'
+import { Router } from "@angular/router" 
+import { RegisterUserService } from '../user/register-user.service'
+import { Location } from '@angular/common'
+import { OAuthManagerService } from '../oauth-service/oauth-manager.service'
+import { OAuthUser } from '../oauth-service/oauth-user'
 @Component( {
     selector: 'oauthcallback',
     templateUrl: './oauth-callback.component.html',
@@ -58,8 +55,7 @@ export class OAuthCallbackComponent implements OnInit {
 
         
     }
-    
-   
+
     
     ngOnInit() {
         
@@ -83,14 +79,9 @@ export class OAuthCallbackComponent implements OnInit {
                 console.log(error);
             }
         );
-        
-        
-        
-        
-        
+
     }
-    
-    
+
 
     ngAfterViewInit() {
 

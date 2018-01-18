@@ -9,6 +9,9 @@ export class RegisterUserService {
         return this._registerUser;
     }
     
+    resetUser():void {
+        this._registerUser = new RegisterUser();
+    }
     set registerUser(value:RegisterUser){
         this._registerUser = value;
     }

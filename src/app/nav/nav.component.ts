@@ -21,7 +21,6 @@ export class NavComponent implements OnInit {
 
     ngOnInit() {
         this.router.events.subscribe((event) => {
-            console.log('url: ',this.router.url);
             if(this.router.url.endsWith('loggedOut')){
                 this.isLoggedOut = true;         
             }else{
@@ -48,6 +47,11 @@ export class NavComponent implements OnInit {
         this.router.navigate(["/user-profile"]);
     }
     
+    onAppRegister(){
+        this.menuOpen = false;
+        this.router.navigate(["/home"]);
+    }
+        
     onLogOut(){
         this.menuOpen = false;
         this.router.navigate(["/logout"]);

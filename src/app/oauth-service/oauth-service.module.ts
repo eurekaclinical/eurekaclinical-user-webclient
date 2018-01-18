@@ -9,7 +9,7 @@ import {OAuthProvider} from './oauth-provider.model'
 import {OAuthUser} from './oauth-user'
 import {GoogleOAuthService} from './google-oauth.service'
 import {GithubOAuthService} from './github-oauth.service'
-import {GlobusOAuthService} from "app/oauth-service/globus-oauth.service";
+import {GlobusOAuthService} from "./globus-oauth.service";
 
 @NgModule( {
     imports: [

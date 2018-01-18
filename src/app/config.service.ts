@@ -10,6 +10,7 @@ export class ConfigurationService {
     readonly CAS_LOGOUT_ENDPOINT = 'https://localhost:8443/cas-mock/logout';
     readonly REGISTRATION_ENDPOINT = 'userrequests';
     readonly OAUTH_ENDPOINT = 'oauthuser/';
+    readonly APP_REGISTER_ENDPOINT = 'componenttypes';
     
     
     private _serviceScheme: string = 'https';
@@ -21,7 +22,6 @@ export class ConfigurationService {
     get serviceUrl(): string {
 
         let serviceUrl: string = '';
-
         if( environment.useScheme ) {
             serviceUrl += ( environment.serviceScheme ) ? environment.serviceScheme : this._serviceScheme;
             serviceUrl += '://';
@@ -37,9 +37,12 @@ export class ConfigurationService {
         }
 
         serviceUrl += ( environment.apiContextRoot ) ? environment.apiContextRoot : this._apiContextRoot;
-
         return serviceUrl;
 
+    }
+    
+    get appRegisterUrl(): string{
+        return this.serviceUrl + this.APP_REGISTER_ENDPOINT;
     }
     
     get casLogoutUrl(): string {
@@ -51,7 +54,6 @@ export class ConfigurationService {
     }
 
     get saveUserAPI(): string {
-        //return "https://localhost:4200/eurekaclinical-user-service/api/userrequests"
         return this.serviceUrl + this.REGISTRATION_ENDPOINT;
     }
     
@@ -68,13 +70,11 @@ export class ConfigurationService {
     }
     
     get getCurrentUserAPI(): string {
-        return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;
-        
+        return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;       
     }
     
     getOAuthUserAPI(provider:string): string{
-            return this.serviceUrl + this.OAUTH_ENDPOINT + provider;
-        
+            return this.serviceUrl + this.OAUTH_ENDPOINT + provider;        
     }
     
     get getUserWebappPropertiesAPI(): string {

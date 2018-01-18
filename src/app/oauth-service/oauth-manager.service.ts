@@ -23,12 +23,7 @@ export class OAuthManagerService{
     registerOAuthService(provider:string, oauth: OAuthInterface){
        this._providers.set(provider,oauth);
     }
-    
-    
-    
-    
-    
-    
+
   
     authenticationServerUrl(providerName: string):string{
         if (!this._providers.get(providerName))
@@ -55,22 +50,10 @@ export class OAuthManagerService{
     
     getOAuthUser(providerName:string,params:any ):Observable<OAuthUser> {
         console.log('OAuthProvider: ' + providerName );
-        //let params = this.parseQueryString(callbackHash);
         console.log(params);
         
         return this.httpClient.get(this.configService.getOAuthUserAPI(providerName), {params: params})
             .map(response => response.json() as OAuthUser);
-        /*
-        let provider  = this._providers.get(providerName);
-        
-        if (provider && provider.enabled()){
-            return provider.getOAuthUser(params);
-        }
-        else{
-            return new Observable<OAuthUser>((observer)=> {
-                                        observer.error("Provider not available")});
-        }
-        */
     }
         
    
@@ -83,5 +66,3 @@ export class OAuthManagerService{
         return params;
     }
 }
-    
-

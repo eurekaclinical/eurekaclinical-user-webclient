@@ -47,7 +47,7 @@ export class GoogleOAuthService implements OAuthInterface{
         
     }
     
-    authenticationServerUrl():string{
+    authenticationServerUrl():string{//only useful
         return this.composeAuthenticationUrl(this.providerInfo);
     }
     
