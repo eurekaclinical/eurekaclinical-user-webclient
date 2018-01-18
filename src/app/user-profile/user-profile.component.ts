@@ -140,8 +140,12 @@ export class UserProfileComponent implements OnInit {
                 this.closePasswordDialog();
             },
             ( error ) => {
-                this.showPasswordMessage(error._body,"fail");
-           
+                if(error._body =="Error while changing password. Old password is incorrect."){
+                    this.showPasswordMessage("<b>Error while changing password.</b> Old password is incorrect.","fail");
+                }
+                else{
+                     this.showPasswordMessage(error._body,"fail");
+                }
             }
         );
     

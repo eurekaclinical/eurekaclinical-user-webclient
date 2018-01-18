@@ -31,7 +31,6 @@ export class OAuthManagerService{
         else{
             return this._providers.get(providerName).authenticationServerUrl(); 
         }
-        
     }
     
     get supportedOAuthProviders():string[]{
@@ -61,7 +60,7 @@ export class OAuthManagerService{
         let params = {};
         let regex = /([^&=]+)=([^&]*)/g, m;
         while (m = regex.exec(queryString)) {
-        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
         }
         return params;
     }

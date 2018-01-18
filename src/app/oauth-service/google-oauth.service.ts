@@ -2,7 +2,6 @@ import {Observable} from "rxjs"
 import {OAuthProvider} from "./oauth-provider.model";
 import {Injectable} from "@angular/core"
 import {Http, Response, Headers} from "@angular/http"
-import {OAuthUser} from './oauth-user'
 import {OAuthInterface} from './oauth.interface'
 import 'rxjs/add/operator/mergeMap';
 
@@ -11,14 +10,8 @@ class GoogleValidationResponse{
     public user_id:string;
     public scope: string;
     public expires_in:number;
-    public accessToken;
 }
 
-class GoogleToken{
-    public access_token:string;
-    public token_type:string;
-    public expires_in:string;
-}
 @Injectable()
 export class GoogleOAuthService implements OAuthInterface{
     providerInfo: OAuthProvider = new OAuthProvider();
@@ -44,7 +37,6 @@ export class GoogleOAuthService implements OAuthInterface{
     
     isEnabled():boolean{
         return true;
-        
     }
     
     authenticationServerUrl():string{//only useful
@@ -69,56 +61,6 @@ export class GoogleOAuthService implements OAuthInterface{
         
         return urlString;
     }
-    
-    validateToken(params:GoogleToken): Observable<GoogleToken> {
-        let queryString: string = this.providerInfo.tokenValidationUrl + "?access_token="+params['access_token'];
-        console.log(this);
-        
-        return this.httpClient.get(queryString).map(response => {
-                    let results = response.json();
-                    
-                    if (results['aud'] != this.providerInfo.clientId){
-                        Observable.throw('clientID does not match');
-                    }
-                    console.log('validation token success');
-                    console.log(results); 
-                    return params;
-                    });
-        
-    }
-    
-    getUserAfterToken(params:GoogleToken):Observable<OAuthUser>{
-        let header = new Headers();
-        header.append("Authorization", params.token_type + " " + params.access_token);
-        console.log("working on getting user");
-        console.log(this);
-        return this.httpClient.get(this.providerInfo.getProfileUrl,{
-            headers:header
-        }).map(response=>{
-            let oauthUser = new OAuthUser();
-            let res = response.json();
-
-            oauthUser.lastName = res.name.familyName;
-            oauthUser.firstName = res.name.givenName;
-            oauthUser.email = res.emails[0].value;
-            oauthUser.userName = 'GoogleProfile#'+res.id;
-            oauthUser.provider = "Google2Provider";
-            oauthUser.providerUsername = oauthUser.email;
-            return oauthUser;
-        });
-        
-    }
-    
-    getOAuthUser(callbackParams:any ):Observable<OAuthUser> {
-        callbackParams = <GoogleToken>callbackParams;
-        if(!callbackParams['access_token']){
-            return new Observable<OAuthUser>((observer)=> {
-                                        observer.error("No access token found")});
-        }
-        
-        return this.validateToken(callbackParams).flatMap(resp=>this.getUserAfterToken(resp));
-    }
-    
 
 }
     

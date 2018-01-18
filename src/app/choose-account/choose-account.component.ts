@@ -5,13 +5,13 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { ServiceResponse } from '../user/service-response.model';
-import {Router, RouterModule  } from "@angular/router" 
-import {RegisterUserService} from '../user/register-user.service'
-import {RegisterUser} from "../user/register-user.model"
-import {Location} from '@angular/common'
+import { Router, RouterModule } from "@angular/router" 
+import { RegisterUserService } from '../user/register-user.service'
+import { RegisterUser } from "../user/register-user.model"
+import { Location } from '@angular/common'
 
-import { OAuthServiceModule} from '../oauth-service/oauth-service.module';
-import {OAuthManagerService} from '../oauth-service/oauth-manager.service';
+import { OAuthServiceModule } from '../oauth-service/oauth-service.module';
+import { OAuthManagerService } from '../oauth-service/oauth-manager.service';
 
 @Component( {
     selector: 'choose-account',
@@ -90,7 +90,7 @@ export class ChooseAccountComponent implements OnInit {
     chooseOAuthAccount(provider:string)
     {
         this.registerUserService.resetUser();
-       window.location.href = 
+        window.location.href = 
            this.oauthManagerService.authenticationServerUrl(provider);
     }
     

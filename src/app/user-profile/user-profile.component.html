@@ -96,7 +96,7 @@
                 <form [formGroup]="userCredentialForm" (ngSubmit)="updatePassword()">
                     <div class="modal-body">
                         <div *ngIf="passwordMessageBoard.showMessage==true" [ngClass] = "passwordMessageBoard.styleClass">
-                              <p><strong>{{passwordMessageBoard.message}}</strong></p>
+                              <p [innerHTML] = "passwordMessageBoard.message"></p>
                         </div>
                         
                         <div class="col-sm-9">
