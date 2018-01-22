@@ -4,8 +4,14 @@ export class App {
     
     private _name:string;
     
+    private _displayName:string;
+        
     private _description:string;     
-             
+          
+    private _url:string;
+    
+    private _type:number;
+               
     constructor() {}
     
     get id():number {
@@ -24,19 +30,46 @@ export class App {
         this._name = value;
     }
     
+    get displayName():string {
+        return this._displayName;
+    }
+    
+    set displayName( value:string ) {
+        this._displayName = value;
+    }
+        
     get description():string {
         return this._description;
     }
     
     set description( value:string ) {
         this._description = value;
-    }                    
+    }   
+    
+    get url():string {
+        return this._url;
+    }
+    
+    set url( value:string ) {
+        this._url = value;
+    }                     
+    
+    get type():number {
+        return this._type;
+    }
+    
+    set type( value:number ) {
+        this._type = value;
+    }
     
     toJSON() {
         
         let keys: string[] = ['id',
                     'name',
-                    'description'];
+                    'displayName',
+                    'description',
+                    'url',
+                    'type'];
 
         let json = {};
         for (let k of keys)
