@@ -5,25 +5,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { UserService } from '../user/user.service';
 
-import { UserProfileRoutingModule } from './user-profile-routing.module';
-import { UserProfileComponent } from './user-profile.component';
-
+import { HomeRoutingModule } from './home-routing.module';
+import { HomeComponent } from './home.component';
 
 @NgModule( {
     imports: [
         CommonModule,
         RouterModule,
         ReactiveFormsModule,
-        UserProfileRoutingModule,
+        HomeRoutingModule
     ],
     declarations: [
-        UserProfileComponent
+        HomeComponent
     ],
     providers: [
         UserService
     ],
     exports: [
-        UserProfileComponent
+        HomeComponent
     ]
 })
-export class UserProfileModule { }
+export class HomeModule { }

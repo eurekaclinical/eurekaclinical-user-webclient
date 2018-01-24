@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { ServiceResponse } from '../user/service-response.model';
 import { PasswordChange } from '../user/passwordchange.model';
+
+
 
 @Component( {
     selector: 'user-profile',
@@ -19,9 +20,28 @@ export class UserProfileComponent implements OnInit {
     errors: string[] = [];
     showPasswordDialog: boolean;
     submitted: boolean;
-    showSuccessMessage: boolean = false;
-    passwordMessage: string;
-    showPasswordMessage: boolean = false;
+    submittedPassword: boolean;
+    
+    
+    messageBoard = {
+                    showMessage: false,
+                    'message': '',
+                    styleClass:{'alert':true,
+                                 'alert-success':true,
+                                 'alert-danger':false
+                                }
+    };
+    
+    passwordMessageBoard = {
+                    showMessage: false,
+                    'message': '',
+                    styleClass:{'alert':true,
+                                 'alert-success':false,
+                                 'alert-danger':true
+                                }
+    };
+    
+    
     
     private validationMessages = {
         'emailAddress': {
@@ -46,19 +66,37 @@ export class UserProfileComponent implements OnInit {
         
         this.userCredentialForm = fb.group({
             oldPassword: [null, Validators.required],
-            newPassword: [null, Validators.required],
+            newPassword: [null, this.passwordValidator],
             verifyPassword: [null, Validators.required]
-        })
+        }, {validator: this.passwordMatchValidator});
+        
+        this.userprofileForm.valueChanges.subscribe((data) => {this.showMessage("","")});
+        this.submitted = false;
+        this.submittedPassword = false;
     }
+    
+   
     
     ngOnInit() {
         this.getCurrentUser();
+    
     }
 
     ngAfterViewInit() {
 
     }
     
+    passwordValidator(g: FormControl){
+        let value:string = g.value;
+        
+        return value && value.length >= 8 && /[0-9]+/.test(value) && /[a-zA-Z]+/.test(value) ? null : {'passwordPattern': true};
+    }
+    
+    passwordMatchValidator(g: FormGroup){
+        const res = g.get('newPassword').value === g.get('verifyPassword').value  
+        return res? null : {'mismatch': true};
+    }
+
     getCurrentUser() : void {
         this.userService.getCurrentUser()
             .then(currentUser => {
@@ -67,39 +105,47 @@ export class UserProfileComponent implements OnInit {
             });
     }
     
-    updateUser() {
-        console.log("Update user being run");        
+    updateUser() {    
         this.submitted = true;
-        this.showSuccessMessage = false;
+        this.showMessage("","")
         this.errors = [];
+        if (!this.userprofileForm.valid)
+            return;
+            
         this.userService.updateUser( this.populateUser() ).then(
             ( response: ServiceResponse ) => {
-                this.submitted = false;
-                this.showSuccessMessage = true;
+                this.showMessage("<b>Your changes has been saved successfully.</b>", "success");
             },
             ( error ) => {
-                this.submitted = false;
+                this.showMessage(error._body,"fail");
             }
         );
     }
     
-    updatePassword(): void{
-        console.log("changing password");        
-        this.submitted = true;
-        this.showSuccessMessage = false;
+    updatePassword(): void{      
+        this.showMessage("","");
+        this.showPasswordMessage("","");
         this.errors = [];
+        this.submittedPassword = true;
+        
+        if (this.userCredentialForm.invalid)
+            return;
+        
         let req = new PasswordChange();
         req.oldPassword = this.userCredentialForm.get('oldPassword').value;
         req.newPassword = this.userCredentialForm.get('newPassword').value;
-        console.log(req);
         this.userService.changePassword( req, this.currentUser.id ).then(
-            ( response: ServiceResponse ) => {
-                
-                this.showSuccessMessage = true;
+            ( response: ServiceResponse ) => {   
+                this.showMessage("<b>Your password has been saved successfully.</b>", "success");
+                this.closePasswordDialog();
             },
             ( error ) => {
-                this.showPasswordMessage = true;
-                this.passwordMessage = String(error);
+                if(error._body =="Error while changing password. Old password is incorrect."){
+                    this.showPasswordMessage("<b>Error while changing password.</b> Old password is incorrect.","fail");
+                }
+                else{
+                     this.showPasswordMessage(error._body,"fail");
+                }
             }
         );
     
@@ -117,6 +163,8 @@ export class UserProfileComponent implements OnInit {
                 }
             }
         }
+        
+       
 
     }
     
@@ -143,17 +191,74 @@ export class UserProfileComponent implements OnInit {
         return updatedUser;
 
     }  
-    
-    openPasswordDialog() : void{
-        console.log("I am called too!");
+     
+    openPasswordDialog() : void{      
         this.showPasswordDialog = true;
-    //    (<JQuery>(<any>$('#newPasswordModal'))).modal('show');
-      //  console.log($('#newPasswordModal'));
     }
     
     closePasswordDialog():void{
+        this.userCredentialForm.setValue({'oldPassword':'', 'newPassword':'','verifyPassword':''});
         this.showPasswordDialog = false;
-        this.showPasswordMessage = false;
-        this.passwordMessage = "";
+        this.showPasswordMessage("","");
+        this.userCredentialForm.reset();
+        this.submittedPassword = false;
+    }
+    
+    showMessage(msg:string, status: string): void{
+        this.messageBoard.message = msg;
+        
+        if(msg ===""){
+            this.messageBoard.showMessage = false;
+        }
+        else{
+            if(status=="success"){
+                this.messageBoard.showMessage = true;
+                this.messageBoard.styleClass['alert-success'] = true;
+                this.messageBoard.styleClass['alert-danger'] = false;
+            }
+            else if(status=="fail")
+            {
+                this.messageBoard.showMessage = true;
+                this.messageBoard.styleClass['alert-success'] = false;
+                this.messageBoard.styleClass['alert-danger'] = true;
+            }
+        }
+    }
+    
+    showPasswordMessage(msg:string, status: string): void{
+        this.passwordMessageBoard.message = msg;
+        
+        if(msg ===""){
+            this.passwordMessageBoard.showMessage = false;
+        }
+        else{
+            if(status=="success"){
+                this.passwordMessageBoard.showMessage = true;
+                this.passwordMessageBoard.styleClass['alert-success'] = true;
+                this.passwordMessageBoard.styleClass['alert-danger'] = false;
+            }
+            else if(status=="fail")
+            {
+                this.passwordMessageBoard.showMessage = true;
+                this.passwordMessageBoard.styleClass['alert-success'] = false;
+                this.passwordMessageBoard.styleClass['alert-danger'] = true;
+                this.passwordMessageBoard.styleClass['errors'] = true;
+                
+            }
+        }
+    }
+    
+    formgroupClass(formName:string, controlName: string)
+    {
+        return {"form-group":true,
+                "has-error": this[formName].controls[controlName].errors&&this.submitted?true:false
+               };
+    }
+    
+    formgroupPasswordClass(formName:string, controlName: string)
+    {
+        return {"form-group":true,
+            "has-error": this[formName].controls[controlName].errors && this.submittedPassword?true:false
+               };
     }
 }

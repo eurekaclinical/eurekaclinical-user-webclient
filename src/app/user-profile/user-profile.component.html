@@ -3,66 +3,66 @@
     <div *ngIf="errors.length > 0" class="errors">
         <div *ngFor="let error of errors">{{error}}</div>
     </div>
-    
+    <div *ngIf="messageBoard.showMessage==true" [ngClass] = "messageBoard.styleClass">
+            <p [innerHTML] = "messageBoard.message"></p>
+    </div>
     <form [formGroup]="userprofileForm" (ngSubmit)="updateUser()">
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="firstName" class="control-label">First Name: </label>
+                <div [ngClass] = "formgroupClass('userprofileForm','firstName')">
+                    <!--
+                    <label for="firstName" [ngClass] = "{'control-label': true, 'has-error': userprofileForm.controls['firstName'].errors && submitted }">First Name: </label>
+                    -->
+                    <label for="firstName" class ="control-label" >First Name</label>
+                   
                     <input type="text" formControlName="firstName" class="form-control" />
-                    <div *ngIf="userprofileForm.controls['firstName'].hasError('required') && userprofileForm.controls['firstName'].touched" class="alert alert-danger">You must include a first name.</div>
-                    <span class="help-block default-hidden"></span>
+                    <div *ngIf="userprofileForm.controls['firstName'].hasError('required') && submitted" class="help-block"><b>You must include a first name.</b></div>
+                    
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="lastName"  class="control-label">Last Name: </label>
+                <div [ngClass] = "formgroupClass('userprofileForm','lastName')">
+                    <label for="lastName"  class="control-label">Last Name</label>
                     <input type="text" formControlName="lastName" class="form-control"/>
-                    <div *ngIf="userprofileForm.controls['lastName'].hasError('required') && userprofileForm.controls['lastName'].touched" class="alert alert-danger">You must include a last name.</div>
-                    <span class="help-block default-hidden"></span>
+                    <div *ngIf="userprofileForm.controls['lastName'].hasError('required') && submitted" class="help-block"><b>You must include a last name.</b></div>        
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="control-label">Organization: </label>
+                <div [ngClass] = "formgroupClass('userprofileForm','organization')">
+                    <label class="control-label">Organization</label>
                     <input type="text" formControlName="organization" class="form-control"/>
-                    <div *ngIf="userprofileForm.controls['organization'].hasError('required') && userprofileForm.controls['organization'].touched" class="alert alert-danger">You must provide an organization.</div>
-                    <span class="help-block default-hidden"></span>
+                    <div *ngIf="userprofileForm.controls['organization'].hasError('required') && submitted" class="help-block"><b>You must provide an organization.</b></div>                    
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="control-label">Title: </label>
+                <div [ngClass] = "formgroupClass('userprofileForm','title')">
+                    <label class="control-label">Title</label>
                     <input type="text" formControlName="title" class="form-control"/>
-                    <div *ngIf="userprofileForm.controls['title'].hasError('required') && userprofileForm.controls['title'].touched" class="alert alert-danger">You must provide a title.</div>
-                    <span class="help-block default-hidden"></span>
+                    <div *ngIf="userprofileForm.controls['title'].hasError('required') && submitted" class="help-block"><b>You must provide a title.</b></div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                <label class="control-label">Department: </label>
+                <div [ngClass] = "formgroupClass('userprofileForm','department')">
+                <label class="control-label">Department</label>
                 <input type="text" formControlName="department" class="form-control"/>
-                <div *ngIf="userprofileForm.controls['department'].hasError('required') && userprofileForm.controls['department'].touched" class="alert alert-danger">You must provide a department name.</div>
-                    <span class="help-block default-hidden"></span>
+                <div *ngIf="userprofileForm.controls['department'].hasError('required') && submitted" class="help-block"><b>You must provide a department name.</b></div>
                 </div>
             </div>
         </div>    
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                <label class="control-label">Email Address: </label>
+                <div [ngClass] = "formgroupClass('userprofileForm','email')">
+                <label class="control-label">Email Address</label>
                 <input type="text" formControlName="email" class="form-control"/>
-                <div *ngIf="userprofileForm.controls['email'].hasError('required') && userprofileForm.controls['email'].touched" class="alert alert-danger">Email is required.</div>
-                <div *ngIf="userprofileForm.controls['email'].errors && userprofileForm.controls['email'].touched" class="alert-email alert-danger-email">Please provide a valid email</div>
-                <span class="help-block default-hidden"></span>
+                <div *ngIf="userprofileForm.controls['email'].errors && submitted" class="help-block"><b>Please provide a valid email</b></div>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="row">
             <div class="col-sm-10">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary text-center" [disabled]="!userprofileForm.valid || submitted" >Save Changes</button>
+                    <button type="submit" class="btn btn-primary text-center" >Save Changes</button>
                     <button routerLink="/" class="btn btn-primary text-center">Cancel</button>
                     <button *ngIf="currentUser?.type=='LOCAL'" type="button" class="btn btn-primary text-center" (click)="openPasswordDialog()">Change Password</button>
                 </div>
@@ -82,12 +82,10 @@
         </div> 
     </form>
     
-    <div *ngIf="showSuccessMessage==true" class="alert alert-success">
-            <p><strong>Your changes has been saved successfully.</strong></p>
-    </div>
     
-    <div id="newPasswordModal" class="modal"   [style.display] = "showPasswordDialog? 'block' : 'none'"  role="dialog" aria-labelledby="newPasswordModalLabel"
-                 aria-hidden="true">
+    
+    <div id="newPasswordModal" class="modal fade in"   [style.display] = "showPasswordDialog? 'block' : 'none'"  
+                 >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -97,48 +95,61 @@
                 </div>
                 <form [formGroup]="userCredentialForm" (ngSubmit)="updatePassword()">
                     <div class="modal-body">
+                        <div *ngIf="passwordMessageBoard.showMessage==true" [ngClass] = "passwordMessageBoard.styleClass">
+                              <p [innerHTML] = "passwordMessageBoard.message"></p>
+                        </div>
+                        
                         <div class="col-sm-9">
-                            <div class="form-group">
+                            <div [ngClass] = "formgroupPasswordClass('userCredentialForm','oldPassword')">
                                 <label for="oldPassword" class="control-label">Old Password</label>
                                 <input id="oldPassword" formControlName="oldPassword" type="password" class="form-control" 
                                        />
-                                 <div *ngIf="userCredentialForm.controls['oldPassword'].hasError('required') && userCredentialForm.controls['oldPassword'].touched" class="alert alert-danger">Please input old password</div>
-
-                                <span class="help-inline"></span>
+                                 <div *ngIf="userCredentialForm.controls['oldPassword'].hasError('required') && submittedPassword" class="help-block">Please input old password</div>
                             </div>
                         </div>
 
                         <div class="col-sm-9">
-                            <div class="form-group">
+                            <div [ngClass] = "formgroupPasswordClass('userCredentialForm','newPassword')">
                                 <label for="newPassword" class="control-label" >New Password</label>
                                 <input id="newPassword" formControlName="newPassword" type="password" class="form-control"
                                        />
-                                <span class="help-inline"></span>
+                                <div *ngIf="userCredentialForm.controls['newPassword'].errors && submittedPassword" class="help-block">
+                                    Passwords must be at least 8 characters and contain at least
+                    one letter & digit
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-9">
-                            <div class="form-group">
+                            <div [ngClass] = "{'has-error': userCredentialForm.hasError('mismatch') && submittedPassword?true:false, 'form-group':true}">
                                 <label for="verifyPassword" class="control-label">Re-enter New Password</label>
                                 <input id="verifyPassword" formControlName="verifyPassword" type="password" class="form-control" 
                                        />
-                                <span class="help-inline"></span>
+                                <div *ngIf="userCredentialForm.hasError('mismatch') && submittedPassword" class="help-block">
+                                    Passwords do not match.
+                                </div>
                             </div>
                         </div>
 
+                        
+                        
                         <div class="row">
-                            <div id="passwordChangeNotificationMsg" [style.display]="showPasswordMessage?'block':'none'" class="col-sm-10 default-hidden">
-                            {{passwordMessage}}
-                            </div>
+                                    <div id="passwordChangeNotificationMsg" class="col-sm-10 default-hidden">
+                                    </div>
+                                </div>
                         </div>
-                    </div>
+                    
                     <div class="modal-footer">
+                         <div class="col-sm-9">
                         <input type="hidden" name="action" value="savepassword"/>
-                        <input type="submit" value="Save Password" id="savePasswordBtn" class="btn btn-primary"/>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "closePasswordDialog()">Close</button>
-                    </div>  
+                            <button type="submit" class="btn btn-primary text-center" >Save Password</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "closePasswordDialog()">Close</button>          
+                        </div>
+                           
+                    </div>
                 </form>
             </div>
         </div>
     </div>          
 </div>
+<div class ="modal-backdrop fade in" [hidden] = "!showPasswordDialog"></div>

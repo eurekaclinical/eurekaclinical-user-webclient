@@ -2,5 +2,9 @@
  "/eurekaclinical-user-webapp": {
   "target": "https://localhost:8443",
   "secure": false
+ },
+ "/eurekaclinical-user-service": {
+  "target": "https://localhost:8443",
+  "secure": false
  }
 }

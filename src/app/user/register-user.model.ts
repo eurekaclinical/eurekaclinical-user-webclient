@@ -1,5 +1,10 @@
-export class RegisterUser {
+import {OAuthUser} from '../oauth-service/oauth-user';
 
+export class RegisterUser {
+    private _id:number;
+    
+    private _userName:string;
+    
     private _firstName:string;
     
     private _lastName:string;  
@@ -16,9 +21,34 @@ export class RegisterUser {
 
     private _password:string;   
     
-    private _verifyPassword:string;      
-            
-    constructor() {}
+    private _verifyPassword:string;  
+    
+    private _authenticationMethod:string;    
+    
+    private _oauthUser:OAuthUser;
+       
+    constructor() {
+        this._authenticationMethod = 'LOCAL';
+        this._id = -1;
+        this._userName = "";
+        this._oauthUser = null;
+    }
+    
+    get id():number {
+        return this._id;
+    }
+    
+    set id(value:number) {
+        this._id = value;
+    }
+    
+    get username():string {
+        return this._userName;
+    }
+    
+    set username(value:string) {
+        this._userName = value;
+    }
 
     get firstName():string {
         return this._firstName;
@@ -90,14 +120,58 @@ export class RegisterUser {
     
     set verifyPassword( value:string ) {
         this._verifyPassword = value;
-    } 
+    }
+    
+    get authenticationMethod():string {
+        return this._authenticationMethod;
+    }
+    
+    set authenticationMethod(value: string) {
+        this._authenticationMethod = value;
+    }
+    
+    
+    get oauthUser():OAuthUser {
+        return this._oauthUser;
+    }
+    
+    set oauthUser(value: OAuthUser) {
+        this._oauthUser = value;
+        this.firstName = this._oauthUser.firstName;
+        this.lastName = this._oauthUser.lastName;
+        this.email = this._oauthUser.email;
+        this.username = this._oauthUser.providerUsername;
+    }
+     
               
     toJSON() {
         
+        let keys: string[] = [
+                    'id',
+                    'username',
+                    'firstName',
+                    'lastName',
+                    'email',
+                    'verifyEmail',
+                    'organization',
+                    'title',
+                    'department',
+                    'password',
+                    'verifyPassword'
+                    
+                    ];
+
         let json = {};
+        for (let k of keys)
+        {
+            json[k] = this[k];
+        }
         
-        json["email"] = this._email;
-        
+        if (this.authenticationMethod === 'LOCAL')
+        {
+            json['type'] = 'LOCAL';
+        }
+        console.log(json);
         return json;
         
     }

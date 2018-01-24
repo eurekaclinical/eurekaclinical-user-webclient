@@ -1,0 +1,25 @@
+<div class ="container container-big">
+<div id="chooseAccountTypeHeading">
+    <h1>Select an Account Type</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+                <a *ngIf = "googleAuth.enabled" (click) = "chooseOAuthAccount('google')" class="btn btn-block btn-social btn-lg btn-google-plus" title="Register using your existing Google account">
+                    <i class="fa fa-google-plus"></i>
+                    Use an existing Google account
+                </a>
+                <a *ngIf = "gitHubAuth.enabled" (click) = "chooseOAuthAccount('github')" class="btn btn-block btn-social btn-lg btn-github" title="Register using your existing GitHub account">
+                    <i class="fa fa-github"></i>
+                    Use an existing GitHub account
+                </a>
+                <a *ngIf = "globusAuth.enabled" (click) = "chooseOAuthAccount('globus')" 
+                   class="btn btn-block btn-primary btn-lg"
+                   title="Register using your existing Globus account">Use an existing Globus account</a>
+                <a *ngIf = "localAccount.enabled" class="btn btn-block btn-primary btn-lg" (click) ="registerLocal()" >Create a traditional user account</a>
+            
+        </div>
+    </div>
+</div>
+</div>

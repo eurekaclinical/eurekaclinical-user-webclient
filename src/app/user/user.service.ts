@@ -2,24 +2,29 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import { Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
 
 import { User } from './user.model';
-import { RegisterUser } from '../user/register-user.model';
-import { AppProperties } from './app-properties.model';
 import { ConfigurationService } from '../config.service';
 import { ServiceResponse } from './service-response.model';
 import { PasswordChange} from './passwordchange.model';
-
+import { App } from './app.model';
 
 @Injectable()
 export class UserService {
-
+data: any;
     private headers = new Headers( {
         'Content-Type': 'application/json'
     });
     
     constructor( private http: Http, private configService: ConfigurationService ) { }
 
+    public doLogout() {
+        return this.http
+            .get( this.configService.casLogoutUrl );
+    }
+    
     updateUser( user: User ): Promise<ServiceResponse> {
         return this.http
             .put(this.configService.getUpdateUserAPI(String(user.id)), user.toJSON(), { headers: this.headers })
@@ -37,15 +42,15 @@ export class UserService {
         
     }
 
-    saveUser( registerUser: RegisterUser ): Promise<ServiceResponse> {
+    registerUser( registerUser: any ): Promise<any> {
         return this.http
-            .post( this.configService.saveUserAPI, JSON.stringify( registerUser ), { headers: this.headers })
+            .post(this.configService.saveUserAPI, registerUser, { headers: this.headers })
             .toPromise()
-            .then( response => response.json() as ServiceResponse )
+            .then( response => response )
             .catch( this.handleError );
     }
     
-    getCurrentUser() : Promise<User> {
+    getCurrentUser(): Promise<User> {
         return this.http
             .get(this.configService.getCurrentUserAPI)
             .toPromise()
@@ -53,26 +58,20 @@ export class UserService {
             .catch(this.handleError);
     }
         
-    getUserWebappProperties() : Promise<AppProperties> {
+    getApps(): Promise<App[]> {
         return this.http
-            .get(this.configService.getUserWebappPropertiesAPI)
+            .get(this.configService.appRegisterUrl)
             .toPromise()
-            .then(response => this.extractAppPropertiesData(response))
+            .then(response => response.json() as App[])
             .catch(this.handleError);
     }
         
-    private extractAppPropertiesData(response: Response){
-        let data = response.json();
-        let appProperties = new AppProperties();
-        
-        appProperties.userWebappUrl = data.url;
-        appProperties.ephiProhibited =  data.ephiProhibited;
-        appProperties.demoMode = data.demoMode;
-        appProperties.registryServiceUrl = data.registryServiceUrl;
-        appProperties.localAccountRegistrationEnabled = data.localAccountRegistrationEnabled;
-        
-        return appProperties;
+    getUserWebappProperties():Observable<any> {
+        return this.http.get(this.configService.getUserWebappPropertiesAPI)
+            .map(response => response.json())
+            .catch( this.handleError );
     }
+       
     
     private handleError( error: Response | any ) {
         return Promise.reject( error.message || error );

@@ -5,18 +5,23 @@ import { environment } from '../environments/environment';
 export class ConfigurationService {
 
     readonly UPDATE_USER_ENDPOINT = 'users/{id}';
-    readonly GET_CURRENT_USER_ENDPOINT = 'users/me'
+    readonly GET_CURRENT_USER_ENDPOINT = 'users/me';
     readonly CHANGE_PASSWORD_ENDPOINT = 'users/passwordchange';
+    readonly CAS_LOGOUT_ENDPOINT = 'https://localhost:8443/cas-mock/logout';
+    readonly REGISTRATION_ENDPOINT = 'userrequests';
+    readonly OAUTH_ENDPOINT = 'oauthuser/';
+    readonly APP_REGISTER_ENDPOINT = 'components';
+    
     
     private _serviceScheme: string = 'https';
     private _serviceHost: string = 'localhost';
     private _servicePort: number = 4200;
     private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';
 
+    
     get serviceUrl(): string {
 
         let serviceUrl: string = '';
-
         if( environment.useScheme ) {
             serviceUrl += ( environment.serviceScheme ) ? environment.serviceScheme : this._serviceScheme;
             serviceUrl += '://';
@@ -32,18 +37,24 @@ export class ConfigurationService {
         }
 
         serviceUrl += ( environment.apiContextRoot ) ? environment.apiContextRoot : this._apiContextRoot;
-
         return serviceUrl;
 
     }
+    
+    get appRegisterUrl(): string{
+        return this.serviceUrl + this.APP_REGISTER_ENDPOINT;
+    }
+    
+    get casLogoutUrl(): string {
+        return this.CAS_LOGOUT_ENDPOINT;
+    }    
 
     get updateUserAPITemplate(): string {
         return this.serviceUrl + this.UPDATE_USER_ENDPOINT;
     }
 
     get saveUserAPI(): string {
-        console.log("I am called saveUserAPI"); 
-        return this.serviceUrl;
+        return this.serviceUrl + this.REGISTRATION_ENDPOINT;
     }
     
     get changePasswordAPITemplate(): string {
@@ -59,13 +70,14 @@ export class ConfigurationService {
     }
     
     get getCurrentUserAPI(): string {
-        console.log("url: ", this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT);
-        return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;
-        
+        return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;       
+    }
+    
+    getOAuthUserAPI(provider:string): string{
+            return this.serviceUrl + this.OAUTH_ENDPOINT + provider;        
     }
     
     get getUserWebappPropertiesAPI(): string {
-        console.log("I am called getUserWebappPropertiesAPI"); 
-        return this.serviceUrl;      
+        return 'assets/config.json';     
     }    
 }
