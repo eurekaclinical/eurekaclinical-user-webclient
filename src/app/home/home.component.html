@@ -1,3 +1,6 @@
 <div class="container container-big">
-    <div *ngFor="let app of apps">Name: {{app.displayName}} URL :{{app.url}}</div>
+    <div *ngFor="let app of apps">
+        <span>Name: {{app.displayName}} URL :{{app.url}} </span>
+        <img *ngIf = app.icon src = {{getIconUrl(app.icon?.small)}} />
+    </div>
 </div>

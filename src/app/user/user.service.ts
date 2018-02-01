@@ -62,7 +62,16 @@ data: any;
         return this.http
             .get(this.configService.appRegisterUrl)
             .toPromise()
-            .then(response => response.json() as App[])
+            .then(function(response) {
+                    let apps: any= response.json();
+                    for (let idx in apps){
+                        console.log("before: ", apps[idx].icon);
+                        apps[idx].icon = JSON.parse(apps[idx].icon);
+                        console.log("after: ", apps[idx].icon);
+                    }
+                    return apps as App[]; 
+                }
+                )
             .catch(this.handleError);
     }
         

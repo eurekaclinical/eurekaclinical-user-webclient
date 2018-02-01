@@ -10,7 +10,7 @@ export class ConfigurationService {
     readonly CAS_LOGOUT_ENDPOINT = 'https://localhost:8443/cas-mock/logout';
     readonly REGISTRATION_ENDPOINT = 'userrequests';
     readonly OAUTH_ENDPOINT = 'oauthuser/';
-    readonly APP_REGISTER_ENDPOINT = 'components';
+    readonly APP_REGISTER_ENDPOINT = 'components?type=WEBAPP&type=EXTERNAL';
     
     
     private _serviceScheme: string = 'https';
