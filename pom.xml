@@ -73,7 +73,7 @@
   
   <profiles>
     <profile>
-      <id>startserver</id>
+      <id>webserver</id>
       <build>
         <plugins>
           <plugin>

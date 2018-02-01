@@ -23,4 +23,14 @@ export class HomeComponent implements OnInit {
                 this.apps = apps;
             });           
     }
+    
+    getIconUrl(iconPath:string):string{
+        if (iconPath.startsWith("https:") || iconPath.startsWith("http:")){
+            return iconPath;
+        }
+        else{                  
+            return "assets/icons/" + iconPath;
+        }
+
+    }
 }
