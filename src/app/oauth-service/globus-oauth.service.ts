@@ -4,6 +4,9 @@ import {Injectable} from "@angular/core"
 import {Http, Response, Headers} from "@angular/http"
 import {OAuthInterface} from './oauth.interface'
 import 'rxjs/add/operator/mergeMap';
+import { Location } from '@angular/common'
+import {ConfigurationService} from '../config.service'
+
 
 class GlobusValidationResponse{
     public aud:string;
@@ -16,7 +19,7 @@ class GlobusValidationResponse{
 export class GlobusOAuthService implements OAuthInterface{
     providerInfo: OAuthProvider = new OAuthProvider();
     
-    constructor(private httpClient: Http){
+    constructor(private httpClient: Http, private config: ConfigurationService, private location: Location){
         this.initializeProviderInfo();  
     }
     
@@ -27,8 +30,13 @@ export class GlobusOAuthService implements OAuthInterface{
     initializeProviderInfo(){
         this.providerInfo.name = "GlobusProvider";
         this.providerInfo.url =  "https://auth.globus.org/v2/oauth2/authorize";
-        this.providerInfo.clientId = "776c6076-4099-45e6-b2d8-d596c460878e"
-        this.providerInfo.redirectUri = "https://localhost:4200/oauthcallback/globus";
+        /*
+        this.config.getUserWebappProperties().subscribe(
+             function (response) {this.providerInfo.clientId = response.globusOAuthID;}
+        );
+        */
+        this.providerInfo.clientId = "776c6076-4099-45e6-b2d8-d596c460878e";//this.config.appConfig.globusOAuthID;
+        this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/globus');
         this.providerInfo.responseType= "code";
         this.providerInfo.scope = "openid profile email urn:globus:auth:scope:auth.globus.org:view_identities "
         this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';

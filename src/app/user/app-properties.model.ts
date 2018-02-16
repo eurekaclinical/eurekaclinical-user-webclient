@@ -13,6 +13,12 @@ export class AppProperties {
     private _authenticationMethod:string;
     
     private _accountTypeDisplayName:string;
+    
+    private _googleOAuthID:string;
+    
+    private _githubOAuthID:string;
+    
+    private _globusOAuthID:string;
             
     constructor() {}
     
@@ -70,7 +76,31 @@ export class AppProperties {
     
     set accountTypeDisplayName( value:string ) {
         this._accountTypeDisplayName = value;
+    }
+    
+    get googleOAuthID(): string{
+        return this._googleOAuthID;
+    }
+    
+    set googleOAuthID(value:string){
+        this._googleOAuthID = value;
+    }
+    
+    get githubOAuthID(): string{
+        return this._githubOAuthID;
+    }
+    
+    set githubOAuthID(value:string){
+        this._githubOAuthID = value;
     } 
+    
+    get globusOAuthID(): string{
+        return this._globusOAuthID;
+    }
+    
+    set globusOAuthID(value:string){
+        this._globusOAuthID = value;
+    }
         
     toJSON() {
         

@@ -5,5 +5,8 @@
     "registryServiceUrl": "https://localhost:8443/eurekaclinical-registry-service",
     "localAccountRegistrationEnabled": false,
     "authenticationMethod": "LOCAL",
-    "accountTypeDisplayName": "Test Account"
+    "accountTypeDisplayName": "Test Account",
+    "googleOAuthID":"",
+    "githubOAuthID":"",
+    "globusOAuthID":""
 }

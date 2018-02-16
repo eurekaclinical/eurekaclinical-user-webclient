@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
+import {AppProperties} from './user/app-properties.model';
+import { Headers, Http, Response } from '@angular/http';
+import { Observable} from 'rxjs/Observable';
+import { Location } from '@angular/common'
 
 @Injectable()
 export class ConfigurationService {
@@ -17,7 +21,13 @@ export class ConfigurationService {
     private _serviceHost: string = 'localhost';
     private _servicePort: number = 4200;
     private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';
-
+    
+    private _appProperties: AppProperties;
+    
+    constructor(private http: Http, private location: Location){
+        console.log("TEST");
+        this.getUserWebappProperties();
+    }
     
     get serviceUrl(): string {
 
@@ -40,6 +50,10 @@ export class ConfigurationService {
         return serviceUrl;
 
     }
+    
+    get baseUrl(): string {
+        return window.location.origin;
+    } 
     
     get appRegisterUrl(): string{
         return this.serviceUrl + this.APP_REGISTER_ENDPOINT;
@@ -78,6 +92,19 @@ export class ConfigurationService {
     }
     
     get getUserWebappPropertiesAPI(): string {
-        return 'assets/config.json';     
-    }    
+        console.log(this.location.prepareExternalUrl('assets/config.json'));
+        return this.location.prepareExternalUrl('assets/config.json');     
+    }
+    
+            
+    getUserWebappProperties():Observable<AppProperties> {
+        return this.http.get(this.getUserWebappPropertiesAPI)
+            .map(function(response){this._appProperties =  response.json();console.log(this._appProperties);
+                return this._appProperties;})
+            .catch( function (error) { console.log(error); return Promise.reject( error.message || error );} );
+    }
+    
+    get appConfig(): AppProperties {
+        return this._appProperties;
+    }   
 }
