@@ -14,15 +14,15 @@
         </div>
         
         <div ngbDropdown class="navbar-collapse collapse in">
-            <ul *ngIf="isLoggedOut; else elseBlock"  class="nav navbar-nav navbar-right menu-text"> 
+            <ul *ngIf="isLoggedOut(); else elseBlock"  class="nav navbar-nav navbar-right menu-text"> 
                 <li>
-                    <a *ngIf="isLoggedOut; else elseBlock"
+                    <a *ngIf="isLoggedOut(); else elseBlock"
                         class="btn btn-link btn-md" (click)="doLogin()">
                         <i class="fa fa-sign-in"></i>Login
                     </a>
                 </li>
                 <li>
-                    <a *ngIf="isLoggedOut; else elseBlock"
+                    <a *ngIf="isLoggedOut(); else elseBlock"
                         class="btn btn-link btn-md" routerLink="/choose-account">
                         <i class="fa fa-sign-in"></i>Register for new user
                     </a>
@@ -51,7 +51,7 @@
                                                 Apps
                                             </a>
                                         </li>    
-                                        <li><a routerLink="#" class="idletimeout-logout" (click) = "onLogOut()">
+                                        <li><a class="idletimeout-logout" (click) = "onLogOut()">
                                                 <i class="fa fa-sign-out"></i>
                                                 Logout
                                             </a>

@@ -19,6 +19,7 @@ export class AppProperties {
     private _githubOAuthID:string;
     
     private _globusOAuthID:string;
+    private _casUrl: string;
             
     constructor() {}
     
@@ -101,7 +102,15 @@ export class AppProperties {
     set globusOAuthID(value:string){
         this._globusOAuthID = value;
     }
-        
+    
+    set casUrl(value:string) {
+        this._casUrl = value;
+    }    
+    
+    get casUrl(): string {
+        return this._casUrl;
+    }
+    
     toJSON() {
         
         let json = {};

@@ -6,6 +6,7 @@ import {OAuthInterface} from './oauth.interface'
 import 'rxjs/add/operator/mergeMap';
 import { Location } from '@angular/common'
 import {ConfigurationService} from '../config.service'
+import { AppProperties } from '../user/app-properties.model';
 
 
 class GlobusValidationResponse{
@@ -35,7 +36,11 @@ export class GlobusOAuthService implements OAuthInterface{
              function (response) {this.providerInfo.clientId = response.globusOAuthID;}
         );
         */
-        this.providerInfo.clientId = "776c6076-4099-45e6-b2d8-d596c460878e";//this.config.appConfig.globusOAuthID;
+        //this.providerInfo.clientId = this.config.appConfig.globusOAuthID;
+        this.config.appConfig.subscribe((config:AppProperties) => {
+            this.providerInfo.clientId = config.globusOAuthID; 
+        }); 
+        
         this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/globus');
         this.providerInfo.responseType= "code";
         this.providerInfo.scope = "openid profile email urn:globus:auth:scope:auth.globus.org:view_identities "

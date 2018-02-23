@@ -7,6 +7,7 @@ import 'rxjs/add/operator/mergeMap';
 import {Router} from "@angular/router"
 import { Location } from '@angular/common'
 import {ConfigurationService} from '../config.service'
+import { AppProperties } from '../user/app-properties.model';
 
 
 class GoogleValidationResponse{
@@ -36,7 +37,9 @@ export class GoogleOAuthService implements OAuthInterface{
             function (response) {this.providerInfo.clientId = response.googleOAuthID;}
         );
         */
-        this.providerInfo.clientId = "32862166882-uo3mehuo8klmd9n16vfujuk1cs7ciagu.apps.googleusercontent.com";//this.config.appConfig.googleOAuthID;
+        this.config.appConfig.subscribe((config:AppProperties) => {
+            this.providerInfo.clientId = config.googleOAuthID; 
+        }) 
        
         this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/google');
         this.providerInfo.responseType= "code";

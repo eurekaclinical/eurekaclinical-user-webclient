@@ -57,7 +57,7 @@ data: any;
             .then(response => response.json() as User)
             .catch(this.handleError);
     }
-        
+      
     getApps(): Promise<App[]> {
         return this.http
             .get(this.configService.appRegisterUrl)
@@ -65,13 +65,7 @@ data: any;
             .then(function(response) {
                     let apps: any= response.json();
                     for (let idx in apps){
-<<<<<<< HEAD
                         apps[idx].icon = JSON.parse(apps[idx].icon);
-=======
-                        console.log("before: ", apps[idx].icon);
-                        apps[idx].icon = JSON.parse(apps[idx].icon);
-                        console.log("after: ", apps[idx].icon);
->>>>>>> 992573f7015a3f464623581ffe62a7637ff919b3
                     }
                     return apps as App[]; 
                 }

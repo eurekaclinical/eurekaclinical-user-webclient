@@ -5,7 +5,8 @@ import {Http, Response, Headers} from "@angular/http"
 import {OAuthInterface} from './oauth.interface'
 import 'rxjs/add/operator/mergeMap';
 import { Location } from '@angular/common'
-import {ConfigurationService} from '../config.service'
+import { ConfigurationService } from '../config.service'
+import { AppProperties } from '../user/app-properties.model';
 
 class GithubValidationResponse{
     public aud:string;
@@ -35,7 +36,10 @@ export class GithubOAuthService implements OAuthInterface{
         );
         */
        // this.providerInfo.clientId = this.config.appConfig.githubOAuthID;
-        this.providerInfo.clientId   ="92540a403e450536ce5e";
+       this.config.appConfig.subscribe((config:AppProperties) => {
+            this.providerInfo.clientId = config.githubOAuthID; 
+        }) 
+        // this.providerInfo.clientId   ="92540a403e450536ce5e";
         this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/github');
         this.providerInfo.scope = "read:user";
         this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';

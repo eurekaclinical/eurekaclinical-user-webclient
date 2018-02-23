@@ -6,5 +6,9 @@
  "/eurekaclinical-user-service": {
   "target": "https://localhost:8443",
   "secure": false
+ },
+ "/cas-server": {
+  "target": "https://localhost:8443",
+  "secure": false
  }
 }

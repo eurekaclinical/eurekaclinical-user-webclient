@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import {AppProperties} from './user/app-properties.model';
+import { AppProperties } from './user/app-properties.model';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable} from 'rxjs/Observable';
 import { Location } from '@angular/common'
@@ -22,12 +22,22 @@ export class ConfigurationService {
     private _servicePort: number = 4200;
     private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';
     
-    private _appProperties: AppProperties;
+    private _appProperties: Observable<AppProperties>;
     
     constructor(private http: Http, private location: Location){
-        console.log("TEST");
-        this.getUserWebappProperties();
+       
     }
+    
+     init() {
+      this.initUserWebappProperties();
+     }
+     
+     initUserWebappProperties() {
+        this._appProperties = this.http.get(this.getUserWebappPropertiesAPI)
+            .map(response=>response.json() as AppProperties)
+            .catch(this.handleError);
+    }
+      
     
     get serviceUrl(): string {
 
@@ -92,19 +102,18 @@ export class ConfigurationService {
     }
     
     get getUserWebappPropertiesAPI(): string {
-        console.log(this.location.prepareExternalUrl('assets/config.json'));
+        //return 'assets/config.json';  
         return this.location.prepareExternalUrl('assets/config.json');     
     }
-    
-            
-    getUserWebappProperties():Observable<AppProperties> {
-        return this.http.get(this.getUserWebappPropertiesAPI)
-            .map(function(response){this._appProperties =  response.json();console.log(this._appProperties);
-                return this._appProperties;})
-            .catch( function (error) { console.log(error); return Promise.reject( error.message || error );} );
-    }
-    
-    get appConfig(): AppProperties {
+     
+    get appConfig(): Observable<AppProperties> {
         return this._appProperties;
-    }   
+    }  
+             
+    
+    private handleError( error: Response | any ) {
+        return Promise.reject( error.message || error );
+    }
+
+    
 }
