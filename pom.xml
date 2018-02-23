@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eurekaclinical</groupId>
-	<artifactId>eurekaclinical-analytics-webclient</artifactId>
+	<artifactId>eurekaclinical-user-webclient</artifactId>
 	<version>1.0-Alpha-1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Eureka! Clinical User Web Client</name>
@@ -73,7 +73,7 @@
   
   <profiles>
     <profile>
-      <id>startserver</id>
+      <id>webserver</id>
       <build>
         <plugins>
           <plugin>

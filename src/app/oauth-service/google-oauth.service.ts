@@ -4,6 +4,11 @@ import {Injectable} from "@angular/core"
 import {Http, Response, Headers} from "@angular/http"
 import {OAuthInterface} from './oauth.interface'
 import 'rxjs/add/operator/mergeMap';
+import {Router} from "@angular/router"
+import { Location } from '@angular/common'
+import {ConfigurationService} from '../config.service'
+import { AppProperties } from '../user/app-properties.model';
+
 
 class GoogleValidationResponse{
     public aud:string;
@@ -16,10 +21,10 @@ class GoogleValidationResponse{
 export class GoogleOAuthService implements OAuthInterface{
     providerInfo: OAuthProvider = new OAuthProvider();
     
-    constructor(private httpClient: Http){
+    constructor(private httpClient: Http,private location: Location, private config:ConfigurationService, private router: Router){
         this.initializeProviderInfo();  
     }
-    
+
     enabled():boolean{
         return true;
     }
@@ -27,12 +32,21 @@ export class GoogleOAuthService implements OAuthInterface{
     initializeProviderInfo(){
         this.providerInfo.name = "Google2Provider";
         this.providerInfo.url =  "https://accounts.google.com/o/oauth2/auth";
-        this.providerInfo.clientId = "32862166882-uo3mehuo8klmd9n16vfujuk1cs7ciagu.apps.googleusercontent.com"
-        this.providerInfo.redirectUri = "https://localhost:4200/oauthcallback/google";
+        /*
+        this.config.getUserWebappProperties().subscribe(
+            function (response) {this.providerInfo.clientId = response.googleOAuthID;}
+        );
+        */
+        this.config.appConfig.subscribe((config:AppProperties) => {
+            this.providerInfo.clientId = config.googleOAuthID; 
+        }) 
+       
+        this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/google');
         this.providerInfo.responseType= "code";
         this.providerInfo.scope = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me"
         this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
         this.providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me'
+        console.log(this.providerInfo);
     }
     
     isEnabled():boolean{

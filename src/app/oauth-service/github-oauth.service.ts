@@ -4,6 +4,9 @@ import {Injectable} from "@angular/core"
 import {Http, Response, Headers} from "@angular/http"
 import {OAuthInterface} from './oauth.interface'
 import 'rxjs/add/operator/mergeMap';
+import { Location } from '@angular/common'
+import { ConfigurationService } from '../config.service'
+import { AppProperties } from '../user/app-properties.model';
 
 class GithubValidationResponse{
     public aud:string;
@@ -16,7 +19,7 @@ class GithubValidationResponse{
 export class GithubOAuthService implements OAuthInterface{
     providerInfo: OAuthProvider = new OAuthProvider();
     
-    constructor(private httpClient: Http){
+    constructor(private httpClient: Http, private config: ConfigurationService, private location: Location){
         this.initializeProviderInfo();  
     }
     
@@ -27,9 +30,17 @@ export class GithubOAuthService implements OAuthInterface{
     initializeProviderInfo(){
         this.providerInfo.name = "GitHub2Provider";
         this.providerInfo.url =  "https://github.com/login/oauth/authorize";
-        this.providerInfo.clientId = "6848fbb612df8f5c5a15"
-        this.providerInfo.redirectUri = "https://localhost:4200/oauthcallback/github";
-  
+        /*
+        this.config.getUserWebappProperties().subscribe(
+             function (response) {this.providerInfo.clientId = response.githubOAuthID;}
+        );
+        */
+       // this.providerInfo.clientId = this.config.appConfig.githubOAuthID;
+       this.config.appConfig.subscribe((config:AppProperties) => {
+            this.providerInfo.clientId = config.githubOAuthID; 
+        }) 
+        // this.providerInfo.clientId   ="92540a403e450536ce5e";
+        this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/github');
         this.providerInfo.scope = "read:user";
         this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
         this.providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me'

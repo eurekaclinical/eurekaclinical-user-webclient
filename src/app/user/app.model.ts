@@ -1,3 +1,4 @@
+type IconType = {small:string; medium:string; large: string};
 export class App {
 
     private _id:number;
@@ -11,6 +12,7 @@ export class App {
     private _url:string;
     
     private _type:number;
+    private _icon:IconType; 
                
     constructor() {}
     
@@ -62,6 +64,14 @@ export class App {
         this._type = value;
     }
     
+    get icon():IconType {
+        return this._icon;
+    }
+    
+    set icon(value:IconType){
+        this._icon = value;
+    }
+    
     toJSON() {
         
         let keys: string[] = ['id',
@@ -69,7 +79,8 @@ export class App {
                     'displayName',
                     'description',
                     'url',
-                    'type'];
+                    'type',
+                    'icon'];
 
         let json = {};
         for (let k of keys)

@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { User } from '../user/user.model';
-import { Router } from '@angular/router';
+import {Router, Route, ActivatedRoute, UrlSegment } from '@angular/router';
+import { Location } from '@angular/common';
 import { UserService } from '../user/user.service';
 import { Subscription } from 'rxjs/Subscription';
+import { ConfigurationService } from '../config.service';
+import { AppProperties } from '../user/app-properties.model';
+
 
 @Component({
   selector: 'app-nav',
@@ -12,25 +16,27 @@ import { Subscription } from 'rxjs/Subscription';
 export class NavComponent implements OnInit {
 
     currentUser: User
-    isLoggedOut: boolean = false;
     
     menuOpen:boolean = false;
-    constructor(private userService: UserService, private router:Router) { 
-        this.currentUser = new User();
+    constructor(private userService: UserService, private router: Router, private activteRoute: ActivatedRoute, private location: Location, private config: ConfigurationService) { 
+        this.currentUser = undefined;
     }
 
     ngOnInit() {
-        this.router.events.subscribe((event) => {
-            if(this.router.url.endsWith('loggedOut')){
-                this.isLoggedOut = true;         
-            }else{
-                this.isLoggedOut = false; 
-                this.getCurrentUser();
-            }            
-        });        
-
+        this.getCurrentUser(); 
+        
     }
 
+    isLoggedOut():boolean {
+        
+        if (this.currentUser===undefined){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     getCurrentUser() : void {
         this.userService.getCurrentUser()
             .then(currentUser => {
@@ -39,7 +45,31 @@ export class NavComponent implements OnInit {
     }
     
     doLogin(){
-        this.router.navigate(['/welcome']);
+        this.config.appConfig.subscribe((config:AppProperties)=>{
+            console.log( config.userWebappUrl+ '/login?webclient=' 
+                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("") ));
+                
+            window.location.href = 
+            config.userWebappUrl + '/protected/login?webclient=' 
+                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("") );
+        });
+        
+            
+            
+              
+                
+      
+        
+    } 
+    
+    loginUrl(){
+        
+        return "https://localhost:4200/eurekaclinical-user-webapp/protected/login?webclient=" + "https://localhost:4200/eurekaclinical-user-webclient";
+        /*
+        return this.config.appConfig.casUrl + '/login?webclient=' 
+                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("/") );      
+         */
+        
     }    
     
     onEditUser(){
@@ -53,7 +83,10 @@ export class NavComponent implements OnInit {
     }
         
     onLogOut(){
-        this.menuOpen = false;
-        this.router.navigate(["/logout"]);
+         this.config.appConfig.subscribe((config:AppProperties)=>{            
+            window.location.href = 
+            config.casUrl + '/logout';
+        });
+        
     }
 }
