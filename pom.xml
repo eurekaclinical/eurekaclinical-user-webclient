@@ -83,8 +83,45 @@
             <configuration>
               <workingDirectory />
               <installDirectory>${user.home}/.eurekaclinical/dev</installDirectory>
-              <arguments>run-script start</arguments>
             </configuration>
+            <executions>
+              <execution>
+                <id>install-node-and-npm</id>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+                <configuration>
+                  <nodeVersion>${nodejs-version}</nodeVersion>
+                  <npmVersion>${npm-version}</npmVersion>
+                </configuration>
+              </execution>
+              <execution>
+                <id>npm-install</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>npm-build</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>run-script build</arguments>
+                </configuration>
+                <phase>generate-resources</phase> 
+              </execution>
+              <execution>
+                <id>npm-start</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>run-script start</arguments>
+                </configuration>
+                <phase>install</phase> 
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>

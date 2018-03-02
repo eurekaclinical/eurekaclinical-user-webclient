@@ -33,14 +33,14 @@
                                 <li [class.open] = "menuOpen">
                                     <a  
                                        class="dropdown-toggle" data-toggle="dropdown" 
-                                       role="button" aria-expanded="false" routerLink="#" id="userLinks"  ngbDropdownToggle>
+                                       role="button" aria-expanded="false" id="userLinks"  ngbDropdownToggle>
                                         <i class="fa fa-user"></i>
-                                                 {{ currentUser.username }}
+                                                 {{ currentUserDisplayName() }}
                                         <span class="caret"></span>
                                     </a>
                                     <ul ngbDropdownMenu class="dropdown-menu" role="menu"   aria-labelledby="userLinks">
                                         <li>
-                                            <a  (click) = "onEditUser()" >
+                                            <a (click) = "onEditUser()">
                                                 <i class="fa fa-user"></i>
                                                 Account Settings
                                             </a>
@@ -51,7 +51,7 @@
                                                 Apps
                                             </a>
                                         </li>    
-                                        <li><a class="idletimeout-logout" (click) = "onLogOut()">
+                                        <li><a  class="idletimeout-logout" (click) = "onLogOut()">
                                                 <i class="fa fa-sign-out"></i>
                                                 Logout
                                             </a>
