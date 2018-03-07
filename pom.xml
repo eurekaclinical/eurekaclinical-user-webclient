@@ -7,6 +7,12 @@
 	<version>1.0-Alpha-1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Eureka! Clinical User Web Client</name>
+
+  <parent>
+    <groupId>org.eurekaclinical</groupId>
+    <artifactId>eurekaclinical-parent</artifactId>
+    <version>1</version>
+  </parent>
 	
 
 	<!-- define the package versions for various project we will use -->
@@ -68,10 +74,33 @@
           </execution>
 				</executions>
 			</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <releaseProfiles>release-sign-artifacts,dist</releaseProfiles>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
   
   <profiles>
+    <profile>
+      <id>dist</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+              <descriptors>
+                <descriptor>assembly/bin.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>webserver</id>
       <build>

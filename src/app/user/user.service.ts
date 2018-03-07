@@ -10,6 +10,7 @@ import { ConfigurationService } from '../config.service';
 import { ServiceResponse } from './service-response.model';
 import { PasswordChange} from './passwordchange.model';
 import { App } from './app.model';
+import { AppProperties } from './app-properties.model'
 
 @Injectable()
 export class UserService {
@@ -73,9 +74,9 @@ data: any;
             .catch(this.handleError);
     }
         
-    getUserWebappProperties():Observable<any> {
+    getUserWebappProperties():Observable<AppProperties> {
         return this.http.get(this.configService.getUserWebappPropertiesAPI)
-            .map(response => response.json())
+            .map(response => response.json() as AppProperties)
             .catch( this.handleError );
     }
        

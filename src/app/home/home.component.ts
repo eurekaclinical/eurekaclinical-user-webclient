@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
+import { Location } from '@angular/common'
 import { UserService } from '../user/user.service';
 import { App } from '../user/app.model';
 
@@ -11,7 +12,7 @@ export class HomeComponent implements OnInit {
     
     apps: App[];
     
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService, private location: Location ) { }
 
     ngOnInit() {
         this.getApps();
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
             return iconPath;
         }
         else{                  
-            return "assets/icons/" + iconPath;
+            return this.location.prepareExternalUrl("assets/icons/" + iconPath);
         }
 
     }
