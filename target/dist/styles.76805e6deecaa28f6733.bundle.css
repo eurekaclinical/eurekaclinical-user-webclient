@@ -1,4 +1,4 @@
-/*-
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css);@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);@import url(https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css);@import url(https://assets.eurekaclinical.org/v2.0a1/css/eurekaclinical.css);/*-
  * #%L
  * Eureka! Clinical User Web Client
  * %%
@@ -17,16 +17,3 @@
  * limitations under the License.
  * #L%
  */
-{
-    "userWebappUrl": "https://localhost:4200/eurekaclinical-user-webapp",
-    "ephiProhibited": false,
-    "demoMode": false,
-    "registryServiceUrl": "https://localhost:8443/eurekaclinical-registry-service",
-    "localAccountRegistrationEnabled": false,
-    "authenticationMethod": "LOCAL",
-    "accountTypeDisplayName": "Test Account",
-    "googleOAuthID":"32862166882-uo3mehuo8klmd9n16vfujuk1cs7ciagu.apps.googleusercontent.com",
-    "githubOAuthID":"6848fbb612df8f5c5a15",
-    "globusOAuthID":"776c6076-4099-45e6-b2d8-d596c460878e",
-    "casUrl": "https://localhost:4200/cas-server"
-}
