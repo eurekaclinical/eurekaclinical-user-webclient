@@ -21,20 +21,6 @@
     <npm-version>3.9.5</npm-version>
     <frontend-maven-plugin-version>1.6</frontend-maven-plugin-version>
 	</properties>
-
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-			<distribution>manual</distribution>
-		</license>
-		<license>
-			<name>GNU General Public License, Version 3</name>
-			<url>http://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
-			<distribution>manual</distribution>
-		</license>
-	</licenses>
-
 	<build>
 		<plugins>
 			<plugin>
