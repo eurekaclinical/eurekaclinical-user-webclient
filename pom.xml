@@ -8,12 +8,6 @@
 	<packaging>pom</packaging>
 	<name>Eureka! Clinical User Web Client</name>
 
-  <parent>
-    <groupId>org.eurekaclinical</groupId>
-    <artifactId>eurekaclinical-parent</artifactId>
-    <version>1</version>
-  </parent>
-	
 
 	<!-- define the package versions for various project we will use -->
 	<properties>

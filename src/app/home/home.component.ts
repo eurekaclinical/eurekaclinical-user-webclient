@@ -25,8 +25,9 @@ export class HomeComponent implements OnInit {
             });           
     }
     
-    getIconUrl(app:App,style:string):string{
-        let iconPath = app.icon[style];
+    getIconUrl(app:App,size:string):string{
+        console.log(app);
+        let iconPath = app.icon[size];
         if(!iconPath)
             return iconPath;
         
@@ -34,7 +35,7 @@ export class HomeComponent implements OnInit {
             return iconPath;
         }
         else{                  
-            return app.url + iconPath;
+            return app.url + "/"+iconPath;
         }
 
     }
