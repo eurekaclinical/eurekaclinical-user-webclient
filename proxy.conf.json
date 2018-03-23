@@ -10,5 +10,9 @@
  "/cas-server": {
   "target": "https://localhost:8443",
   "secure": false
+ },
+ "/cas-mock": {
+  "target": "https://localhost:8443",
+  "secure": false
  }
 }

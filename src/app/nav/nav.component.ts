@@ -11,7 +11,8 @@ import { AppProperties } from '../user/app-properties.model';
 
 @Component({
   selector: 'app-nav',
-  templateUrl: './nav.component.html'
+  templateUrl: './nav.component.html',
+  styles: ['a {cursor:pointer;}']
 })
 export class NavComponent implements OnInit {
 
@@ -41,7 +42,23 @@ export class NavComponent implements OnInit {
         this.userService.getCurrentUser()
             .then(currentUser => {
                 this.currentUser = currentUser;
+            })
+            .catch(error=>{
+                console.log('Fail to get user');
             });           
+    }
+    
+    currentUserDisplayName():string{
+        if (!this.currentUser.firstName){
+            return this.currentUser.username;
+        }else{ 
+            let name = this.currentUser.firstName;
+            if(this.currentUser.lastName){
+                name = name + ' ' + this.currentUser.lastName;
+            }
+            
+            return  name;
+        }
     }
     
     doLogin(){

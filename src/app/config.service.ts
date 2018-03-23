@@ -15,6 +15,7 @@ export class ConfigurationService {
     readonly REGISTRATION_ENDPOINT = 'userrequests';
     readonly OAUTH_ENDPOINT = 'oauthuser/';
     readonly APP_REGISTER_ENDPOINT = 'components?type=WEBAPP&type=EXTERNAL';
+    readonly CONFIG_FILE = 'assets/config.json';
     
     
     private _serviceScheme: string = 'https';
@@ -101,9 +102,8 @@ export class ConfigurationService {
             return this.serviceUrl + this.OAUTH_ENDPOINT + provider;        
     }
     
-    get getUserWebappPropertiesAPI(): string {
-        //return 'assets/config.json';  
-        return this.location.prepareExternalUrl('assets/config.json');     
+    get getUserWebappPropertiesAPI(): string {  
+        return this.location.prepareExternalUrl(this.CONFIG_FILE);     
     }
      
     get appConfig(): Observable<AppProperties> {

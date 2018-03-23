@@ -12,7 +12,12 @@ export class App {
     private _url:string;
     
     private _type:number;
-    private _icon:IconType; 
+    
+    private _smallIcon:string; 
+    
+    private _mediumIcon:string; 
+    
+    private _largeIcon:string; 
                
     constructor() {}
     
@@ -64,12 +69,28 @@ export class App {
         this._type = value;
     }
     
-    get icon():IconType {
-        return this._icon;
+    get smallIcon():string {
+        return this._smallIcon;
     }
     
-    set icon(value:IconType){
-        this._icon = value;
+    set smallIcon(value:string){
+        this._smallIcon = value;
+    }
+    
+    get mediumIcon():string {
+        return this._mediumIcon;
+    }
+    
+    set mediumIcon(value:string){
+        this._mediumIcon = value;
+    }
+    
+    get largeIcon():string {
+        return this._largeIcon;
+    }
+    
+    set largeIcon(value:string){
+        this._largeIcon = value;
     }
     
     toJSON() {
@@ -80,7 +101,9 @@ export class App {
                     'description',
                     'url',
                     'type',
-                    'icon'];
+                    'smallIcon',
+                    'mediumIcon',
+                    'largeicon'];
 
         let json = {};
         for (let k of keys)

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
+import { Location } from '@angular/common'
 import { UserService } from '../user/user.service';
 import { App } from '../user/app.model';
 
@@ -11,7 +12,7 @@ export class HomeComponent implements OnInit {
     
     apps: App[];
     
-    constructor(private userService: UserService) { }
+    constructor(private userService: UserService, private location: Location ) { }
 
     ngOnInit() {
         this.getApps();
@@ -24,12 +25,29 @@ export class HomeComponent implements OnInit {
             });           
     }
     
-    getIconUrl(iconPath:string):string{
+    getIconUrl(app:App,size:string):string{
+        console.log(app);
+         let iconPath = '';
+        switch (size){
+            case 'small':
+                iconPath = app.smallIcon;
+                break;
+            case 'medium':
+                iconPath = app.mediumIcon;
+                break;
+            case 'large':
+                iconPath = app.largeIcon;
+            
+        }
+        
+        if(!iconPath)
+            return iconPath;
+        
         if (iconPath.startsWith("https:") || iconPath.startsWith("http:")){
             return iconPath;
         }
         else{                  
-            return "assets/icons/" + iconPath;
+            return app.url + "/"+iconPath;
         }
 
     }

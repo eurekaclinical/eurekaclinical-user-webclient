@@ -33,23 +33,26 @@ export class OAuthCallbackComponent implements OnInit {
                                 }
     };
     
-    passwordMessageBoard = {
-                    showMessage: false,
-                    'message': '',
-                    styleClass:{'alert':true,
-                                 'alert-success':true,
-                                 'alert-danger':false
-                                }
-    };
-    
-    
-    
-    private validationMessages = {
-        'emailAddress': {
-            'required': 'Email address is required.',
-            'email': 'Please enter a valid email address.'
+ showMessage(msg:string, status: string): void{
+        this.messageBoard.message = msg;
+        
+        if(msg ===""){
+            this.messageBoard.showMessage = false;
         }
-    };
+        else{
+            if(status=="success"){
+                this.messageBoard.showMessage = true;
+                this.messageBoard.styleClass['alert-success'] = true;
+                this.messageBoard.styleClass['alert-danger'] = false;
+            }
+            else if(status=="fail")
+            {
+                this.messageBoard.showMessage = true;
+                this.messageBoard.styleClass['alert-success'] = false;
+                this.messageBoard.styleClass['alert-danger'] = true;
+            }
+        }
+    }
 
     constructor(private registerUserService: RegisterUserService, private router: Router, private route: ActivatedRoute, private location: Location, private oauthService: OAuthManagerService){
 
@@ -74,9 +77,10 @@ export class OAuthCallbackComponent implements OnInit {
                 
                 
             },
-            error=>{
+            error=>{    
                 console.log('error occured');
                 console.log(error);
+                this.showMessage("<b>Error happens while authenticating</b>.\n" + error._body,'fail');
             }
         );
 
