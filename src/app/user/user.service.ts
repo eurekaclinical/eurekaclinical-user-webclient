@@ -65,9 +65,6 @@ data: any;
             .toPromise()
             .then(function(response) {
                     let apps: any= response.json();
-                    for (let idx in apps){
-                        apps[idx].icon = JSON.parse(apps[idx].icon);
-                    }
                     return apps as App[]; 
                 }
                 )

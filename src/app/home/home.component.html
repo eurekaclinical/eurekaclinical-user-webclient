@@ -21,7 +21,7 @@
     <div *ngFor="let app of apps">
         <a href ={{app.url}}>
         <span>Name: {{app.displayName}} URL :{{app.url}} </span> 
-        <img *ngIf = app.icon src = "{{getIconUrl(app,'small')}}" />
+        <img *ngIf = app.smallIcon src = "{{getIconUrl(app,'small')}}" />
         </a>
     </div>
 </div>

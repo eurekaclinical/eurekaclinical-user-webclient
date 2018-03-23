@@ -27,7 +27,19 @@ export class HomeComponent implements OnInit {
     
     getIconUrl(app:App,size:string):string{
         console.log(app);
-        let iconPath = app.icon[size];
+         let iconPath = '';
+        switch (size){
+            case 'small':
+                iconPath = app.smallIcon;
+                break;
+            case 'medium':
+                iconPath = app.mediumIcon;
+                break;
+            case 'large':
+                iconPath = app.largeIcon;
+            
+        }
+        
         if(!iconPath)
             return iconPath;
         
