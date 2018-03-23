@@ -28,6 +28,19 @@
         <npm-version>3.9.5</npm-version>
         <frontend-maven-plugin-version>1.6</frontend-maven-plugin-version>
     </properties>
+
+    <scm>
+        <developerConnection>scm:git:https://github.com/eurekaclinical/eurekaclinical-user-webclient.git</developerConnection>
+        <connection>scm:git:https://github.com/eurekaclinical/eurekaclinical-user-webclient.git</connection>
+        <url>https://github.com/eurekaclinical/eurekaclinical-user-webclient.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/eurekaclinical/eurekaclinical-user-webclient/issues</url>
+    </issueManagement>
+    
     <build>
         <plugins>
             <plugin>
