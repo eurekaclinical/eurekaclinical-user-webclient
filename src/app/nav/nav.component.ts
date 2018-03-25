@@ -69,14 +69,11 @@ export class NavComponent implements OnInit {
             window.location.href = 
             config.userWebappUrl + '/protected/login?webclient=' 
                 + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("") );
-        });
-        
-            
-            
-              
-                
-      
-        
+        });    
+    }
+    
+    doHelp(){
+        window.open("http://eurekaclinical.org", "_blank");
     } 
     
     loginUrl(){
