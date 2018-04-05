@@ -19,12 +19,14 @@ export class LoginComponent implements OnInit {
         if ( this.router.url.endsWith( 'logout' ) ) {
             this.doLogout();
         }
-        this.doLogin();
+        if ( this.router.url.endsWith( 'login' ) ) {
+            this.doLogin();
+        }
     }
     
     doLogin(){
         this.config.appConfig.subscribe((config:AppProperties)=>{
-            console.log( config.userWebappUrl+ '/login?webclient=' 
+            console.log( config.userWebappUrl+ '/protected/login?webclient=' 
                 + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("") ));
                 
             window.location.href = 
