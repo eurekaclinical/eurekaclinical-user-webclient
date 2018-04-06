@@ -57,6 +57,22 @@ export class NavComponent implements OnInit {
             });           
     }
     
+    filterApps():App[]{
+        if(!this.apps){
+            return null;
+        }else
+        {
+            let apps:App[] = [];
+            for(let app of this.apps){
+                if (app.name != "Eureka! Clinical Portal" && app.displayName != "Portal")
+                {
+                    apps.push(app);
+                }
+            }
+            return apps;
+        }
+    }
+    
     currentUserDisplayName():string{
         if (!this.currentUser.firstName){
             return this.currentUser.username;
