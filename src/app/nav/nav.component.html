@@ -63,20 +63,20 @@
                       </a>
                   </li>
 
-                  <li *ngIf="!isLoggedOut()" [class.open] = "menuOpen">
+                  <li *ngIf="!isLoggedOut()" [class.open] = "menuOpen" (clickOutside) = "menuOpen = false;">
                       <a  
-                          class="dropdown-toggle" data-toggle="dropdown" 
-                          role="button" aria-expanded="false" id="userLinks"  ngbDropdownToggle>
+                          class="dropdown-toggle"  
+                          role="button" aria-expanded="false" id="userLinks" (click) = "toggleUser()">
                           <i class="fa fa-user"></i>
                           {{ currentUserDisplayName()}}
                           <span class="caret"></span>
-                          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                          <span></span>
                       </a>
                       <ul ngbDropdownMenu class="dropdown-menu" role="menu"   aria-labelledby="userLinks">   
                           <li *ngFor="let app of filterApps()">
                               <a href ={{app.url}}>
                                 <i class="fa fa-link"></i>
-                                <span>{{app.name}}</span>                                        
+                                {{app.name}}                                        
                               </a>
                           </li>
                           

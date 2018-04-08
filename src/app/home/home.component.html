@@ -17,11 +17,23 @@
   limitations under the License.
   #L%
   -->
-<div class="container container-big">
-    <div *ngFor="let app of apps">
-        <a href ={{app.url}}>
-        <span>Name: {{app.displayName}} URL :{{app.url}} </span> 
-        <img *ngIf = app.smallIcon src = "{{getIconUrl(app,'small')}}" />
-        </a>
+ <div class="container container-big">
+      <div class="row">
+        <div class="col-md-3 col-sm-6" style="width: 25rem;" *ngFor="let app of filterApps()">
+             <a href ={{app.url}}>
+            <div class="card">
+                <h5 class="card-title" style="text-align:center">{{app.name}}</h5>
+                <!--
+                <i class="fa fa-link" style="font-size: 7em; text-align:center;display: inline-block;
+    width: 100%;"></i>
+                -->
+                <img class="card-img-top img-responsive" (error)="handleNoIconImageFound($event)" src={{app.url}} >
+                
+                <div class="card-body" >
+                    <p class="card-text" >{{app.description}}</p>
+                </div>
+            </div>
+            </a>
+        </div>
     </div>
-</div>
+ </div>

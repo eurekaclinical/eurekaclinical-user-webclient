@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ConfigurationService } from '../config.service';
 import { AppProperties } from '../user/app-properties.model';
 import { App } from '../user/app.model';
+import { ClickOutsideModule } from 'ng4-click-outside';
 
 @Component({
   selector: 'app-nav',
@@ -57,15 +58,13 @@ export class NavComponent implements OnInit {
             });           
     }
     
-    filterApps():App[]{
-        if(!this.apps){
+     filterApps(): App[] {
+        if (!this.apps) {
             return null;
-        }else
-        {
-            let apps:App[] = [];
-            for(let app of this.apps){
-                if (app.name != "Eureka! Clinical Portal" && app.displayName != "Portal")
-                {
+        } else {
+            let apps: App[] = [];
+            for (let app of this.apps) {
+                if (app.name != "Eureka! Clinical Portal" && app.displayName != "Portal") {
                     apps.push(app);
                 }
             }
@@ -115,6 +114,12 @@ export class NavComponent implements OnInit {
         this.menuOpen = false;
         this.router.navigate(["/user-profile"]);
     }
+    
+    toggleUser()
+    {
+        this.menuOpen = !this.menuOpen;
+    }
+    
     
     onAppRegister(){
         this.menuOpen = false;
