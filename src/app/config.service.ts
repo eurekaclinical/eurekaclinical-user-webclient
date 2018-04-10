@@ -24,6 +24,7 @@ export class ConfigurationService {
     private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';
     
     private _appProperties: Observable<AppProperties>;
+    private _defaultAppIconPath: string = "assets/icons/default-app-icon.png";
     
     constructor(private http: Http, private location: Location){
        
@@ -109,6 +110,10 @@ export class ConfigurationService {
     get appConfig(): Observable<AppProperties> {
         return this._appProperties;
     }  
+    
+    get defaultAppIconPath():string{
+        return this.location.prepareExternalUrl(this._defaultAppIconPath);
+    }
              
     
     private handleError( error: Response | any ) {

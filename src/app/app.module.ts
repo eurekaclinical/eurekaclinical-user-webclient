@@ -14,6 +14,7 @@ import { FooterComponent } from './footer/footer.component';
 import {ChooseAccountModule} from './choose-account/choose-account.module';
 import {OAuthCallbackModule} from './oauthcallback/oauthcallback.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ClickOutsideModule } from 'ng4-click-outside';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ChooseAccountModule,
         OAuthCallbackModule,
         AppRoutingModule,
+        ClickOutsideModule,
         NgbModule.forRoot()
         
     ],

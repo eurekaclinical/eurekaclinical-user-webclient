@@ -2,7 +2,6 @@
     "userWebappUrl": "https://localhost:4200/eurekaclinical-user-webapp",
     "ephiProhibited": false,
     "demoMode": false,
-    "registryServiceUrl": "https://localhost:8443/eurekaclinical-registry-service",
     "localAccountRegistrationEnabled": false,
     "authenticationMethod": "LOCAL",
     "accountTypeDisplayName": "Test Account",

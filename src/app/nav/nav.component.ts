@@ -7,7 +7,8 @@ import { UserService } from '../user/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ConfigurationService } from '../config.service';
 import { AppProperties } from '../user/app-properties.model';
-
+import { App } from '../user/app.model';
+import { ClickOutsideModule } from 'ng4-click-outside';
 
 @Component({
   selector: 'app-nav',
@@ -17,6 +18,7 @@ import { AppProperties } from '../user/app-properties.model';
 export class NavComponent implements OnInit {
 
     currentUser: User
+    apps: App[];
     
     menuOpen:boolean = false;
     constructor(private userService: UserService, private router: Router, private activteRoute: ActivatedRoute, private location: Location, private config: ConfigurationService) { 
@@ -24,7 +26,8 @@ export class NavComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCurrentUser(); 
+        this.getCurrentUser();
+        this.getApps(); 
         
     }
 
@@ -46,6 +49,27 @@ export class NavComponent implements OnInit {
             .catch(error=>{
                 console.log('Fail to get user');
             });           
+    }
+    
+    getApps() : void {
+        this.userService.getApps()
+            .then(apps => {
+                this.apps = apps;
+            });           
+    }
+    
+     filterApps(): App[] {
+        if (!this.apps) {
+            return null;
+        } else {
+            let apps: App[] = [];
+            for (let app of this.apps) {
+                if (app.name != "Eureka! Clinical Portal" && app.displayName != "Portal") {
+                    apps.push(app);
+                }
+            }
+            return apps;
+        }
     }
     
     currentUserDisplayName():string{
@@ -90,6 +114,12 @@ export class NavComponent implements OnInit {
         this.menuOpen = false;
         this.router.navigate(["/user-profile"]);
     }
+    
+    toggleUser()
+    {
+        this.menuOpen = !this.menuOpen;
+    }
+    
     
     onAppRegister(){
         this.menuOpen = false;

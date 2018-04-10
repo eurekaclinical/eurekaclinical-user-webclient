@@ -8,7 +8,7 @@ const appRoutes: Routes = [
     {path: '', redirectTo: '/welcome', pathMatch: 'full'},
     {path:'welcome', component:LoginComponent},
     {path:'welcome/:action', component:LoginComponent},
-    {path:'logout', component:LoginComponent},
+    {path:'login', component:LoginComponent},
     {path:'home', component:HomeComponent}
 ];
 
