@@ -91,5 +91,36 @@
               </ul>
           </div>
       </div>
+   
+     
   </div>
+  <div id="idleModal" class="modal center fade in"   [style.display] = "idleWarning? 'block' : 'none'"  
+                 >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="newPasswordModalLabel" class="modal-title">
+                        We didn't see activity for a while
+                    </h4>
+                </div>
+                <form [formGroup]="null" >
+                    <div class="modal-body">
+                        <div >
+                              <p >{{idleWarningMessage}}</p>
+                        </div>
+                    </div> 
+                    <!--  
+                    <div class="modal-footer">
+                         <div class="col-sm-9">
+                        <input type="hidden" name="action" value="savepassword"/>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "closePasswordDialog()">Cancel</button>          
+                        </div>
+                           
+                    </div>
+                     -->
+                </form>
+            </div>
+        </div>
+    </div>
+  <div class ="modal-backdrop fade in" [hidden] = "!idleWarning"></div>
 

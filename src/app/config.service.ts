@@ -16,6 +16,8 @@ export class ConfigurationService {
     readonly OAUTH_ENDPOINT = 'oauthuser/';
     readonly APP_REGISTER_ENDPOINT = 'components?type=WEBAPP&type=EXTERNAL';
     readonly CONFIG_FILE = 'assets/config.json';
+    readonly IDLETIME=10;
+    readonly IDLEWAITTIME=10;
     
     
     private _serviceScheme: string = 'https';

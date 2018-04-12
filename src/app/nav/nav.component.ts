@@ -9,25 +9,58 @@ import { ConfigurationService } from '../config.service';
 import { AppProperties } from '../user/app-properties.model';
 import { App } from '../user/app.model';
 import { ClickOutsideModule } from 'ng4-click-outside';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { EventEmitter } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styles: ['a {cursor:pointer;}']
+  styleUrls: ['nav.component.css']
 })
 export class NavComponent implements OnInit {
 
     currentUser: User
     apps: App[];
-    
+    idleWarning: boolean;
+    idleWarningMessage:string;
     menuOpen:boolean = false;
-    constructor(private userService: UserService, private router: Router, private activteRoute: ActivatedRoute, private location: Location, private config: ConfigurationService) { 
+    loginEvent:EventEmitter<boolean>;
+    constructor(private userService: UserService, private router: Router, private activteRoute: ActivatedRoute, private location: Location, private config: ConfigurationService, private idle: Idle, private changeDetectorRef: ChangeDetectorRef) { 
         this.currentUser = undefined;
+        this.loginEvent = new EventEmitter<boolean>();
+        this.loginEvent.subscribe(() => this.setupIdleWatcher());
+    }
+    
+    setupIdleWatcher(){
+        this.idle.setIdle(this.config.IDLETIME);
+        this.idle.setTimeout(this.config.IDLEWAITTIME);
+        this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+        this.idle.onIdleEnd.subscribe(() => {this.idleWarning = false; this.changeDetectorRef.detectChanges();});
+        this.idle.onTimeout.subscribe(() => {this.logoutSystem();});//log out system
+        this.idle.onIdleStart.subscribe(()=>{});
+        this.idle.onTimeoutWarning.subscribe((countdown) => {
+                    this.idleWarningMessage = 'You will be logged out in ' + countdown + ' seconds! Move your cursor to avoid this.';
+                    this.idleWarning= true;
+                    });
+        this.idle.watch();
+
+    }
+    
+    logoutSystem(){
+        this.config.appConfig.subscribe((config:AppProperties)=>{
+            console.log(config.casUrl+ '/logout');
+                
+            window.location.href = 
+                config.casUrl + '/logout';
+        });
     }
 
     ngOnInit() {
         this.getCurrentUser();
-        this.getApps(); 
+        this.getApps();
+   
+        
         
     }
 
@@ -45,6 +78,7 @@ export class NavComponent implements OnInit {
         this.userService.getCurrentUser()
             .then(currentUser => {
                 this.currentUser = currentUser;
+                this.loginEvent.emit(true);     
             })
             .catch(error=>{
                 console.log('Fail to get user');
@@ -86,10 +120,7 @@ export class NavComponent implements OnInit {
     }
     
     doLogin(){
-        this.config.appConfig.subscribe((config:AppProperties)=>{
-            console.log( config.userWebappUrl+ '/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("") ));
-                
+        this.config.appConfig.subscribe((config:AppProperties)=>{                
             window.location.href = 
             config.userWebappUrl + '/protected/login?webclient=' 
                 + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("") );
