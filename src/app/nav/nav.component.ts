@@ -19,22 +19,42 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['nav.component.css']
 })
 export class NavComponent implements OnInit {
-
     currentUser: User
     apps: App[];
     idleWarning: boolean;
     idleWarningMessage:string;
     menuOpen:boolean = false;
     loginEvent:EventEmitter<boolean>;
+    idleTime:number;
+    idleWaitTime:number;
+    
     constructor(private userService: UserService, private router: Router, private activteRoute: ActivatedRoute, private location: Location, private config: ConfigurationService, private idle: Idle, private changeDetectorRef: ChangeDetectorRef) { 
         this.currentUser = undefined;
         this.loginEvent = new EventEmitter<boolean>();
-        this.loginEvent.subscribe(() => this.setupIdleWatcher());
+        this.idleTime = this.config.DEFAULTIDLETIME;
+        this.idleWaitTime = this.config.DEFAULTIDLEWAITTIME;
+        this.loginEvent.subscribe(() => {
+            this.config.appConfig.subscribe((config)=> {
+                if (config.idleTime){
+                    this.idleTime = config.idleTime;
+                }
+                if (config.idleWaitTime){
+                    this.idleWaitTime = config.idleWaitTime;
+                }
+                this.setupIdleWatcher();
+            },
+            error =>{
+                this.setupIdleWatcher();
+            }
+            );
+            
+        });
     }
     
     setupIdleWatcher(){
-        this.idle.setIdle(this.config.IDLETIME);
-        this.idle.setTimeout(this.config.IDLEWAITTIME);
+        
+        this.idle.setIdle(this.idleTime);
+        this.idle.setTimeout(this.idleWaitTime);
         this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
         this.idle.onIdleEnd.subscribe(() => {this.idleWarning = false; this.changeDetectorRef.detectChanges();});
         this.idle.onTimeout.subscribe(() => {this.logoutSystem();});//log out system
@@ -89,6 +109,10 @@ export class NavComponent implements OnInit {
         this.userService.getApps()
             .then(apps => {
                 this.apps = apps;
+            })
+            .catch(error=>{
+                console.log('Fail to get apps:');
+                console.log(error);
             });           
     }
     

@@ -24,6 +24,11 @@ export class HomeComponent implements OnInit {
         this.userService.getApps()
             .then(apps => {
                 this.apps = apps;
+            })
+            .catch(
+            error=>{
+                console.log('fail to get apps');
+                console.log(error);
             });      
                  
     }

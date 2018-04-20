@@ -1,25 +1,18 @@
 export class AppProperties {
 
-    private _userWebappUrl:string; 
-    
+    private _userWebappUrl:string;  
     private _ephiProhibited:boolean;
-    
     private _demoMode:boolean;
-
     private _registryServiceUrl:string;  
-    
     private _localAccountRegistrationEnabled:boolean;  
-    
     private _authenticationMethod:string;
-    
     private _accountTypeDisplayName:string;
-    
     private _googleOAuthID:string;
-    
     private _githubOAuthID:string;
-    
     private _globusOAuthID:string;
     private _casUrl: string;
+    private _idleTime: number;
+    private _idleWaitTime: number;
             
     constructor() {}
     
@@ -109,6 +102,22 @@ export class AppProperties {
     
     get casUrl(): string {
         return this._casUrl;
+    }
+    
+    set idleTime(value:number){
+        this._idleTime = value;
+    }
+    
+    get idleTime(){
+        return this._idleTime;
+    }
+    
+    set idleWaitTime(value:number){
+        this._idleWaitTime = value;
+    }
+    
+    get idleWaitTime(){
+        return this._idleWaitTime;
     }
     
     toJSON() {

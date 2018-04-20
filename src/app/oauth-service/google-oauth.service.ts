@@ -46,7 +46,6 @@ export class GoogleOAuthService implements OAuthInterface{
         this.providerInfo.scope = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me"
         this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
         this.providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me'
-        console.log(this.providerInfo);
     }
     
     isEnabled():boolean{
