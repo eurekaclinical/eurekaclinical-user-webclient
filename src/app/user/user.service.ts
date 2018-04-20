@@ -56,7 +56,7 @@ data: any;
             .get(this.configService.getCurrentUserAPI)
             .toPromise()
             .then(response => response.json() as User)
-            .catch(this.handleError);
+            .catch(error=>this.handleError(error));
     }
       
     getApps(): Promise<App[]> {
@@ -68,7 +68,7 @@ data: any;
                     return apps as App[]; 
                 }
                 )
-            .catch(this.handleError);
+            .catch(error=>this.handleError(error));
     }
         
     getUserWebappProperties():Observable<AppProperties> {

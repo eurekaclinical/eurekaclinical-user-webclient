@@ -79,7 +79,7 @@ export class ChooseAccountComponent implements OnInit {
    
     
     ngOnInit() {
-        console.log(this.location.prepareExternalUrl("https://localhost:4200/googlecallback"));
+      
     
     }
 

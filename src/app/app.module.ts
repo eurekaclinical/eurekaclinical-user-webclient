@@ -15,7 +15,7 @@ import {ChooseAccountModule} from './choose-account/choose-account.module';
 import {OAuthCallbackModule} from './oauthcallback/oauthcallback.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClickOutsideModule } from 'ng4-click-outside';
-
+import { NgIdleModule } from '@ng-idle/core';
 @NgModule({
     imports: [
         BrowserModule,
@@ -28,7 +28,8 @@ import { ClickOutsideModule } from 'ng4-click-outside';
         OAuthCallbackModule,
         AppRoutingModule,
         ClickOutsideModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        NgIdleModule.forRoot()
         
     ],
     declarations: [

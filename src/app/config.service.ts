@@ -16,13 +16,13 @@ export class ConfigurationService {
     readonly OAUTH_ENDPOINT = 'oauthuser/';
     readonly APP_REGISTER_ENDPOINT = 'components?type=WEBAPP&type=EXTERNAL';
     readonly CONFIG_FILE = 'assets/config.json';
-    
-    
+    readonly DEFAULTIDLETIME=10;
+    readonly DEFAULTIDLEWAITTIME=10;
+     
     private _serviceScheme: string = 'https';
     private _serviceHost: string = 'localhost';
     private _servicePort: number = 4200;
-    private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';
-    
+    private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';    
     private _appProperties: Observable<AppProperties>;
     private _defaultAppIconPath: string = "assets/icons/default-app-icon.png";
     
@@ -30,19 +30,17 @@ export class ConfigurationService {
        
     }
     
-     init() {
-      this.initUserWebappProperties();
-     }
+    init() {
+        this.initUserWebappProperties();
+    }
      
-     initUserWebappProperties() {
+    initUserWebappProperties() {
         this._appProperties = this.http.get(this.getUserWebappPropertiesAPI)
             .map(response=>response.json() as AppProperties)
             .catch(this.handleError);
-    }
-      
+    }      
     
     get serviceUrl(): string {
-
         let serviceUrl: string = '';
         if( environment.useScheme ) {
             serviceUrl += ( environment.serviceScheme ) ? environment.serviceScheme : this._serviceScheme;
@@ -100,7 +98,7 @@ export class ConfigurationService {
     }
     
     getOAuthUserAPI(provider:string): string{
-            return this.serviceUrl + this.OAUTH_ENDPOINT + provider;        
+        return this.serviceUrl + this.OAUTH_ENDPOINT + provider;        
     }
     
     get getUserWebappPropertiesAPI(): string {  
@@ -114,8 +112,7 @@ export class ConfigurationService {
     get defaultAppIconPath():string{
         return this.location.prepareExternalUrl(this._defaultAppIconPath);
     }
-             
-    
+               
     private handleError( error: Response | any ) {
         return Promise.reject( error.message || error );
     }

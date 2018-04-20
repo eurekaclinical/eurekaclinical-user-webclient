@@ -5,8 +5,10 @@
     "localAccountRegistrationEnabled": false,
     "authenticationMethod": "LOCAL",
     "accountTypeDisplayName": "Test Account",
-    "googleOAuthID":"32862166882-uo3mehuo8klmd9n16vfujuk1cs7ciagu.apps.googleusercontent.com",
-    "githubOAuthID":"6848fbb612df8f5c5a15",
-    "globusOAuthID":"776c6076-4099-45e6-b2d8-d596c460878e",
-    "casUrl": "https://localhost:4200/cas-mock"
+    "googleOAuthID": "32862166882-uo3mehuo8klmd9n16vfujuk1cs7ciagu.apps.googleusercontent.com",
+    "githubOAuthID": "6848fbb612df8f5c5a15",
+    "globusOAuthID": "776c6076-4099-45e6-b2d8-d596c460878e",
+    "casUrl": "https://localhost:4200/cas-mock",
+    "idleTime": 600,
+    "idleWaitTime": 120
 }
