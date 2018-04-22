@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
-
 import 'rxjs/add/operator/toPromise';
 import { Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-
 import { User } from './user.model';
 import { ConfigurationService } from '../config.service';
 import { ServiceResponse } from './service-response.model';
 import { PasswordChange} from './passwordchange.model';
 import { App } from './app.model';
 import { AppProperties } from './app-properties.model'
+import { SessionProperties } from '../session/session-properties.model'
 
 @Injectable()
 export class UserService {
@@ -58,7 +57,16 @@ data: any;
             .then(response => response.json() as User)
             .catch(error=>this.handleError(error));
     }
-      
+     
+    
+    getSessionProperties(): Promise<SessionProperties> {
+        return this.http
+            .get(this.configService.GET_SESSION_PROPERTIES_URL)
+            .toPromise()
+            .then(response => response.json() as SessionProperties)
+            .catch(error=>this.handleError(error));
+    }
+     
     getApps(): Promise<App[]> {
         return this.http
             .get(this.configService.appRegisterUrl)

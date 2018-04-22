@@ -34,20 +34,17 @@ export class NavComponent implements OnInit {
         this.idleTime = this.config.DEFAULTIDLETIME;
         this.idleWaitTime = this.config.DEFAULTIDLEWAITTIME;
         this.loginEvent.subscribe(() => {
-            this.config.appConfig.subscribe((config)=> {
-                if (config.idleTime){
-                    this.idleTime = config.idleTime;
+            this.userService.getSessionProperties().then( properties=>{
+                    if (properties.maxInactiveInterval) {
+                        this.idleTime = properties.maxInactiveInterval-this.config.DEFAULTIDLEWAITTIME;
+                        this.idleTime = 10;
+                        this.setupIdleWatcher();
+                    }
                 }
-                if (config.idleWaitTime){
-                    this.idleWaitTime = config.idleWaitTime;
-                }
-                this.setupIdleWatcher();
-            },
-            error =>{
-                this.setupIdleWatcher();
-            }
-            );
-            
+            )
+            .catch(error=>{
+                
+            });    
         });
     }
     
