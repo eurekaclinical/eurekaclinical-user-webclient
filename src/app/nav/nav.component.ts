@@ -37,7 +37,6 @@ export class NavComponent implements OnInit {
             this.userService.getSessionProperties().then( properties=>{
                     if (properties.maxInactiveInterval) {
                         this.idleTime = properties.maxInactiveInterval-this.config.DEFAULTIDLEWAITTIME;
-                        this.idleTime = 10;
                         this.setupIdleWatcher();
                     }
                 }
@@ -144,7 +143,7 @@ export class NavComponent implements OnInit {
         this.config.appConfig.subscribe((config:AppProperties)=>{                
             window.location.href = 
             config.userWebappUrl + '/protected/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("") );
+                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("home") );
         });    
     }
     
