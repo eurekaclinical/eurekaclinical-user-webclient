@@ -15,6 +15,7 @@ export class ConfigurationService {
     readonly REGISTRATION_ENDPOINT = 'userrequests';
     readonly OAUTH_ENDPOINT = 'oauthuser/';
     readonly APP_REGISTER_ENDPOINT = 'components?type=WEBAPP&type=EXTERNAL';
+    readonly GET_SESSION_PROPERTIES_URL = '/eurekaclinical-user-webapp/protected/get-session-properties';
     readonly CONFIG_FILE = 'assets/config.json';
     readonly DEFAULTIDLETIME=10;
     readonly DEFAULTIDLEWAITTIME=10;
@@ -112,6 +113,7 @@ export class ConfigurationService {
     get defaultAppIconPath():string{
         return this.location.prepareExternalUrl(this._defaultAppIconPath);
     }
+    
                
     private handleError( error: Response | any ) {
         return Promise.reject( error.message || error );

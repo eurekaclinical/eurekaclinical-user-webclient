@@ -28,3 +28,11 @@ a {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.modal-backdrop {
+    z-index: 1100;
+}
+
+.modal {
+    z-index: 1150;
+}
