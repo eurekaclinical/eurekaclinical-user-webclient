@@ -36,7 +36,7 @@ export class GithubOAuthService implements OAuthInterface{
         );
         */
        // this.providerInfo.clientId = this.config.appConfig.githubOAuthID;
-       this.config.appConfig.subscribe((config:AppProperties) => {
+       this.config.appConfig.then((config:AppProperties) => {
             this.providerInfo.clientId = config.githubOAuthID; 
         }) 
         // this.providerInfo.clientId   ="92540a403e450536ce5e";

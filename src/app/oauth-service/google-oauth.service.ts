@@ -37,7 +37,7 @@ export class GoogleOAuthService implements OAuthInterface{
             function (response) {this.providerInfo.clientId = response.googleOAuthID;}
         );
         */
-        this.config.appConfig.subscribe((config:AppProperties) => {
+        this.config.appConfig.then((config:AppProperties) => {
             this.providerInfo.clientId = config.googleOAuthID; 
         }) 
        

@@ -64,7 +64,7 @@ export class NavComponent implements OnInit {
     }
     
     logoutSystem(){
-        this.config.appConfig.subscribe((config:AppProperties)=>{
+        this.config.appConfig.then((config:AppProperties)=>{
             console.log(config.casUrl+ '/logout');
                 
             window.location.href = 
@@ -73,11 +73,10 @@ export class NavComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCurrentUser();
-        this.getApps();
-   
-        
-        
+        this.userService.getSession().then(response=>{
+            this.getCurrentUser();
+            this.getApps();
+        })        
     }
 
     isLoggedOut():boolean {
@@ -112,7 +111,7 @@ export class NavComponent implements OnInit {
             });           
     }
     
-     filterApps(): App[] {
+    filterApps(): App[] {
         if (!this.apps) {
             return null;
         } else {
@@ -140,10 +139,10 @@ export class NavComponent implements OnInit {
     }
     
     doLogin(){
-        this.config.appConfig.subscribe((config:AppProperties)=>{                
+        this.config.appConfig.then((config:AppProperties)=>{                
             window.location.href = 
             config.userWebappUrl + '/protected/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("home") );
+                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("login") );
         });    
     }
     
@@ -178,7 +177,7 @@ export class NavComponent implements OnInit {
     }
         
     onLogOut(){
-         this.config.appConfig.subscribe((config:AppProperties)=>{            
+         this.config.appConfig.then((config:AppProperties)=>{            
             window.location.href = 
             config.casUrl + '/logout';
         });

@@ -16,6 +16,7 @@ export class ConfigurationService {
     readonly OAUTH_ENDPOINT = 'oauthuser/';
     readonly APP_REGISTER_ENDPOINT = 'components?type=WEBAPP&type=EXTERNAL';
     readonly GET_SESSION_PROPERTIES_URL = '/eurekaclinical-user-webapp/protected/get-session-properties';
+    readonly GET_SESSION_URL = '/eurekaclinical-user-webapp/protected/get-session';
     readonly CONFIG_FILE = 'assets/config.json';
     readonly DEFAULTIDLETIME=10;
     readonly DEFAULTIDLEWAITTIME=10;
@@ -24,21 +25,23 @@ export class ConfigurationService {
     private _serviceHost: string = 'localhost';
     private _servicePort: number = 4200;
     private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';    
-    private _appProperties: Observable<AppProperties>;
+    private _appProperties: Promise<AppProperties>;
     private _defaultAppIconPath: string = "assets/icons/default-app-icon.png";
     
     constructor(private http: Http, private location: Location){
-       
-    }
-    
-    init() {
+        this._appProperties = null;
         this.initUserWebappProperties();
     }
+    
      
     initUserWebappProperties() {
         this._appProperties = this.http.get(this.getUserWebappPropertiesAPI)
-            .map(response=>response.json() as AppProperties)
-            .catch(this.handleError);
+                .toPromise()
+            .then(function(response) {
+                    return response.json() as AppProperties; 
+                }
+                )
+            .catch(error=>this.handleError(error));
     }      
     
     get serviceUrl(): string {
@@ -106,7 +109,7 @@ export class ConfigurationService {
         return this.location.prepareExternalUrl(this.CONFIG_FILE);     
     }
      
-    get appConfig(): Observable<AppProperties> {
+    get appConfig(): Promise<AppProperties> {
         return this._appProperties;
     }  
     

@@ -37,7 +37,7 @@ export class GlobusOAuthService implements OAuthInterface{
         );
         */
         //this.providerInfo.clientId = this.config.appConfig.globusOAuthID;
-        this.config.appConfig.subscribe((config:AppProperties) => {
+        this.config.appConfig.then((config:AppProperties) => {
             this.providerInfo.clientId = config.globusOAuthID; 
         }); 
         

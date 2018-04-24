@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import { User } from './user.model';
 import { ConfigurationService } from '../config.service';
@@ -12,6 +13,7 @@ import { AppProperties } from './app-properties.model'
 import { SessionProperties } from '../session/session-properties.model'
 import { EventEmitter } from '@angular/core';
 
+
 @Injectable()
 export class UserService {
 data: any;
@@ -20,9 +22,11 @@ data: any;
     });
     
     loginEvent:EventEmitter<boolean>;
+    configJson: Observable<AppProperties>
     
     constructor( private http: Http, private configService: ConfigurationService ) { 
         this.loginEvent = new EventEmitter<boolean>();
+        this.configJson = null;
     }
 
     public doLogout() {
@@ -66,7 +70,14 @@ data: any;
     getLoginEvent() :EventEmitter<boolean>{
         return this.loginEvent;     
     }
-     
+    
+    getSession():Promise<boolean> {
+        return this.http
+            .get(this.configService.GET_SESSION_URL)
+            .toPromise()
+            .then(response => { console.log(response);return true;})
+            .catch(error=>this.handleError(error));
+    }
     
     getSessionProperties(): Promise<SessionProperties> {
         return this.http
@@ -89,9 +100,14 @@ data: any;
     }
         
     getUserWebappProperties():Observable<AppProperties> {
-        return this.http.get(this.configService.getUserWebappPropertiesAPI)
+        if (this.configJson){
+        }
+        else{
+            this.configJson = this.http.get(this.configService.getUserWebappPropertiesAPI)
             .map(response => response.json() as AppProperties)
             .catch( this.handleError );
+        }
+        return this.configJson;
     }
        
     

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private router: Router,
         private configService: ConfigurationService
     ) { 
-        this.configService.init();
+        let tmp = this.configService.appConfig;
     }
 
     ngOnInit() {

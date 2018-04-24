@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router'
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { ServiceResponse } from '../user/service-response.model';
@@ -50,9 +50,7 @@ export class UserProfileComponent implements OnInit {
         }
     };
 
-    constructor(
-
-        private userService: UserService, fb: FormBuilder) {
+    constructor( private userService: UserService, fb: FormBuilder, private router:Router) {
         this.showPasswordDialog = false;
         this.currentUser = new User();
         this.userprofileForm = fb.group({
@@ -78,8 +76,11 @@ export class UserProfileComponent implements OnInit {
    
     
     ngOnInit() {
-        this.getCurrentUser();
-    
+        this.userService.getSession().then(response=>{
+            this.getCurrentUser();
+        }).catch(error=>{
+            this.router.navigateByUrl('welcome');
+        })
     }
 
     ngAfterViewInit() {
