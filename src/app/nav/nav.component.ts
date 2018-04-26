@@ -142,7 +142,7 @@ export class NavComponent implements OnInit {
         this.config.appConfig.then((config:AppProperties)=>{                
             window.location.href = 
             config.userWebappUrl + '/protected/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("login") );
+                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("home") );
         });    
     }
     
