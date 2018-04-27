@@ -77,7 +77,12 @@ export class UserProfileComponent implements OnInit {
     
     ngOnInit() {
         this.userService.getSession().then(response=>{
-            this.getCurrentUser();
+            if (response.status !=200){
+                this.router.navigateByUrl('welcome');
+            }
+            else{
+                this.getCurrentUser();
+            }
         }).catch(error=>{
             this.router.navigateByUrl('welcome');
         })

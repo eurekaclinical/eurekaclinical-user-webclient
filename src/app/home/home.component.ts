@@ -19,7 +19,12 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.userService.getSession().then(response=>{
-            this.getApps();
+            if (response.status !=200){
+                this.router.navigateByUrl('welcome');
+            }
+            else{
+                this.getApps();
+            }
         }).catch(error=>{
             this.router.navigateByUrl('welcome');
         })

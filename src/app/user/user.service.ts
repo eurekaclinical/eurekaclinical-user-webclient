@@ -12,7 +12,7 @@ import { App } from './app.model';
 import { AppProperties } from './app-properties.model'
 import { SessionProperties } from '../session/session-properties.model'
 import { EventEmitter } from '@angular/core';
-
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class UserService {
@@ -71,11 +71,11 @@ data: any;
         return this.loginEvent;     
     }
     
-    getSession():Promise<boolean> {
+    getSession():Promise<Response> {
         return this.http
             .get(this.configService.GET_SESSION_URL)
             .toPromise()
-            .then(response => { console.log(response);return true;})
+            .then(response => {return response;})
             .catch(error=>this.handleError(error));
     }
     
