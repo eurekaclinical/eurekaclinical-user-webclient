@@ -21,7 +21,8 @@
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
     transition: 0.3s;
-    margin:6%;
+    display: block;
+    margin:0 auto;width:200px;
 }
 
 .card:hover {
@@ -46,4 +47,10 @@
 
 a, a:link, a:visited, a:active, a:hover {
 text-decoration: none;
+margin: 0 auto;
+}
+
+.row {
+    text-align: center;
+    width:auto;
 }
