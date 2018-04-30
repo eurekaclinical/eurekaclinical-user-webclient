@@ -108,6 +108,9 @@ export class UserProfileComponent implements OnInit {
             .then(currentUser => {
                 this.currentUser = currentUser;
                 this.populateUserForm()
+            })
+            .catch(error=>{
+                this.router.navigateByUrl('welcome');
             });
     }
     

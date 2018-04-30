@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
             error=>{
                 console.log('fail to get apps');
                 console.log(error);
+                this.router.navigateByUrl('welcome');
             });      
                  
     }

@@ -8,23 +8,20 @@ import { Location } from '@angular/common'
 @Injectable()
 export class ConfigurationService {
 
+    private _apiContextRoot: string = '/proxy-resource/';    
     readonly UPDATE_USER_ENDPOINT = 'users/{id}';
     readonly GET_CURRENT_USER_ENDPOINT = 'users/me';
     readonly CHANGE_PASSWORD_ENDPOINT = 'users/passwordchange';
-    readonly CAS_LOGOUT_ENDPOINT = 'https://localhost:8443/cas-mock/logout';
     readonly REGISTRATION_ENDPOINT = 'userrequests';
-    readonly OAUTH_ENDPOINT = 'oauthuser/';
+    readonly OAUTH_ENDPOINT = 'oauthuser';
     readonly APP_REGISTER_ENDPOINT = 'components?type=WEBAPP&type=EXTERNAL';
-    readonly GET_SESSION_PROPERTIES_URL = '/eurekaclinical-user-webapp/protected/get-session-properties';
-    readonly GET_SESSION_URL = '/eurekaclinical-user-webapp/protected/get-session';
     readonly CONFIG_FILE = 'assets/config.json';
-    readonly DEFAULTIDLETIME=10;
-    readonly DEFAULTIDLEWAITTIME=10;
-     
-    private _serviceScheme: string = 'https';
-    private _serviceHost: string = 'localhost';
-    private _servicePort: number = 4200;
-    private _apiContextRoot: string = '/eurekaclinical-user-webapp/proxy-resource/';    
+
+    readonly DEFAULTIDLEWAITTIME=60;
+    readonly LOGINCALLBACK_SELECTOR='home';
+    private GET_SESSION_PROPERTIES_URL = '/protected/get-session-properties';
+    private GET_SESSION_URL = '/protected/get-session';
+  
     private _appProperties: Promise<AppProperties>;
     private _defaultAppIconPath: string = "assets/icons/default-app-icon.png";
     
@@ -32,8 +29,7 @@ export class ConfigurationService {
         this._appProperties = null;
         this.initUserWebappProperties();
     }
-    
-     
+       
     initUserWebappProperties() {
         this._appProperties = this.http.get(this.getUserWebappPropertiesAPI)
                 .toPromise()
@@ -42,82 +38,85 @@ export class ConfigurationService {
                 }
                 )
             .catch(error=>this.handleError(error));
-    }      
-    
-    get serviceUrl(): string {
-        let serviceUrl: string = '';
-        if( environment.useScheme ) {
-            serviceUrl += ( environment.serviceScheme ) ? environment.serviceScheme : this._serviceScheme;
-            serviceUrl += '://';
-        }
-
-        if( environment.useHost ) {
-            serviceUrl += ( environment.serviceHost ) ? environment.serviceHost : this._serviceHost;
-        }
-
-        if( environment.usePort ) {
-            serviceUrl += ':';
-            serviceUrl += ( environment.servicePort ) ? environment.servicePort : this._servicePort;
-        }
-
-        serviceUrl += ( environment.apiContextRoot ) ? environment.apiContextRoot : this._apiContextRoot;
-        return serviceUrl;
-
-    }
-    
-    get baseUrl(): string {
-        return window.location.origin;
-    } 
-    
-    get appRegisterUrl(): string{
-        return this.serviceUrl + this.APP_REGISTER_ENDPOINT;
-    }
-    
-    get casLogoutUrl(): string {
-        return this.CAS_LOGOUT_ENDPOINT;
-    }    
-
-    get updateUserAPITemplate(): string {
-        return this.serviceUrl + this.UPDATE_USER_ENDPOINT;
-    }
-
-    get saveUserAPI(): string {
-        return this.serviceUrl + this.REGISTRATION_ENDPOINT;
-    }
-    
-    get changePasswordAPITemplate(): string {
-        return this.serviceUrl + this.CHANGE_PASSWORD_ENDPOINT;
-    }
-    
-    getUpdateUserAPI(userId: string): string {
-        return this.updateUserAPITemplate.replace("{id}",userId);
-    }
-    
-    getChangePasswordAPI(userId:string): string{
-        return this.changePasswordAPITemplate.replace("{id}",userId);
-    }
-    
-    get getCurrentUserAPI(): string {
-        return this.serviceUrl + this.GET_CURRENT_USER_ENDPOINT;       
-    }
-    
-    getOAuthUserAPI(provider:string): string{
-        return this.serviceUrl + this.OAUTH_ENDPOINT + provider;        
     }
     
     get getUserWebappPropertiesAPI(): string {  
         return this.location.prepareExternalUrl(this.CONFIG_FILE);     
     }
      
-    get appConfig(): Promise<AppProperties> {
+    get appProperties(): Promise<AppProperties> {
         return this._appProperties;
-    }  
+    }      
+    
+    get serviceUrl(): Promise<string> {
+        return  this.appProperties.then(config=>{
+                    return config.userWebappUrl + this._apiContextRoot;
+                });  
+    }
+    
+    get baseUrl(): string {
+        return window.location.origin;
+    }
+    
+    composeAPIEndpoint(endpointSegment:string): Promise<string>{
+        return  this.serviceUrl.then(serviceUrl=>{
+                    return serviceUrl + endpointSegment
+                });
+    }
+    
+    get appRegisterUrl(): Promise<string>{
+        return this.composeAPIEndpoint(this.APP_REGISTER_ENDPOINT);
+    }
+    
+    get updateUserAPITemplate(): Promise<string> {
+        return this.composeAPIEndpoint(this.UPDATE_USER_ENDPOINT);
+    }
+
+    get saveUserAPI(): Promise<string> {
+        return this.composeAPIEndpoint(this.REGISTRATION_ENDPOINT);
+    }
+    
+    get changePasswordAPITemplate(): Promise<string> {
+        return this.composeAPIEndpoint(this.CHANGE_PASSWORD_ENDPOINT);
+    }
+    
+    getUpdateUserAPI(userId: string): Promise<string> {
+        return  this.updateUserAPITemplate.then(apiTemplate=>{
+                    return apiTemplate.replace("{id}",userId);
+                }); 
+    }
+    
+    getChangePasswordAPI(userId:string): Promise<string>{
+        return  this.changePasswordAPITemplate.then(apiTemplate=>{
+                    return apiTemplate.replace("{id}",userId);
+                });
+    }
+    
+    get getCurrentUserAPI(): Promise<string> {
+        return this.composeAPIEndpoint(this.GET_CURRENT_USER_ENDPOINT);
+    }
+    
+    getOAuthUserAPI(provider:string): Promise<string>{
+        return this.composeAPIEndpoint(this.OAUTH_ENDPOINT + '/' + provider);
+    }
+    
+    getSessionUrl():Promise<string>{
+        return  this.appProperties.then(config=>{
+            return config.userWebappUrl + this.GET_SESSION_URL;
+        });
+    }
+    
+    getSessionPropertiesUrl():Promise<string>{
+        return  this.appProperties.then(config=>{
+            return config.userWebappUrl + this.GET_SESSION_PROPERTIES_URL;
+        });        
+    }
+
     
     get defaultAppIconPath():string{
         return this.location.prepareExternalUrl(this._defaultAppIconPath);
     }
-    
-               
+                  
     private handleError( error: Response | any ) {
         return Promise.reject( error.message || error );
     }

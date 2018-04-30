@@ -20,13 +20,11 @@ export class AppComponent implements OnInit, OnDestroy {
         private router: Router,
         private configService: ConfigurationService
     ) { 
-        let tmp = this.configService.appConfig;
+        let tmp = this.configService.appProperties;
     }
 
     ngOnInit() {
-
-        this.titleService.setTitle( 'Euerka! Clinical User Web Client' );
-
+        this.titleService.setTitle( 'Eureka! Clinical User Portal' );
     }
 
     ngOnDestroy() {

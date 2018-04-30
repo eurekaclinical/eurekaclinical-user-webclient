@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
     }
     
     doLogout() {
-        this.userService.doLogout();
         this.router.navigate( ['/welcome', 'loggedOut'] );
     }  
 }

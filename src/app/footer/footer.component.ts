@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-
-  constructor() { }
+  whatTime: Observable<Date>;
+  constructor() {
+    this.whatTime = Observable.interval(1000).map(x => new Date()).share();
+  }
 
   ngOnInit() {
   }
