@@ -11,8 +11,8 @@ export class AppProperties {
     private _githubOAuthID:string;
     private _globusOAuthID:string;
     private _casUrl: string;
-    private _idleTime: number;
     private _idleWaitTime: number;
+    private _helpUrl:string;
             
     constructor() {}
     
@@ -103,21 +103,21 @@ export class AppProperties {
     get casUrl(): string {
         return this._casUrl;
     }
-    
-    set idleTime(value:number){
-        this._idleTime = value;
-    }
-    
-    get idleTime(){
-        return this._idleTime;
-    }
-    
+   
     set idleWaitTime(value:number){
         this._idleWaitTime = value;
     }
     
     get idleWaitTime(){
         return this._idleWaitTime;
+    }
+    
+    get helpUrl():string{
+        return this._helpUrl;
+    }
+    
+    set helpUrl(value:string){
+        this._helpUrl = value;
     }
     
     toJSON() {

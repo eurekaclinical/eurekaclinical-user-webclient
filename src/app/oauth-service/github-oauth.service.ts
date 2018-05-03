@@ -17,7 +17,7 @@ class GithubValidationResponse{
 
 @Injectable()
 export class GithubOAuthService implements OAuthInterface{
-    providerInfo: OAuthProvider = new OAuthProvider();
+    providerInfo: Promise<OAuthProvider>;
     
     constructor(private httpClient: Http, private config: ConfigurationService, private location: Location){
         this.initializeProviderInfo();  
@@ -28,45 +28,43 @@ export class GithubOAuthService implements OAuthInterface{
     }
     
     initializeProviderInfo(){
-        this.providerInfo.name = "GitHub2Provider";
-        this.providerInfo.url =  "https://github.com/login/oauth/authorize";
-        /*
-        this.config.getUserWebappProperties().subscribe(
-             function (response) {this.providerInfo.clientId = response.githubOAuthID;}
-        );
-        */
-       // this.providerInfo.clientId = this.config.appConfig.githubOAuthID;
-       this.config.appConfig.subscribe((config:AppProperties) => {
-            this.providerInfo.clientId = config.githubOAuthID; 
-        }) 
-        // this.providerInfo.clientId   ="92540a403e450536ce5e";
-        this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/github');
-        this.providerInfo.scope = "read:user";
-        this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
-        this.providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me'
+        this.providerInfo = this.config.appProperties.then((config:AppProperties) => {
+            let providerInfo = new OAuthProvider();
+                    
+            providerInfo.name = "GitHub2Provider";
+            providerInfo.url =  "https://github.com/login/oauth/authorize";
+
+            providerInfo.clientId = config.githubOAuthID; 
+            providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/github');
+            providerInfo.scope = "read:user";
+            providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
+            providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me';
+            return providerInfo;
+        });
     }
     
     isEnabled():boolean{
         return true;        
     }
 
-    authenticationServerUrl():string{
+    authenticationServerUrl():Promise<string>{
         return this.composeAuthenticationUrl(this.providerInfo);
     }
     
-    composeAuthenticationUrl(oauthProvider: OAuthProvider):string{
-        
-        let urlString: string = oauthProvider.url + "?client_id=" + encodeURIComponent(oauthProvider.clientId);
-        
-        if (oauthProvider.redirectUri){
-            urlString += "&redirect_uri=" + encodeURIComponent(oauthProvider.redirectUri);
-        }
-        
-        if (oauthProvider.scope) {
-            urlString += "&scope=" + encodeURIComponent(oauthProvider.scope);
-        }
-        
-        return urlString;
+    composeAuthenticationUrl(oauthProviderPromise: Promise<OAuthProvider>):Promise<string>{
+        return oauthProviderPromise.then((oauthProvider:OAuthProvider) => {
+            let urlString: string = oauthProvider.url + "?client_id=" + encodeURIComponent(oauthProvider.clientId);
+
+            if (oauthProvider.redirectUri){
+                urlString += "&redirect_uri=" + encodeURIComponent(oauthProvider.redirectUri);
+            }
+
+            if (oauthProvider.scope) {
+                urlString += "&scope=" + encodeURIComponent(oauthProvider.scope);
+            }
+
+            return urlString;
+        });
     }
     
 }

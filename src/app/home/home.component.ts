@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Location } from '@angular/common'
+import { Router } from '@angular/router'
 import { UserService } from '../user/user.service';
 import { App } from '../user/app.model';
 import { ConfigurationService } from '../config.service';
@@ -14,10 +15,20 @@ export class HomeComponent implements OnInit {
     
     apps: App[];
     
-    constructor(private userService: UserService, private location: Location, private config: ConfigurationService ) { }
+    constructor(private userService: UserService, private location: Location, private config: ConfigurationService, private router: Router ) { }
 
     ngOnInit() {
-        this.getApps();
+        this.userService.getSession().then(response=>{
+            if (response.status !=200){
+                this.router.navigateByUrl('welcome');
+            }
+            else{
+                this.getApps();
+            }
+        }).catch(error=>{
+            this.router.navigateByUrl('welcome');
+        })
+        
     }
     
     getApps() : void {
@@ -29,6 +40,7 @@ export class HomeComponent implements OnInit {
             error=>{
                 console.log('fail to get apps');
                 console.log(error);
+                this.router.navigateByUrl('welcome');
             });      
                  
     }

@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "node_modules/.bin/ng",
-    "start": "node_modules/.bin/ng serve --aot --deploy-url eurekaclinical-user-webclient --proxy-config proxy.conf.json --ssl 1 --ssl-key pki/key.pem --ssl-cert pki/cert.pem",
-    "startPublic": "node_modules/.bin/ng serve --aot --proxy-config proxy.conf.json --ssl 1 --ssl-key pki/key.pem --ssl-cert pki/cert.pem --host 192.168.1.4",
-    "build": "node_modules/.bin/ng build --prod -d eurekaclinical-user-webclient",
+    "start": "node_modules/.bin/ng serve --aot --deploy-url '' --proxy-config proxy.conf.json --ssl 1 --ssl-key pki/key.pem --ssl-cert pki/cert.pem",
+    "build": "node_modules/.bin/ng build --prod",
+    "build2Subfolder": "node_modules/.bin/ng build --prod -d eurekaclinical-user-webclient --base-href eurekaclinical-user-webclient",
     "test": "node_modules/.bin/ng test",
     "lint": "node_modules/.bin/ng lint",
     "pree2e": "node_modules/.bin/json-server --watch e2e/db.json &",

@@ -31,21 +31,33 @@ export class NavComponent implements OnInit {
     constructor(private userService: UserService, private router: Router, private activteRoute: ActivatedRoute, private location: Location, private config: ConfigurationService, private idle: Idle, private changeDetectorRef: ChangeDetectorRef) { 
         this.currentUser = undefined;
         this.loginEvent = new EventEmitter<boolean>();
-        this.idleTime = this.config.DEFAULTIDLETIME;
         this.idleWaitTime = this.config.DEFAULTIDLEWAITTIME;
-        this.loginEvent.subscribe(() => {
-            this.userService.getSessionProperties().then( properties=>{
-                    if (properties.maxInactiveInterval) {
-                        this.idleTime = properties.maxInactiveInterval-this.config.DEFAULTIDLEWAITTIME;
-                        this.setupIdleWatcher();
-                    }
+        this.config.appProperties
+            .then(config=>{
+                if(config.idleWaitTime){
+                    return config.idleWaitTime
+                } 
+                else{
+                    return this.config.DEFAULTIDLEWAITTIME;
                 }
-            )
-            .catch(error=>{
+            })
+            .then(idleWaitTime=>{
                 
-            });    
-        });
-    }
+                this.idleWaitTime = idleWaitTime;
+                this.loginEvent.subscribe(() => {
+                    this.userService.getSessionProperties().then( properties=>{
+                            if (properties.maxInactiveInterval) {
+                                this.idleTime = properties.maxInactiveInterval - this.idleWaitTime;
+                                this.setupIdleWatcher();
+                            }
+                        }
+                    )
+                    .catch(error=>{
+
+                    });    
+                });
+            });
+    };
     
     setupIdleWatcher(){
         
@@ -64,20 +76,25 @@ export class NavComponent implements OnInit {
     }
     
     logoutSystem(){
-        this.config.appConfig.subscribe((config:AppProperties)=>{
-            console.log(config.casUrl+ '/logout');
-                
+        this.config.appProperties.then((config:AppProperties)=>{           
             window.location.href = 
                 config.casUrl + '/logout';
         });
     }
 
     ngOnInit() {
-        this.getCurrentUser();
-        this.getApps();
-   
-        
-        
+        this.userService.getSession().then(response=>{
+            this.getCurrentUser();
+            this.getApps();
+            })
+            .catch(error=>{
+                console.log(this.currentUser);
+                this.currentUser = undefined;
+            })
+            
+        this.userService.getLogoutEvent().subscribe((isLoggedOut)=>{
+            this.currentUser = undefined;
+        });        
     }
 
     isLoggedOut():boolean {
@@ -97,6 +114,7 @@ export class NavComponent implements OnInit {
                 this.loginEvent.emit(true);     
             })
             .catch(error=>{
+                this.currentUser = undefined;
                 console.log('Fail to get user');
             });           
     }
@@ -112,7 +130,7 @@ export class NavComponent implements OnInit {
             });           
     }
     
-     filterApps(): App[] {
+    filterApps(): App[] {
         if (!this.apps) {
             return null;
         } else {
@@ -134,54 +152,43 @@ export class NavComponent implements OnInit {
             if(this.currentUser.lastName){
                 name = name + ' ' + this.currentUser.lastName;
             }
-            
             return  name;
         }
     }
     
     doLogin(){
-        this.config.appConfig.subscribe((config:AppProperties)=>{                
+        this.config.appProperties.then((config:AppProperties)=>{                
             window.location.href = 
             config.userWebappUrl + '/protected/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("home") );
+            + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl(this.config.LOGINCALLBACK_SELECTOR) );
         });    
     }
     
+    doLogOut(){
+        this.config.appProperties.then((config:AppProperties)=>{            
+            window.location.href = 
+            config.casUrl + '/logout';
+        });
+        
+    }
+    
     doHelp(){
-        window.open("http://eurekaclinical.org", "_blank");
+        this.config.appProperties.then((config:AppProperties)=>{
+            window.open(config.helpUrl, "_blank");
+            });
     } 
-    
-    loginUrl(){
         
-        return "https://localhost:4200/eurekaclinical-user-webapp/protected/login?webclient=" + "https://localhost:4200/eurekaclinical-user-webclient";
-        /*
-        return this.config.appConfig.casUrl + '/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("/") );      
-         */
-        
-    }    
-    
     onEditUser(){
         this.menuOpen = false;
         this.router.navigate(["/user-profile"]);
     }
-    
-    toggleUser()
-    {
-        this.menuOpen = !this.menuOpen;
-    }
-    
     
     onAppRegister(){
         this.menuOpen = false;
         this.router.navigate(["/home"]);
     }
         
-    onLogOut(){
-         this.config.appConfig.subscribe((config:AppProperties)=>{            
-            window.location.href = 
-            config.casUrl + '/logout';
-        });
-        
+    toggleUser(){
+        this.menuOpen = !this.menuOpen;
     }
 }

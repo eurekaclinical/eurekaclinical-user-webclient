@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
 import { ServiceResponse } from '../user/service-response.model';
@@ -61,9 +60,7 @@ export class ChooseAccountComponent implements OnInit {
                                  'alert-danger':false
                                 }
     };
-    
-    
-    
+        
     private validationMessages = {
         'emailAddress': {
             'required': 'Email address is required.',
@@ -87,15 +84,14 @@ export class ChooseAccountComponent implements OnInit {
 
     }
     
-    chooseOAuthAccount(provider:string)
-    {
+    chooseOAuthAccount(provider:string){
         this.registerUserService.resetUser();
-        window.location.href = 
-           this.oauthManagerService.authenticationServerUrl(provider);
+        this.oauthManagerService.authenticationServerUrl(provider).then(url=>{
+            window.location.href = url;
+        });
     }
     
-    registerLocal()
-    {
+    registerLocal(){
         this.registerUserService.resetUser();
         this.registerUserService.registerUser.authenticationMethod = "LOCAL";
         this.router.navigate(['register']);

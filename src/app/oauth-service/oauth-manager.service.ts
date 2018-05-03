@@ -25,7 +25,7 @@ export class OAuthManagerService{
     }
 
   
-    authenticationServerUrl(providerName: string):string{
+    authenticationServerUrl(providerName: string):Promise<string>{
         if (!this._providers.get(providerName))
             return null;
         else{
@@ -50,9 +50,11 @@ export class OAuthManagerService{
     getOAuthUser(providerName:string,params:any ):Observable<OAuthUser> {
         console.log('OAuthProvider: ' + providerName );
         console.log(params);
-        
-        return this.httpClient.get(this.configService.getOAuthUserAPI(providerName), {params: params})
+        return Observable.fromPromise(this.configService.getOAuthUserAPI(providerName)).flatMap(apiEndpoint=>{
+            return this.httpClient.get(apiEndpoint
+            , {params: params})
             .map(response => response.json() as OAuthUser);
+        });
     }
         
    

@@ -26,14 +26,7 @@ export class LoginComponent implements OnInit {
     }
     
     doLogin(){
-        this.config.appConfig.subscribe((config:AppProperties)=>{
-            console.log( config.userWebappUrl+ '/protected/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("home") ));
-                
-            window.location.href = 
-            config.userWebappUrl + '/protected/login?webclient=' 
-                + encodeURIComponent(this.config.baseUrl + this.location.prepareExternalUrl("home") );
-        });    
+        this.router.navigateByUrl('home');
     }
     
     prepareExternalUrl(value:string):string {
@@ -41,7 +34,6 @@ export class LoginComponent implements OnInit {
     }
     
     doLogout() {
-        this.userService.doLogout();
         this.router.navigate( ['/welcome', 'loggedOut'] );
     }  
 }

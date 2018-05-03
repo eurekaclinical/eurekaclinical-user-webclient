@@ -18,7 +18,7 @@ class GlobusValidationResponse{
 
 @Injectable()
 export class GlobusOAuthService implements OAuthInterface{
-    providerInfo: OAuthProvider = new OAuthProvider();
+    providerInfo: Promise<OAuthProvider>;
     
     constructor(private httpClient: Http, private config: ConfigurationService, private location: Location){
         this.initializeProviderInfo();  
@@ -29,23 +29,18 @@ export class GlobusOAuthService implements OAuthInterface{
     }
     
     initializeProviderInfo(){
-        this.providerInfo.name = "GlobusProvider";
-        this.providerInfo.url =  "https://auth.globus.org/v2/oauth2/authorize";
-        /*
-        this.config.getUserWebappProperties().subscribe(
-             function (response) {this.providerInfo.clientId = response.globusOAuthID;}
-        );
-        */
-        //this.providerInfo.clientId = this.config.appConfig.globusOAuthID;
-        this.config.appConfig.subscribe((config:AppProperties) => {
-            this.providerInfo.clientId = config.globusOAuthID; 
-        }); 
-        
-        this.providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/globus');
-        this.providerInfo.responseType= "code";
-        this.providerInfo.scope = "openid profile email urn:globus:auth:scope:auth.globus.org:view_identities "
-        this.providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
-        this.providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me'
+        this.providerInfo = this.config.appProperties.then((config:AppProperties) => {
+            let providerInfo = new OAuthProvider();
+            providerInfo.name = "GlobusProvider";
+            providerInfo.url =  "https://auth.globus.org/v2/oauth2/authorize";
+            providerInfo.clientId = config.globusOAuthID; 
+            providerInfo.redirectUri = this.config.baseUrl + this.location.prepareExternalUrl('/oauthcallback/globus');
+            providerInfo.responseType= "code";
+            providerInfo.scope = "openid profile email urn:globus:auth:scope:auth.globus.org:view_identities "
+            providerInfo.tokenValidationUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
+            providerInfo.getProfileUrl = 'https://www.googleapis.com/plus/v1/people/me';
+            return providerInfo;
+        });
     }
     
     isEnabled():boolean{
@@ -53,12 +48,13 @@ export class GlobusOAuthService implements OAuthInterface{
         
     }
 
-    authenticationServerUrl():string{
+    authenticationServerUrl():Promise<string>{
         return this.composeAuthenticationUrl(this.providerInfo);
     }
     
-    composeAuthenticationUrl(oauthProvider: OAuthProvider):string{
-        
+    composeAuthenticationUrl(oauthProviderPromise: Promise<OAuthProvider>):Promise<string>{
+         return oauthProviderPromise.then((oauthProvider:OAuthProvider) => {
+
         let urlString: string = oauthProvider.url + "?client_id=" + encodeURIComponent(oauthProvider.clientId);
         
         if (oauthProvider.redirectUri){
@@ -74,6 +70,7 @@ export class GlobusOAuthService implements OAuthInterface{
         }
         
         return urlString;
+         });
     }
 
 }
