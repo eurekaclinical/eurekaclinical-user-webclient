@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eurekaclinical</groupId>
     <artifactId>eurekaclinical-user-webclient</artifactId>
-    <version>1.0-Alpha-7</version>
+    <version>1.0-Alpha-8-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Eureka! Clinical User Web Client</name>
 
@@ -33,7 +33,7 @@
         <developerConnection>scm:git:https://github.com/eurekaclinical/eurekaclinical-user-webclient.git</developerConnection>
         <connection>scm:git:https://github.com/eurekaclinical/eurekaclinical-user-webclient.git</connection>
         <url>https://github.com/eurekaclinical/eurekaclinical-user-webclient.git</url>
-        <tag>eurekaclinical-user-webclient-1.0-Alpha-7</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
