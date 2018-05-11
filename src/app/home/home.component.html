@@ -16,11 +16,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   #L%
-  -->  
- <div class="container container-big ">
-       
+  -->
+ <div class="container container-big">
       <div class="row">
-        <div class="col-md-4"  *ngFor="let app of filterApps()">
+        <div class="col-md-3 col-sm-6" style="width: 25rem;" *ngFor="let app of filterApps()">
              <a href ={{app.url}}>
             <div class="card">
                 <h5 class="card-title" style="text-align:center">{{app.name}}</h5>
@@ -37,5 +36,4 @@
             </a>
         </div>
     </div>
-
  </div>

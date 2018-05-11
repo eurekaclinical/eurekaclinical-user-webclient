@@ -177,6 +177,10 @@ export class NavComponent implements OnInit {
             window.open(config.helpUrl, "_blank");
             });
     } 
+    
+    doNothing(event: Event){
+        event.preventDefault();
+    }
         
     onEditUser(){
         this.menuOpen = false;
@@ -191,4 +195,5 @@ export class NavComponent implements OnInit {
     toggleUser(){
         this.menuOpen = !this.menuOpen;
     }
+    
 }
