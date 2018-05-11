@@ -21,6 +21,7 @@ export class ConfigurationService {
     readonly LOGINCALLBACK_SELECTOR='home';
     private GET_SESSION_PROPERTIES_URL = '/protected/get-session-properties';
     private GET_SESSION_URL = '/protected/get-session';
+    private DESTROY_SESSION_URL = '/destroy-session';
   
     private _appProperties: Promise<AppProperties>;
     private _defaultAppIconPath: string = "assets/icons/default-app-icon.png";
@@ -103,6 +104,12 @@ export class ConfigurationService {
     getSessionUrl():Promise<string>{
         return  this.appProperties.then(config=>{
             return config.userWebappUrl + this.GET_SESSION_URL;
+        });
+    }
+    
+    destroySessionUrl():Promise<string>{
+        return  this.appProperties.then(config=>{
+            return config.userWebappUrl + this.DESTROY_SESSION_URL;
         });
     }
     

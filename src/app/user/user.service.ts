@@ -104,6 +104,16 @@ data: any;
             .catch(error=>{this.handleError(error); throw(error);});
         });
     }
+    
+    destroySession():Promise<Response> {
+        return this.configService.destroySessionUrl().then(apiEndpoint =>{ 
+                    return this.http
+                    .get(apiEndpoint)
+                    .toPromise();
+                })
+                .then(response => {this.logOut(); return response;})
+            .catch(error => {this.logOut(); throw(error);});
+    }
      
     getApps(): Promise<App[]> {
         return this.configService.appRegisterUrl.then(apiEndpoint=>{
