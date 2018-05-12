@@ -165,9 +165,18 @@ export class NavComponent implements OnInit {
     }
     
     doLogOut(){
-        this.config.appProperties.then((config:AppProperties)=>{            
-            window.location.href = 
-            config.casUrl + '/logout';
+        this.userService.destroySession().then(response =>{
+            this.config.appProperties.then((config:AppProperties)=>{            
+                window.location.href = 
+                config.casUrl + '/logout';
+            }); 
+        })
+        .catch(error=>{
+            console.log('Something is wrong, there might be a bug');
+            this.config.appProperties.then((config:AppProperties)=>{            
+                window.location.href = 
+                config.casUrl + '/logout';
+            });    
         });
         
     }
@@ -177,6 +186,10 @@ export class NavComponent implements OnInit {
             window.open(config.helpUrl, "_blank");
             });
     } 
+    
+    doNothing(event: Event){
+        event.preventDefault();
+    }
         
     onEditUser(){
         this.menuOpen = false;
@@ -191,4 +204,5 @@ export class NavComponent implements OnInit {
     toggleUser(){
         this.menuOpen = !this.menuOpen;
     }
+    
 }

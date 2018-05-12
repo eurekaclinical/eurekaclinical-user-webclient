@@ -46,4 +46,10 @@
 
 a, a:link, a:visited, a:active, a:hover {
 text-decoration: none;
+margin: 0 auto;
+}
+
+.row {
+    text-align: center;
+    width:auto;
 }
