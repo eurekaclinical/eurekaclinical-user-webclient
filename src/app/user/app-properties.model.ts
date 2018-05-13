@@ -13,6 +13,7 @@ export class AppProperties {
     private _casUrl: string;
     private _idleWaitTime: number;
     private _helpUrl:string;
+    private _logoutUrl:string;
             
     constructor() {}
     
@@ -118,6 +119,14 @@ export class AppProperties {
     
     set helpUrl(value:string){
         this._helpUrl = value;
+    }
+    
+    get logoutUrl():string{
+        return this._logoutUrl;
+    }
+    
+    set logoutUrl(value:string){
+        this._logoutUrl= value;
     }
     
     toJSON() {

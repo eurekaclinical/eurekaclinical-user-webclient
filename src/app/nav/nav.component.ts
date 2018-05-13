@@ -168,14 +168,14 @@ export class NavComponent implements OnInit {
         this.userService.destroySession().then(response =>{
             this.config.appProperties.then((config:AppProperties)=>{            
                 window.location.href = 
-                config.casUrl + '/logout';
+                config.logoutUrl;
             }); 
         })
         .catch(error=>{
             console.log('Something is wrong, there might be a bug');
             this.config.appProperties.then((config:AppProperties)=>{            
                 window.location.href = 
-                config.casUrl + '/logout';
+                config.logoutUrl;
             });    
         });
         
