@@ -2,6 +2,6 @@ import {Observable} from 'rxjs'
 import {OAuthUser} from './oauth-user'
 
 export interface OAuthInterface{
-    enabled():boolean;
+    enabled():Promise<boolean>;
     authenticationServerUrl():Promise<string>;
 };

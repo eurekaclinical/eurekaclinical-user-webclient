@@ -24,7 +24,11 @@ export class OAuthManagerService{
        this._providers.set(provider,oauth);
     }
 
-  
+    getProvider(providerName:string): OAuthInterface{
+        console.log(this._providers.get(providerName));
+        return this._providers.get(providerName);
+    }
+    
     authenticationServerUrl(providerName: string):Promise<string>{
         if (!this._providers.get(providerName))
             return null;

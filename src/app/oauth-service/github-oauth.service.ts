@@ -23,8 +23,17 @@ export class GithubOAuthService implements OAuthInterface{
         this.initializeProviderInfo();  
     }
     
-    enabled():boolean{
-        return true;
+    enabled():Promise<boolean>{   
+        return this.config.appProperties.then((config:AppProperties)=>{
+            let oauthID = config.githubOAuthID;
+            if(oauthID && oauthID!=""){
+                return true;
+                
+            }
+            else{
+                return false;
+            }
+        });
     }
     
     initializeProviderInfo(){
