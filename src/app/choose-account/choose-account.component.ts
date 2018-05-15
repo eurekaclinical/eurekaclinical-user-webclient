@@ -8,6 +8,7 @@ import { Router, RouterModule } from "@angular/router"
 import { RegisterUserService } from '../user/register-user.service'
 import { RegisterUser } from "../user/register-user.model"
 import { Location } from '@angular/common'
+import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import { OAuthServiceModule } from '../oauth-service/oauth-service.module';
 import { OAuthManagerService } from '../oauth-service/oauth-manager.service';
@@ -27,15 +28,15 @@ export class ChooseAccountComponent implements OnInit {
     submittedPassword: boolean;
     
     googleAuth = {
-                  enabled:true
+                  enabled:false
     };
     
     gitHubAuth = {
-                  enabled:true
+                  enabled:false
     };
     
     globusAuth = {
-                  enabled:true
+                  enabled:false
     };
     
     localAccount = {
@@ -76,9 +77,21 @@ export class ChooseAccountComponent implements OnInit {
    
     
     ngOnInit() {
+        this.oauthManagerService.getProvider('google').enabled().then(response=>{
+            this.googleAuth.enabled = response;
+        });
+       
+        this.oauthManagerService.getProvider('github').enabled().then(response=>{
+            this.gitHubAuth.enabled = response;
+        });
+        
+        this.oauthManagerService.getProvider('globus').enabled().then(response=>{
+            this.globusAuth.enabled = response;
+        });
+       
+    }
       
     
-    }
 
     ngAfterViewInit() {
 

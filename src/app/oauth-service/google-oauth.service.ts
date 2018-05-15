@@ -25,8 +25,18 @@ export class GoogleOAuthService implements OAuthInterface{
         this.initializeProviderInfo();  
     }
 
-    enabled():boolean{
-        return true;
+    enabled():Promise<boolean>{   
+        return this.config.appProperties.then((config:AppProperties)=>{
+            let oauthID = config.googleOAuthID;
+            if(oauthID && oauthID!=""){
+                console.log('google enabled')
+                return true;
+                
+            }
+            else{
+                return false;
+            }
+        });
     }
     
     initializeProviderInfo(){
