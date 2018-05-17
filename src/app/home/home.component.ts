@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
 
     }
     
-    handleNoIconImageFound($event){
+    handleNoIconImageFound(event){
         if ((event.target as HTMLImageElement).src != this.config.defaultAppIconPath){
           (event.target as HTMLImageElement).src = this.config.defaultAppIconPath;  
         };
