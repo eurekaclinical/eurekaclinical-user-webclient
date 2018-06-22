@@ -5,11 +5,8 @@
 This project contains the web client for Eureka! Clinical
 User Services. It is an Angular 4/5 single-page site.
 
-## Version 1.0 development series
-Latest release:
-
-## Version history
-No final releases yet.
+## Version 1.0
+Initial release.
 
 ## Build requirements
 * [Oracle Java JDK 8](http://www.oracle.com/technetwork/java/javase/overview/index.html)
@@ -18,14 +15,14 @@ No final releases yet.
 ## Runtime requirements
 * Any web browser that is supported by Angular 4/5 (see
   https://angular.io/guide/browser-support).
-* `eurekaclinical-user-webapp` version 2.0-Alpha-4 from
-  https://oss.sonatype.org/content/groups/public/org/eurekaclinical/eurekaclinical-user-webapp/2.0-Alpha-4/eurekaclinical-user-webapp-2.0-Alpha-4.war,
+* `eurekaclinical-user-webapp` version 2.0 from
+  https://oss.sonatype.org/content/groups/public/org/eurekaclinical/eurekaclinical-user-webapp/2.0/eurekaclinical-user-webapp-2.0.war,
   accessible over the internet from your web browser. See
-  https://github.com/eurekaclinical/eureka for installation instructions. 
-* `eurekaclinical-user-service` version 2.0-Alpha-2 from
-  https://oss.sonatype.org/content/groups/public/org/eurekaclinical/eurekaclinical-user-service/2.0-Alpha-2/eurekaclinical-user-service-2.0-Alpha-2.war,
+  https://github.com/eurekaclinical/eurekaclinical-user-webapp for installation instructions. 
+* `eurekaclinical-user-service` version 2.0 from
+  https://oss.sonatype.org/content/groups/public/org/eurekaclinical/eurekaclinical-user-service/2.0/eurekaclinical-user-service-2.0.war,
   accessible over the internet from your web browser. See
-  https://github.com/eurekaclinical/eureka for installation instructions.
+  https://github.com/eurekaclinical/eurekaclinical-user-service for installation instructions.
 
 ## Building it
 We use maven, node, and gulp to build the project. You need to install
@@ -46,7 +43,7 @@ following:
 
 1. Clone the [eurekaclinical-user-webapp](https://github.com/eurekaclinical/eurekaclinical-user-webapp)
 project from GitHub, and execute `mvn clean install`
-followed by `mvn cargo:run -Ptomcat` in the root directory of the
+followed by `mvn process-resources cargo:run -Ptomcat` in the root directory of the
 project on the command line to run the server-side Eureka! Clinical
 User code in embedded tomcat. The backend services must be
 listening on port 8443, which is the default.
