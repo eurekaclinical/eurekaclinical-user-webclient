@@ -34,36 +34,42 @@
 
           <div ngbDropdown class="navbar-collapse collapse">
               <ul   class="nav navbar-nav navbar-right menu-text">
-                  <li *ngIf="!isLoggedOut()">
+                  <li *ngIf="!isLoggedOut()&&loginReturned">
                       <a (click) = "onEditUser()">
                           <i class="fa fa-user"></i>
                           Account Settings
                       </a>
                   </li>
-                  <li *ngIf="!isLoggedOut()">
+                  <li *ngIf = "!loginReturned">
+                      <a (click) = "doNothing($event)">
+                          <i class="fa fa-spin fa-refresh"></i>
+                          Loading...
+                      </a>
+                  </li>
+                  <li *ngIf="!isLoggedOut()&&loginReturned">
                       <a  (click) = "onAppRegister()" >
                           <i class="fa fa-bars"></i>
                           Apps
                       </a>
                   </li> 
-                  <li>
+                  <li *ngIf = "loginReturned">
                       <a (click)="doHelp()">
                           <i class="fa fa-question-circle"></i>Help
                       </a>
                   </li>
-                  <li *ngIf="isLoggedOut()">
+                  <li *ngIf="isLoggedOut()&&loginReturned">
                       <a *ngIf="isLoggedOut()" (click)="doLogin()">
                           <i class="fa fa-sign-in"></i>Login
                       </a>
                   </li>
 
                   <li>
-                      <a *ngIf="isLoggedOut()" routerLink="/choose-account">
+                      <a *ngIf="isLoggedOut()&&loginReturned" routerLink="/choose-account">
                           <i class="fa fa-user"></i>Register for new user
                       </a>
                   </li>
 
-                  <li *ngIf="!isLoggedOut()" [class.open] = "menuOpen" (clickOutside) = "menuOpen = false;">
+                  <li *ngIf="!isLoggedOut()&&loginReturned" [class.open] = "menuOpen" (clickOutside) = "menuOpen = false;">
                       <a  
                           class="dropdown-toggle"  
                           role="button" aria-expanded="false" id="userLinks" (click) = "toggleUser()">

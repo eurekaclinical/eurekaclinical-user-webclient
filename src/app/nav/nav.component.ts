@@ -27,11 +27,13 @@ export class NavComponent implements OnInit {
     loginEvent:EventEmitter<boolean>;
     idleTime:number;
     idleWaitTime:number;
+    loginReturned:boolean;
     
     constructor(private userService: UserService, private router: Router, private activteRoute: ActivatedRoute, private location: Location, private config: ConfigurationService, private idle: Idle, private changeDetectorRef: ChangeDetectorRef) { 
         this.currentUser = undefined;
         this.loginEvent = new EventEmitter<boolean>();
         this.idleWaitTime = this.config.DEFAULTIDLEWAITTIME;
+        this.loginReturned = false;
         this.config.appProperties
             .then(config=>{
                 if(config.idleWaitTime){
@@ -110,10 +112,12 @@ export class NavComponent implements OnInit {
     getCurrentUser() : void {
         this.userService.getCurrentUser()
             .then(currentUser => {
+                this.loginReturned = true;
                 this.currentUser = currentUser;
                 this.loginEvent.emit(true);     
             })
             .catch(error=>{
+                this.loginReturned = true;
                 this.currentUser = undefined;
                 console.log('Fail to get user');
             });           
