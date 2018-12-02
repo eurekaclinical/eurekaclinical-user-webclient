@@ -24,10 +24,12 @@ data: any;
     loginEvent:EventEmitter<boolean>;
     logoutEvent:EventEmitter<boolean>;
     isLoggedIn:boolean;
+    appsPromise: Promise<App []>;
     constructor( private http: Http, private configService: ConfigurationService ) { 
         this.loginEvent = new EventEmitter<boolean>();
         this.logoutEvent = new EventEmitter<boolean>();
         this.isLoggedIn = false;
+        this.appsPromise = null;
     }
        
     updateUser( user: User ): Promise<ServiceResponse> {
@@ -116,7 +118,9 @@ data: any;
     }
      
     getApps(): Promise<App[]> {
-        return this.configService.appRegisterUrl.then(apiEndpoint=>{
+        if (this.appsPromise==null)
+        {
+            this.appsPromise = this.configService.appRegisterUrl.then(apiEndpoint=>{
             return this.http
             .get(apiEndpoint)
             .toPromise()
@@ -126,7 +130,9 @@ data: any;
                 }
                 )
             .catch(error=>{throw(error);});
-        });
+            });
+        }
+        return this.appsPromise;
     }
         
     private handleError( error: Response | any ) {
