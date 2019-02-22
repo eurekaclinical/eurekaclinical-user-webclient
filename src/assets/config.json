@@ -1,5 +1,5 @@
 {
-    "userWebappUrl": "https://localhost:4200/eurekaclinical-user-webapp",
+    "userWebappUrl": "https://localhost:8000/eurekaclinical-user-webapp",
     "helpUrl": "http://eurekaclinical.org",
     "ephiProhibited": false,
     "demoMode": false,
@@ -9,7 +9,7 @@
     "googleOAuthID": "",
     "githubOAuthID": "",
     "globusOAuthID": "",
-    "casUrl": "https://localhost:4200/cas-mock",
-    "logoutUrl": "https://localhost:4200/cas-mock/logout",
+    "casUrl": "https://localhost:8000/cas-mock",
+    "logoutUrl": "https://localhost:8000/cas-mock/logout",
     "idleWaitTime": 60
 }
