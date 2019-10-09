@@ -41,6 +41,19 @@
         <url>https://github.com/eurekaclinical/eurekaclinical-user-webclient/issues</url>
     </issueManagement>
     
+    <distributionManagement>
+  <repository>
+   <id>eurekaclinical-user-webclient</id>
+   <name>Eurekaclinical-user-webclient Internal Repo</name>
+  <url>https://maven-int.bmi.emory.edu/nexus/repository/eurekaclinical-user-webclient/</url>
+  </repository>
+  <snapshotRepository>
+   <id>eurekaclinical-user-webclient-snapshots</id>
+   <name>Eurekaclinical-user-webclient Internal Snapshots Repo</name>
+  <url>https://maven-int.bmi.emory.edu/nexus/repository/eurekaclinical-user-webclient-snapshots/</url>
+  </snapshotRepository>
+ </distributionManagement>
+ 
     <build>
         <plugins>
             <plugin>
