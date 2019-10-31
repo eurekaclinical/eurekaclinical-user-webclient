@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eurekaclinical</groupId>
     <artifactId>eurekaclinical-user-webclient</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Eureka! Clinical User Web Client</name>
 
     <parent>
         <groupId>org.eurekaclinical</groupId>
         <artifactId>eurekaclinical-parent</artifactId>
-        <version>3</version>
+        <version>4-Alpha-8-SNAPSHOT</version>
     </parent>
     
     <licenses>
@@ -107,6 +107,15 @@
                     <releaseProfiles>release-sign-artifacts,dist</releaseProfiles>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>assembly/bin.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
           </plugins>
     </build>
   
